@@ -1,0 +1,8 @@
+[
+  {
+    "id": "tag-downwell",
+    "name": "Downwell",
+    "applied_to": ["poi"],
+    "description": "This Point of Interest is located on a planet or similar celestial body, and can only be accessed by vessels with the \"lander\" tag"
+  }
+]
