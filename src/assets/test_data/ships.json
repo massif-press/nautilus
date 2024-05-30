@@ -73,7 +73,7 @@
     "lon": 59.4140625,
     "status": "Underway",
     "mission": "In transit to Sol/Mars",
-    "destination": "g-chapelcogate"
+    "destination": "g-chapelco"
   },
   {
     "id": "e586a4aa-4612-462b-a3f4-d4261b4a638d",
@@ -447,7 +447,7 @@
     "lon": 14.58984375,
     "status": "Underway",
     "mission": "In transit to Sol/Mars",
-    "destination": "g-chapelcogate"
+    "destination": "g-chapelco"
   },
   {
     "id": "7a374bbf-7d59-4b17-9e3d-a88f629b4f8c",
@@ -491,7 +491,7 @@
     "lon": 58.359375,
     "status": "Underway",
     "mission": "In transit to Sol/Mars",
-    "destination": "g-chapelcogate"
+    "destination": "g-chapelco"
   },
   {
     "id": "baa39a81-726c-4961-993c-ba7b1f4c0b53",
@@ -536,7 +536,7 @@
     "lon": 35.859375,
     "status": "Underway",
     "mission": "In transit to Sol/Mars",
-    "destination": "g-chapelcogate"
+    "destination": "g-chapelco"
   },
   {
     "id": "95b26a45-af2f-4bc5-b78e-6828a3ab77a5",
@@ -566,7 +566,7 @@
     "lon": 66.62109375,
     "status": "Underway",
     "mission": "In transit to Sol/Cradle",
-    "destination": "g-chapelcogate"
+    "destination": "g-chapelco"
   },
   {
     "id": "e57f250f-6893-47c4-9bd2-0b713bc42022",
@@ -624,7 +624,7 @@
     "lon": 31.640625,
     "status": "Underway",
     "mission": "In transit to Sol/Mars",
-    "destination": "g-chapelcogate"
+    "destination": "g-chapelco"
   },
   {
     "id": "d82cf680-2c78-4757-8fa4-e7db75a41e69",
@@ -668,6 +668,6 @@
     "lon": 56.77734375,
     "status": "Underway",
     "mission": "In transit to Sol/Mars",
-    "destination": "g-chapelcogate"
+    "destination": "g-chapelco"
   }
 ]

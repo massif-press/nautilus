@@ -195,19 +195,6 @@
     "map": "ganymede"
   },
   {
-    "id": "g-chapelcogate",
-    "name": "Chapelco Gate",
-    "faction": "Union",
-    "owner": "UBO/NTM (OIT)",
-    "role": "infrastructure",
-    "size": "medium",
-    "poitype": "Blink Gate",
-    "lat": 19,
-    "lon": 29,
-    "icon": "mdi-star-four-points-circle-outline",
-    "map": "ganymede"
-  },
-  {
     "id": "g-cyllenegate",
     "name": "Cyllene Transfer Gate",
     "faction": "Union",
