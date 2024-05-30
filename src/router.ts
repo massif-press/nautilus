@@ -10,6 +10,9 @@ import PoiEditor from './views/editors/poi.vue';
 import About from './views/about.vue';
 import Compendium from './views/compendium.vue';
 
+import Hulls from './views/compendium/hulls.vue';
+import Tags from './views/compendium/tags.vue';
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -61,6 +64,19 @@ const router = createRouter({
           path: 'compendium',
           name: 'compendium',
           component: Compendium,
+          children: [
+            {
+              path: 'hulls',
+              name: 'hulls',
+              component: Hulls,
+            },
+            {
+              path: 'tags/:type',
+              name: 'tags',
+              component: Tags,
+              props: true,
+            },
+          ],
         },
         {
           path: 'about',

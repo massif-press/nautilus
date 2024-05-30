@@ -31,9 +31,7 @@
       <v-spacer />
       <div style="width: 1px; height: 40px; opacity: 0.3" class="bg-grey" />
       <v-spacer />
-      <v-btn size="small" variant="tonal" color="accent" to="/main/compendium" disabled>
-        COMPENDIUM
-      </v-btn>
+      <v-btn size="small" variant="tonal" color="accent" to="/main/compendium">COMPENDIUM</v-btn>
       <v-spacer />
       <v-btn size="small" variant="tonal" color="accent" to="/main/about" disabled>ABOUT</v-btn>
       <v-spacer />

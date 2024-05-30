@@ -241,9 +241,47 @@
     "role": "infrastructure",
     "size": "huge",
     "poitype": "Station",
-    "lat": 23,
-    "lon": 26,
+    "lat": 22,
+    "lon": 22,
     "icon": "mdi-rhombus-outline",
+    "map": "ganymede",
+    "submap": {
+      "img": "chapelco_station.svg",
+      "show": 8,
+      "bounds": [
+        [21, 23],
+        [23, 21]
+      ]
+    }
+  },
+  {
+    "id": "g-chapelco-anchor",
+    "name": "Chapelco Station Blink Anchor",
+    "faction": "Union",
+    "owner": "Union",
+    "role": "infrastructure",
+    "size": "small",
+    "poitype": "Station",
+    "lat": 21.39234407119931,
+    "lon": 22.000122070312504,
+    "icon": "mdi-star-three-points",
+    "color": "yellow",
+    "show": 8,
+    "map": "ganymede"
+  },
+  {
+    "id": "g-chapelco-berth1",
+    "name": "Chapelco Docking Ring, Berth 224",
+    "faction": "Union",
+    "owner": "Union",
+    "role": "infrastructure",
+    "size": "small",
+    "poitype": "Station",
+    "lat": 21.546343396454947,
+    "lon": 22.85842895507813,
+    "icon": "mdi-rhombus-outline",
+    "color": "yellow",
+    "show": 8,
     "map": "ganymede"
   },
   {

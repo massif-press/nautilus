@@ -14,7 +14,7 @@
         attributionControl: false,
         zoomControl: false,
         minZoom: 1,
-        maxZoom: 8,
+        maxZoom: 12,
         preferCanvas: true,
       }"
       style="background-color: rgb(var(--v-background))"
@@ -32,8 +32,16 @@
         :options="t.options" />
 
       <template v-for="item in items">
+        <l-image-overlay
+          v-if="item.Submap && item.Submap.show <= zoom"
+          :url="getImgPath(item.Submap.img)"
+          :crossOrigin="true"
+          :visible="item.Submap.show <= zoom"
+          :bounds="item.Submap.bounds" />
+
         <l-marker
-          v-if="item.Icon.show && zoom >= item.Icon.show"
+          v-else
+          :visible="item.Icon.show && zoom >= item.Icon.show"
           :lat-lng="item.Location.coords"
           @click="select(item)">
           <l-icon>
@@ -45,6 +53,7 @@
               :size="getIconSize(item)[0]"
               :color="selected && item.ID === selected.ID ? 'warning' : item.Icon.color"
               :icon="item.Icon.icon" />
+            <!-- :icon="item.Icon.icon" /> -->
           </l-icon>
           <l-tooltip :options="{ sticky: true, direction: 'bottom', offset: [0, 30] }">
             {{ item.Title }}
@@ -120,6 +129,7 @@ import {
   LCircle,
   LControl,
   LPolyline,
+  LImageOverlay,
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useMapStore } from '../../mapStore';
@@ -134,6 +144,7 @@ export default {
     LCircle,
     LControl,
     LPolyline,
+    LImageOverlay,
   },
   data: () => ({
     zoom: 3,
@@ -168,10 +179,15 @@ export default {
     },
   },
   methods: {
+    getImgPath(img) {
+      console.log(img);
+      const path = new URL('../../assets/icons/svg', import.meta.url);
+      return `${path}/${img}`;
+    },
     getIconSize(item) {
       let base = this.baseSize;
       if (item.ItemType === 'ship') {
-        if (this.zoom > 4) base -= Math.floor(this.zoom / 2);
+        if (this.zoom > 4 && this.zoom < 8) base -= Math.floor(this.zoom / 2);
       }
       return [base + item.SizeValue, base + item.SizeValue];
     },
@@ -197,7 +213,6 @@ export default {
       }
     },
     clearSelection() {
-      console.log('clear');
       this.selected = null;
     },
     setClickLocation(e) {

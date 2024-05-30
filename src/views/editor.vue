@@ -15,7 +15,7 @@
           <v-icon :icon="s.Icon.icon" size="x-small" class="mt-n1" />
           {{ s.Name }}
           <div class="text-caption text-disabled" style="line-height: 14px">
-            {{ `${s.Owner} ${s.HullType}` }}
+            {{ `${s.Owner} ${s.Hull.Class}` }}
           </div>
         </v-list-item>
       </v-list-group>

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Ship, ShipData } from './models/ship';
+import { Ship, ShipData } from './models/ships/ship';
 import { Poi, PoiData } from './models/poi';
 import crew from './assets/test_data/crew.json';
 import cargo from './assets/test_data/cargo.json';

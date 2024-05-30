@@ -108,7 +108,7 @@
             <v-list-item
               v-for="ship in ships"
               :title="ship.Title"
-              :subtitle="`${ship.Owner} ${ship.HullType}`"
+              :subtitle="`${ship.Owner} ${ship.Hull.Class}`"
               @click="select(ship)" />
           </v-list>
         </div>

@@ -1,8 +1,90 @@
 [
   {
     "id": "tag-downwell",
+    "appliesTo": "poi",
     "name": "Downwell",
-    "applied_to": ["poi"],
-    "description": "This Point of Interest is located on a planet or similar celestial body, and can only be accessed by vessels with the \"lander\" tag"
+    "description": "This Point of Interest is located on a planet or similar celestial body, and can only be accessed by vessels with the \"lander\" tag",
+    "gentype": "mechanic",
+    "valtype": "boolean"
+  },
+  {
+    "id": "tag-lander",
+    "appliesTo": "ship",
+    "name": "Lander",
+    "description": "This vessel is capable of landing on planets and similar celestial bodies.",
+    "gentype": "mechanic",
+    "valtype": "boolean"
+  },
+  {
+    "id": "tag-moorings",
+    "appliesTo": "poi",
+    "name": "Moorings",
+    "description": "This Point of Interest will generate stabilized anchors where large vessels can safely moor. ",
+    "gentype": "mechanic",
+    "valtype": "location ID"
+  },
+  {
+    "id": "tag-dockcap",
+    "appliesTo": "poi, ship",
+    "name": "Docking Capcaity",
+    "description": "The maximum vessel size class this vessel or Point of Interest can accomidate in its docking facilities.",
+    "gentype": "mechanic",
+    "valtype": "number"
+  },
+  {
+    "id": "tag-solidstate",
+    "appliesTo": "ship",
+    "name": "Solid State",
+    "description": "This vessel does not carry human crew, and is entirely operated by one or more NHPs or sufficiently advanced expert systems.",
+    "gentype": "mechanic",
+    "valtype": "boolean"
+  },
+  {
+    "id": "tag-restricted",
+    "appliesTo": "poi",
+    "name": "Restricted",
+    "description": "This Point of Interest will not allow any vessels within their nearspace that do not have the specified tag or type",
+    "gentype": "mechanic",
+    "valtype": "type, owner, or tag ID"
+  },
+  {
+    "id": "tag-stevedores",
+    "appliesTo": "ship",
+    "name": "Stevedores",
+    "description": "This vessel is too large to dock at most stations and will deploy stevedore ships to facilitate cargo transfer",
+    "gentype": "mechanic",
+    "valtype": "boolean"
+  },
+  {
+    "id": "tag-dronecontrol",
+    "appliesTo": "ship",
+    "name": "Drone Controller",
+    "description": "This vessel will deploy mission-specific drones",
+    "gentype": "mechanic",
+    "valtype": "boolean"
+  },
+  {
+    "id": "tag-tenders",
+    "appliesTo": "ship",
+    "name": "Tenders",
+    "description": "This vessel will deploy tenders to ferry personnel and cargo between nearby ships that have the specified tag or type",
+    "gentype": "mechanic",
+    "valtype": "type, owner, or tag ID"
+  },
+  {
+    "id": "tag-escorts",
+    "appliesTo": "ship",
+    "name": "Escorts",
+    "description": "This vessel is flanked by one or more support ships or strike craft wings",
+    "gentype": "mechanic",
+    "valtype": "boolean"
+  },
+  {
+    "id": "tag-fighters",
+    "appliesTo": "ship",
+    "name": "Fighter Bays",
+    "description": "This vessel will deploy fighter wings",
+    "gentype": "mechanic",
+    "valtype": "boolean"
   }
 ]

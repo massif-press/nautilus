@@ -4,7 +4,7 @@
       <v-col cols="auto"><v-icon icon="cc:gms" size="large" class="ml-1 mt-n1 mr-n1" /></v-col>
       <v-col>
         {{ item.Title }}
-        <div class="text-caption text-disabled">{{ `${item.Owner} ${item.HullType}` }}</div>
+        <div class="text-caption text-disabled">{{ `${item.Owner} ${item.Hull.Class}` }}</div>
       </v-col>
     </v-row>
     <v-btn
@@ -96,11 +96,11 @@
       <v-card-text class="pt-0">
         <v-window v-model="tab">
           <v-window-item>
-            <div class="text-h6">{{ item.Owner }} {{ item.Hull }}-class {{ item.HullType }}</div>
+            <div class="text-h6">{{ item.Owner }} {{ item.Hull }}-class {{ item.Hull.Class }}</div>
             <v-row>
               <v-col cols="auto">
-                <div class="text-caption text-disabled">Manufacturer</div>
-                <div>{{ item.Manufacturer }}</div>
+                <div class="text-caption text-disabled">Shipwright</div>
+                <div>{{ item.Hull.Shipwright }}</div>
               </v-col>
               <v-col cols="auto">
                 <div class="text-caption text-disabled">Home Port</div>

@@ -84,6 +84,8 @@ type PoiData = {
   map: string;
   lat: number;
   lon: number;
+  color?: string;
+  show?: number;
 
   // crew_capacity: number;
   // inhabitant_capacity: number;
@@ -96,6 +98,8 @@ type PoiData = {
   cargo?: cargoData[];
 
   tags?: string[];
+
+  submap?: any;
 };
 
 class Poi {
@@ -120,6 +124,8 @@ class Poi {
   public Tags: string[];
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
+  public Submap?: any;
+
   constructor(data?: PoiData) {
     this.ID = data?.id || _.uniqueId('poi_');
     this.Name = data?.name || '';
@@ -142,6 +148,8 @@ class Poi {
       coords: [data?.lat || 0, data?.lon || 0],
     };
 
+    if (data?.submap) this.Submap = data.submap;
+
     this.History = data && data.history ? data.history.map((h) => new ItemHistory(h)) : [];
     this.Crew = data && data.crew ? data.crew.map((c) => new Crew(c)) : [];
     this.Cargo = data && data.cargo ? data.cargo.map((c) => new Cargo(c)) : [];
@@ -149,6 +157,9 @@ class Poi {
 
     if (!this.Icon.size) this.Icon.size = 24;
     if (!this.Icon.show) this.Icon.show = 1;
+
+    if (data?.show) this.Icon.show = data.show;
+    if (data?.color) this.Icon.color = data.color;
   }
 
   public get Title(): string {

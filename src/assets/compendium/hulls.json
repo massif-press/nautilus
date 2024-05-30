@@ -1,0 +1,466 @@
+[
+  {
+    "id": "hull-gms-combahee",
+    "name": "Combahee",
+    "code": "SL",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Corvette"
+  },
+  {
+    "id": "hull-gms-somonauk",
+    "name": "Somonauk",
+    "code": "SL",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Corvette"
+  },
+  {
+    "id": "hull-gms-tsaratanana",
+    "name": "Tsaratanana ",
+    "code": "SL",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Cruiser"
+  },
+  {
+    "id": "hull-gms-orontes",
+    "name": "Orontes",
+    "code": "SL",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Destroyer"
+  },
+  {
+    "id": "hull-gms-haechi",
+    "name": "Haechi",
+    "code": "SL",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Destroyer"
+  },
+  {
+    "id": "hull-gms-kibali",
+    "name": "Kibali",
+    "code": "SL",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Destroyer"
+  },
+  {
+    "id": "hull-gms-benue",
+    "name": "Benue",
+    "code": "SL",
+    "size": "small",
+    "shipwright": "un",
+    "class": "High Speed Transport"
+  },
+  {
+    "id": "hull-gms-cochien",
+    "name": "Cổ Chiên",
+    "code": "LS",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Oiler"
+  },
+  {
+    "id": "hull-gms-mishongnovi",
+    "name": "Mishongnovi",
+    "code": "RS",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Hospital Ship"
+  },
+  {
+    "id": "hull-gms-montevista",
+    "name": "Monte Vista",
+    "code": "RS",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Rescue and Salvage"
+  },
+  {
+    "id": "hull-gms-mukalla",
+    "name": "Mukalla ",
+    "code": "LS",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Logistics Support"
+  },
+  {
+    "id": "hull-gms-yangxiangzhen",
+    "name": "Yangxiangzhen",
+    "code": "NAV",
+    "size": "small",
+    "shipwright": "un",
+    "class": "Navigation Support"
+  },
+  {
+    "id": "hull-gms-caspiansea",
+    "name": "Caspian Sea",
+    "code": "LS",
+    "size": "medium",
+    "shipwright": "un",
+    "class": "Frigate"
+  },
+  {
+    "id": "hull-gms-superior",
+    "name": "Superior",
+    "code": "LS",
+    "size": "medium",
+    "shipwright": "un",
+    "class": "Frigate"
+  },
+  {
+    "id": "hull-gms-huron",
+    "name": "Huron",
+    "code": "LS",
+    "size": "medium",
+    "shipwright": "un",
+    "class": "Frigate"
+  },
+  {
+    "id": "hull-gms-poyang",
+    "name": "Poyang",
+    "code": "LS",
+    "size": "medium",
+    "shipwright": "un",
+    "class": "Troop Transport"
+  },
+  {
+    "id": "hull-gms-sarygamysh",
+    "name": "Sarygamysh ",
+    "code": "RS",
+    "size": "medium",
+    "shipwright": "un",
+    "class": "Hospital Ship"
+  },
+  {
+    "id": "hull-gms-amazon",
+    "name": "Amazon",
+    "code": "CV",
+    "size": "large",
+    "shipwright": "un",
+    "class": "Carrier",
+    "tags": "tag-fighters"
+  },
+  {
+    "id": "hull-gms-tongass",
+    "name": "Tongass",
+    "code": "CV",
+    "size": "large",
+    "shipwright": "un",
+    "class": "Carrier",
+    "tags": "tag-fighters"
+  },
+  {
+    "id": "hull-gms-gobi",
+    "name": "Gobi",
+    "code": "DCV",
+    "size": "large",
+    "shipwright": "un",
+    "class": "Drone Platform",
+    "tags": "tag-dronecontrol"
+  },
+  {
+    "id": "hull-gms-marmara",
+    "name": "Marmara",
+    "code": "TT",
+    "size": "large",
+    "shipwright": "un",
+    "class": "Barracks Ship"
+  },
+  {
+    "id": "hull-gms-muire",
+    "name": "Muire",
+    "code": "BB",
+    "size": "massive",
+    "shipwright": "un",
+    "class": "Battleship"
+  },
+  {
+    "id": "hull-gms-thoreau",
+    "name": "Thoreau",
+    "code": "BB",
+    "size": "massive",
+    "shipwright": "un",
+    "class": "Battleship"
+  },
+  {
+    "id": "hull-gms-humboldt",
+    "name": "Humboldt ",
+    "code": "DN",
+    "size": "massive",
+    "shipwright": "un",
+    "class": "Dreadnaught",
+    "tags": "tag-mooring"
+  },
+  {
+    "id": "hull-gms-bolano",
+    "name": "Bolaño",
+    "code": "MCP",
+    "size": "platform",
+    "shipwright": "un",
+    "class": "Mobile Command Platform",
+    "tags": "tag-mooring"
+  },
+  {
+    "id": "hull-gms-stratford",
+    "name": "Stratford",
+    "code": "ST",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Shuttle",
+    "tags": "tag_shuttle"
+  },
+  {
+    "id": "hull-gms-takagi",
+    "name": "Takagi",
+    "code": "ST",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Shuttle",
+    "tags": "tag_shuttle"
+  },
+  {
+    "id": "hull-gms-renzuhang",
+    "name": "Renzuhang",
+    "code": "LND",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Lander",
+    "tags": "tag_lander"
+  },
+  {
+    "id": "hull-gms-tortuga",
+    "name": "Tortuga",
+    "code": "LND",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Lander",
+    "tags": "tag_lander"
+  },
+  {
+    "id": "hull-gms-pine",
+    "name": "Pine",
+    "code": "TG",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Tug",
+    "tags": "tag_tug"
+  },
+  {
+    "id": "hull-gms-hachong",
+    "name": "Hachong",
+    "code": "TG",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Tug",
+    "tags": "tag_tug"
+  },
+  {
+    "id": "hull-gms-carysfort",
+    "name": "Carysfort",
+    "code": "STS",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Stevedore",
+    "tags": "tag_stevedore"
+  },
+  {
+    "id": "hull-gms-kosong",
+    "name": "Kosong",
+    "code": "FF",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Ferry"
+  },
+  {
+    "id": "hull-gms-michelbach",
+    "name": "Michelbach",
+    "code": "MT",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Multipurpose Transport"
+  },
+  {
+    "id": "hull-gms-indravati",
+    "name": "Indravati",
+    "code": "MT",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Multipurpose Transport"
+  },
+  {
+    "id": "hull-gms-apeldoorn",
+    "name": "Apeldoorn",
+    "code": "TR",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Tender"
+  },
+  {
+    "id": "hull-gms-ezpeleta",
+    "name": "Ezpeleta",
+    "code": "MTR",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Maintenance Tender"
+  },
+  {
+    "id": "hull-gms-hombetsu",
+    "name": "Hombetsu",
+    "code": "FF",
+    "size": "medium",
+    "shipwright": "gms",
+    "class": "Ferry"
+  },
+  {
+    "id": "hull-gms-gbambiasso",
+    "name": "Gbambiasso",
+    "code": "RV",
+    "size": "medium",
+    "shipwright": "gms",
+    "class": "Research Vessel"
+  },
+  {
+    "id": "hull-gms-muqdadiyah",
+    "name": "Muqdadiyah",
+    "code": "MTT",
+    "size": "medium",
+    "shipwright": "gms",
+    "class": "Multipurpose Transport"
+  },
+  {
+    "id": "hull-gms-jaheyna",
+    "name": "Jaheyna",
+    "code": "P3",
+    "size": "large",
+    "shipwright": "gms",
+    "class": "S3 Printship"
+  },
+  {
+    "id": "hull-gms-nannewiid",
+    "name": "Nannewiid",
+    "code": "CC",
+    "size": "large",
+    "shipwright": "gms",
+    "class": "Containerized Cargo Carrier"
+  },
+  {
+    "id": "hull-gms-vaquiro",
+    "name": "Vaquiro",
+    "code": "MT",
+    "size": "large",
+    "shipwright": "gms",
+    "class": "Multipurpose Transport"
+  },
+  {
+    "id": "hull-gms-koloma",
+    "name": "Koloma",
+    "code": "GHS",
+    "size": "large",
+    "shipwright": "gms",
+    "class": "Gas Harvester"
+  },
+  {
+    "id": "hull-gms-brynmawr",
+    "name": "Bryn-mawr",
+    "code": "TNK",
+    "size": "large",
+    "shipwright": "gms",
+    "class": "Tanker"
+  },
+  {
+    "id": "hull-gms-castlehill",
+    "name": "Castle Hill",
+    "code": "CC",
+    "size": "massive",
+    "shipwright": "gms",
+    "class": "Containerized Cargo Carrier",
+    "tags": "tag-mooring"
+  },
+  {
+    "id": "hull-gms-foelgrach",
+    "name": "Foel Grach",
+    "code": "BC",
+    "size": "massive",
+    "shipwright": "gms",
+    "class": "Bulk Cargo Carrier",
+    "tags": "tag-mooring"
+  },
+  {
+    "id": "hull-gms-sanpietro",
+    "name": "San Pietro",
+    "code": "MSY",
+    "size": "massive",
+    "shipwright": "gms",
+    "class": "Mobile Shipyard",
+    "tags": "tag-mooring"
+  },
+  {
+    "id": "hull-gms-broniarth",
+    "name": "Broniarth",
+    "code": "MMP",
+    "size": "platform",
+    "shipwright": "gms",
+    "class": "Mobile Mining Platform",
+    "tags": "tag-mooring"
+  },
+  {
+    "id": "hull-gms-acoma",
+    "name": "Acoma",
+    "code": "SDV",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Personal Transport"
+  },
+  {
+    "id": "hull-gms-parallaxii",
+    "name": "Parallax II",
+    "code": "SDV",
+    "size": "small",
+    "shipwright": "mg",
+    "class": "Yacht"
+  },
+  {
+    "id": "hull-gms-truelotus",
+    "name": "True Lotus",
+    "code": "SDV",
+    "size": "small",
+    "shipwright": "yd",
+    "class": "Yacht"
+  },
+  {
+    "id": "hull-gms-scheherazade",
+    "name": "Scheherazade ",
+    "code": "SDV",
+    "size": "small",
+    "shipwright": "ac",
+    "class": "Yacht"
+  },
+  {
+    "id": "hull-gms-kewa",
+    "name": "Kewa",
+    "code": "SDV",
+    "size": "small",
+    "shipwright": "gms",
+    "class": "Homeship"
+  },
+  {
+    "id": "hull-gms-celadon",
+    "name": "Celadon",
+    "code": "DDV",
+    "size": "medium",
+    "shipwright": "yd",
+    "class": "Homeship"
+  },
+  {
+    "id": "hull-gms-horizon",
+    "name": "Horizon",
+    "code": "QGDV",
+    "size": "large",
+    "shipwright": "mg",
+    "class": "Cruise Liner"
+  }
+]

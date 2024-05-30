@@ -14,6 +14,7 @@ import router from './router';
 import App from './App.vue';
 import { useMapStore } from './mapStore';
 import { useUserStore } from './userStore';
+import { useCompendiumStore } from './compendiumStore';
 
 const nautilus = createApp(App);
 
@@ -46,5 +47,6 @@ nautilus.use(createPinia());
 
 nautilus.mount('#app');
 
+useCompendiumStore().load();
 useMapStore().load();
 useUserStore().loadUser();
