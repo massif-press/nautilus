@@ -181,7 +181,7 @@ export default {
   methods: {
     getImgPath(img) {
       console.log(img);
-      const path = new URL('../../assets/icons/svg', import.meta.url);
+      const path = new URL('/submaps', import.meta.url);
       return `${path}/${img}`;
     },
     getIconSize(item) {
