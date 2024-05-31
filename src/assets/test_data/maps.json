@@ -11,32 +11,29 @@
         "id": "ganymede",
         "name": "Ganymede",
         "component": "l-circle",
-        "Location": {
-          "coords": [0, 0],
-          "zoom": 3
+        "submap": {
+          "img": "ganymede.svg",
+          "show": 1,
+          "bounds": [
+            [-28, 28],
+            [28, -28]
+          ]
         },
-
-        "options": {
-          "radius": 2631000,
-          "interactive": false
-        },
-        "color": "lightblue",
         "description": "desc"
       },
       {
         "id": "cyllene",
         "name": "Cyllene",
         "component": "l-circle",
-        "Location": {
-          "coords": [50, 185],
-          "zoom": 3
+        "submap": {
+          "img": "cyllene.svg",
+          "show": 1,
+          "bounds": [
+            [49, 186],
+            [51, 184]
+          ]
         },
 
-        "options": {
-          "radius": 41280,
-          "interactive": false
-        },
-        "color": "lightblue",
         "description": "Cyllene is a small moon that was moved into Ganymede's orbit to serve as a mining base to supply Union's extensive orbital and deep space industry in the region."
       }
     ]

@@ -25,10 +25,13 @@
         </l-icon>
       </l-marker>
 
-      <component
+      <l-image-overlay
         v-for="t in terrain"
         :is="t.component"
-        :lat-lng="t.Location.coords"
+        :url="getImgPath(t.submap.img)"
+        :crossOrigin="true"
+        :visible="t.submap.show <= zoom"
+        :bounds="t.submap.bounds"
         :options="t.options" />
 
       <template v-for="item in items">
@@ -180,9 +183,11 @@ export default {
   },
   methods: {
     getImgPath(img) {
-      console.log(img);
-      const path = new URL('/submaps', import.meta.url);
-      return `${path}/${img}`;
+      // console.log(img);
+      // const path = new URL('/submaps', import.meta.url);
+      // console.log(path);
+      const path = 'submaps';
+      return `/${path}/${img}`;
     },
     getIconSize(item) {
       let base = this.baseSize;

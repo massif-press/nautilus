@@ -230,11 +230,11 @@
     "poitype": "Station",
     "lat": 22,
     "lon": 22,
-    "icon": "mdi-rhombus-outline",
+    "icon": "mdi-star-four-points-circle-outline",
     "map": "ganymede",
     "submap": {
       "img": "chapelco_station.svg",
-      "show": 8,
+      "show": 7,
       "bounds": [
         [21, 23],
         [23, 21]
@@ -264,8 +264,8 @@
     "role": "infrastructure",
     "size": "small",
     "poitype": "Station",
-    "lat": 21.546343396454947,
-    "lon": 22.85842895507813,
+    "lat": 21.5546457815932,
+    "lon": 22.860488891601562,
     "icon": "mdi-rhombus-outline",
     "color": "yellow",
     "show": 8,
