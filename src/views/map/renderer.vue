@@ -2,7 +2,6 @@
   <div style="position: absolute; top: 0; left: 56px; right: 0; bottom: 56px; z-index: 0">
     <l-map
       ref="lmap"
-      v-model="zoom"
       v-model:zoom="zoom"
       :center="[0, 0]"
       :maxBounds="[
@@ -27,20 +26,18 @@
 
       <l-image-overlay
         v-for="t in terrain"
-        :is="t.component"
-        :url="getImgPath(t.submap.img)"
+        :url="getImgPath(t.Submap.Img)"
         :crossOrigin="true"
-        :visible="t.submap.show <= zoom"
-        :bounds="t.submap.bounds"
-        :options="t.options" />
+        :visible="t.Submap.Show <= zoom"
+        :bounds="t.Submap.Bounds" />
 
       <template v-for="item in items">
         <l-image-overlay
-          v-if="item.Submap && item.Submap.show <= zoom"
-          :url="getImgPath(item.Submap.img)"
+          v-if="item.Submap && item.Submap.Show <= zoom"
+          :url="getImgPath(item.Submap.Img)"
           :crossOrigin="true"
-          :visible="item.Submap.show <= zoom"
-          :bounds="item.Submap.bounds" />
+          :visible="item.Submap.Show <= zoom"
+          :bounds="item.Submap.Bounds" />
 
         <l-marker
           v-else
@@ -62,11 +59,36 @@
             {{ item.Title }}
           </l-tooltip>
         </l-marker>
+
         <l-polyline
           v-if="selected && item.ID === selected.ID && item.Location.line"
           :lat-lngs="item.Location.line"
           color="cyan"
           :opacity="0.1" />
+
+        <template v-for="subitem in item.Subitems">
+          <l-marker
+            :visible="subitem.Icon.show && zoom >= subitem.Icon.show"
+            :lat-lng="subitem.Location.coords"
+            @click="select(subitem)">
+            <l-icon>
+              <v-icon
+                :style="`${
+                  subitem.Location.heading
+                    ? `transform: rotate(${subitem.Location.heading}rad)`
+                    : ''
+                }`"
+                class="mt-n1"
+                :size="getIconSize(subitem)[0]"
+                :color="selected && subitem.ID === selected.ID ? 'warning' : subitem.Icon.color"
+                :icon="subitem.Icon.icon" />
+              <!-- :icon="subitem.Icon.icon" /> -->
+            </l-icon>
+            <l-tooltip :options="{ sticky: true, direction: 'bottom', offset: [0, 30] }">
+              {{ subitem.Title }}
+            </l-tooltip>
+          </l-marker>
+        </template>
       </template>
 
       <l-control position="bottomright">
@@ -135,7 +157,7 @@ import {
   LImageOverlay,
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useMapStore } from '../../mapStore';
+import { useMapStore } from '../../stores/mapStore';
 
 export default {
   name: 'MapRenderer',
@@ -166,16 +188,16 @@ export default {
       return useMapStore().map;
     },
     terrain() {
-      return useMapStore().map.terrain;
+      return useMapStore().map.Terrain;
     },
     ships() {
-      return useMapStore().ships.filter((s) => s.Location.map === this.map.id);
+      return useMapStore().ships.filter((s) => s.Location.map === this.map.ID);
     },
     pois() {
-      return useMapStore().pois.filter((p) => p.Location.map === this.map.id);
+      return useMapStore().pois.filter((p) => p.Location.map === this.map.ID);
     },
     crew() {
-      return useMapStore().crew.filter((c) => c.location.map === this.map.id);
+      return useMapStore().crew.filter((c) => c.location.map === this.map.ID);
     },
     items() {
       return [...this.ships, ...this.pois];
@@ -183,9 +205,6 @@ export default {
   },
   methods: {
     getImgPath(img) {
-      // console.log(img);
-      // const path = new URL('/submaps', import.meta.url);
-      // console.log(path);
       const path = 'submaps';
       return `/${path}/${img}`;
     },
@@ -194,15 +213,18 @@ export default {
       if (item.ItemType === 'ship') {
         if (this.zoom > 4 && this.zoom < 8) base -= Math.floor(this.zoom / 2);
       }
-      return [base + item.SizeValue, base + item.SizeValue];
+      let total = item.SizeValue + base;
+      if (this.zoom === 2) total -= 5;
+      if (this.zoom === 1) total -= 8;
+      return [total, total];
     },
     setSelected(item) {
       this.selected = item;
       this.loc = `${item.Location.coords[0]}, ${item.Location.coords[1]}`;
 
-      this.$refs.lmap.leafletObject.flyTo(item.Location.coords, 5, {
+      this.$refs.lmap.leafletObject.flyTo(item.Location.coords, 8, {
         animate: true,
-        duration: 0.4,
+        duration: 0.8,
         noMoveStart: true,
       });
     },

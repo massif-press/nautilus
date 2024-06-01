@@ -2,6 +2,6 @@
 
 <script lang="ts">
 export default {
-  name: 'Ship Editor',
+  name: 'CrewEditor',
 };
 </script>

@@ -3,7 +3,6 @@ type TagData = {
   name: string;
   description: string;
   appliesTo: string;
-  effect: string;
 };
 
 class Tag {
@@ -20,7 +19,6 @@ class Tag {
     this.Name = data.name;
     this.Description = data.description || '';
     this.AppliesTo = data.appliesTo ? data.appliesTo.split(', ') : [];
-    this.Effect = data.effect || '';
   }
 }
 

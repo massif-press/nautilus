@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import hulls from './assets/compendium/hulls.json';
-import shipwrights from './assets/compendium/shipwrights.json';
-import tags from './assets/compendium/tags.json';
-import { Hull } from './models/ships/hull';
-import { Shipwright } from './models/ships/shipwright';
-import { Tag } from './models/tag';
+import hulls from '../assets/compendium/hulls.json';
+import shipwrights from '../assets/compendium/shipwrights.json';
+import tags from '../assets/compendium/tags.json';
+import { Hull } from '../models/ships/hull';
+import { Shipwright } from '../models/ships/shipwright';
+import { Tag } from '../models/tag';
 
 export const useCompendiumStore = defineStore('compendium', {
   state: () => ({
@@ -26,7 +26,6 @@ export const useCompendiumStore = defineStore('compendium', {
   actions: {
     load() {
       this.tags = tags.map((tag) => new Tag(tag));
-      console.log('tags', this.tags);
       this.shipwrights = shipwrights.map((shipwright) => new Shipwright(shipwright));
       this.hulls = hulls.map((hull) => new Hull(hull));
     },

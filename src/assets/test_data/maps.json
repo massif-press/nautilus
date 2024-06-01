@@ -1,23 +1,20 @@
 [
   {
     "id": "ganymede",
-    "title": "Ganymede",
+    "name": "Ganymede",
     "subtitle": "CRADLE//SOL 5b",
     "control": "Union",
     "description": "Ganymede is the largest moon of Jupiter and one of the most heavily populated locales in the Cradle. It is a nexus of Union culture, science, and industry. First colonized in the immediate precollapse period, it was reinhabited in the in the early 1400s and has since served as a center for Union outer system activities, as well as a major blink gate and omninet nexus. More recently, in the late 4400s, the Jovian minor satellite Cyllene was moved into Ganymede's orbit to serve as a mining base to supply Union's extensive orbital and deep space industry in the region.",
-
     "terrain": [
       {
         "id": "ganymede",
         "name": "Ganymede",
         "component": "l-circle",
+        "center": [0, 0],
         "submap": {
           "img": "ganymede.svg",
           "show": 1,
-          "bounds": [
-            [-28, 28],
-            [28, -28]
-          ]
+          "size": 28
         },
         "description": "desc"
       },
@@ -25,15 +22,12 @@
         "id": "cyllene",
         "name": "Cyllene",
         "component": "l-circle",
+        "center": [50, 185],
         "submap": {
           "img": "cyllene.svg",
           "show": 1,
-          "bounds": [
-            [49, 186],
-            [51, 184]
-          ]
+          "size": 0.7
         },
-
         "description": "Cyllene is a small moon that was moved into Ganymede's orbit to serve as a mining base to supply Union's extensive orbital and deep space industry in the region."
       }
     ]

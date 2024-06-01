@@ -1,39 +1,4 @@
 <template>
-  <v-list-item style="position: relative" class="pa-0">
-    <v-row dense class="py-1">
-      <v-col cols="auto"><v-icon icon="cc:gms" size="large" class="ml-1 mt-n1 mr-n1" /></v-col>
-      <v-col>
-        {{ item.Name }}
-        <div class="text-caption text-disabled">{{ `${item.Owner} ${item.PoiType}` }}</div>
-      </v-col>
-    </v-row>
-    <v-btn
-      size="x-small"
-      icon
-      color="accent"
-      variant="plain"
-      style="position: absolute; top: -4px; right: -8px"
-      @click="$emit('deselect')">
-      <v-icon size="large" icon="mdi-close" />
-    </v-btn>
-  </v-list-item>
-  <v-divider />
-  <v-card variant="outlined" height="150px" class="ma-2" style="position: relative">
-    <v-btn
-      size="x-small"
-      icon
-      color="accent"
-      variant="plain"
-      style="position: absolute; top: 0; right: 0"
-      @click="$emit('select', item)">
-      <v-icon size="large" icon="mdi-loupe" />
-    </v-btn>
-    <div
-      style="position: absolute; top: 15%; left: 0; right: 0; opacity: 0.2"
-      class="text-center text-h3 font-weight-light">
-      NO IMAGE
-    </div>
-  </v-card>
   <div class="px-2 text-caption">
     <v-divider class="my-2" />
     <v-btn color="primary" size="x-small" flat class="my-2" block @click="openDetailTab(0)">
@@ -84,9 +49,7 @@
       <v-card-text class="pt-0">
         <v-window v-model="tab">
           <v-window-item>
-            <div class="text-h6">
-              {{ item.Owner }} {{ item.PoiType }} &mdash; {{ map.title }} ({{ map.subtitle }})
-            </div>
+            <slot name="details" />
 
             <div class="text-caption text-disabled">Item Particulars</div>
             <div v-if="item.Details" v-for="(value, key) in item.Details" :key="key">
@@ -113,20 +76,22 @@
 
 <script lang="ts">
 export default {
-  name: 'PoiViewer',
+  name: 'BaseSidebarView',
   props: {
     item: { type: Object, required: true },
     map: { type: Object, required: true },
   },
+  data() {
+    return {
+      dialog: false,
+      tab: 0,
+    };
+  },
   emits: ['select', 'deselect'],
-  data: () => ({
-    dialog: false,
-    tab: 0,
-  }),
   methods: {
     openDetailTab(tab: number) {
-      this.dialog = true;
       this.tab = tab;
+      this.dialog = true;
     },
   },
 };

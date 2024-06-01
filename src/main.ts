@@ -12,9 +12,9 @@ import ipsn from './assets/theme';
 import router from './router';
 
 import App from './App.vue';
-import { useMapStore } from './mapStore';
-import { useUserStore } from './userStore';
-import { useCompendiumStore } from './compendiumStore';
+import { useMapStore } from './stores/mapStore';
+import { useUserStore } from './stores/userStore';
+import { useCompendiumStore } from './stores/compendiumStore';
 
 const nautilus = createApp(App);
 

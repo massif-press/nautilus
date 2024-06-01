@@ -87,8 +87,8 @@
 </template>
 
 <script lang="ts">
-import { useMapStore } from '../../mapStore';
-import { useUserStore } from '../../userStore';
+import { useMapStore } from '../../stores/mapStore';
+import { useUserStore } from '../../stores/userStore';
 
 export default {
   name: 'Overview',

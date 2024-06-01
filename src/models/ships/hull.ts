@@ -1,4 +1,4 @@
-import { useCompendiumStore } from '../../compendiumStore';
+import { useCompendiumStore } from '../../stores/compendiumStore';
 import { Tag } from '../tag';
 import { Shipwright } from './shipwright';
 

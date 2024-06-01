@@ -7,8 +7,8 @@
       <v-select
         v-model="selectedMap"
         :items="maps"
-        item-text="name"
-        item-value="id"
+        item-title="Name"
+        item-value="ID"
         label="Map"
         variant="outlined"
         hide-details
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { useMapStore } from '../mapStore';
+import { useMapStore } from '../stores/mapStore';
 
 export default {
   name: 'main-view',
@@ -56,7 +56,7 @@ export default {
       if (!store.maps.length) store.load();
       store.setMap(store.maps[0]);
     }
-    this.selectedMap = store.map?.id;
+    this.selectedMap = store.map?.ID;
   },
   computed: {
     maps() {
@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     setMap(map: string) {
-      useMapStore().setMap(this.maps.find((m) => m.id === map));
+      useMapStore().setMap(this.maps.find((m) => m.ID === map));
     },
   },
 };

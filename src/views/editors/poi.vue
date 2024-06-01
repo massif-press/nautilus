@@ -65,11 +65,11 @@
 </template>
 
 <script lang="ts">
-import { Poi, poiSizeClasses, poiRoles } from '../../models/poi';
-import { useMapStore } from '../../mapStore';
+import { Poi, poiSizeClasses } from '../../models/poi';
+import { useMapStore } from '../../stores/mapStore';
 
 export default {
-  name: 'poi Editor',
+  name: 'PoiEditor',
   props: {
     id: { type: String, required: true },
     lat: { type: String, required: false },
@@ -107,9 +107,6 @@ export default {
   computed: {
     poiSizeClasses() {
       return poiSizeClasses;
-    },
-    poiRoles() {
-      return poiRoles;
     },
   },
 };

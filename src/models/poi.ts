@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { cargoData, Cargo } from './cargo';
 import { crewData, Crew } from './crew';
-import { iconData, locationData } from './dataTypes';
 import { itemHistoryData, ItemHistory } from './itemHistory';
+import { MapItem, MapItemData } from './maps/mapitem';
 
 const poiSizeClasses = [
   {
@@ -34,141 +34,101 @@ const poiSizeClasses = [
   },
 ];
 
-const poiRoles = [
-  {
-    id: 'role_military',
-    name: 'Military',
-    code: 'M',
-    description:
-      'Points of interest that are primarily military in nature, including bases, outposts, and defense installations.',
-  },
-  {
-    id: 'role_industrial',
-    name: 'Industrial',
-    code: 'I',
-    description:
-      'Points of interest that are primarily industrial in nature, including mining operations, refineries, and manufacturing plants.',
-  },
-  {
-    id: 'role_research',
-    name: 'Research',
-    code: 'R',
-    description:
-      'Points of interest that are primarily research in nature, including labs, observatories, and research stations.',
-  },
-  {
-    id: 'role_infrastructure',
-    name: 'Infrastructure',
-    code: 'L',
-    description:
-      'Points of interest that are primarily logistics in nature, including cargo hubs, storage facilities, and trade depots.',
-  },
-  {
-    id: 'role_civilian',
-    name: 'Civilian',
-    code: 'C',
-    description:
-      'Points of interest that are primarily civilian in nature, including residential districts, commercial hubs, and entertainment centers.',
-  },
-];
-
-type PoiData = {
-  id: string;
-  name: string;
-  faction: string;
-  owner: string;
+type PoiData = MapItemData & {
   size: string;
-  role: string;
-
-  icon?: string;
-  map: string;
-  lat: number;
-  lon: number;
-  color?: string;
   show?: number;
-
-  // crew_capacity: number;
-  // inhabitant_capacity: number;
-
   poitype: string;
   description: string;
 
-  history?: itemHistoryData[];
   crew?: crewData[];
   cargo?: cargoData[];
 
-  tags?: string[];
-
-  submap?: any;
+  subitems?: SubitemPoiData[];
 };
 
-class Poi {
+type SubitemPoiData = {
+  id: string;
+  name: string;
+  poitype: string;
+  offset: number[];
+  size?: string;
+  icon?: string;
+  color?: string;
+  show?: number;
+  description?: string;
+};
+
+class Poi extends MapItem {
   public readonly ItemType = 'poi';
   public readonly Collection = 'poi';
 
-  public readonly ID: string;
-  public Name: string;
   public Size: string;
-  public Role: string;
   public Description: string;
   public PoiType: string;
-  // public CrewCapacity: number;
-  // public InhabitantCapacity: number;
-  public Faction: string;
-  public Owner: string;
-  public Icon: iconData;
-  public Location: locationData;
+
   public History: ItemHistory[];
   public Crew: Crew[];
   public Cargo: Cargo[];
-  public Tags: string[];
+
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
-  public Submap?: any;
+  public Subitems: Poi[];
 
   constructor(data?: PoiData) {
-    this.ID = data?.id || _.uniqueId('poi_');
-    this.Name = data?.name || '';
+    super(data);
     this.Size = data?.size || '';
-    this.Role = data?.role || '';
     this.Description = data?.description || '';
-
-    this.Faction = data?.faction || '';
-    this.Owner = data?.owner || '';
     this.PoiType = data?.poitype || '';
 
-    this.Status = 'Approved';
-
-    this.Icon = { icon: data?.icon || 'mdi-rhombus-outline', color: 'green' };
     const sizeClass = poiSizeClasses.find((s) => s.id === this.Size);
     this.Icon.show = sizeClass?.show || 1;
 
-    this.Location = {
-      map: data?.map || 'unknown',
-      coords: [data?.lat || 0, data?.lon || 0],
-    };
-
-    if (data?.submap) this.Submap = data.submap;
-
-    this.History = data && data.history ? data.history.map((h) => new ItemHistory(h)) : [];
     this.Crew = data && data.crew ? data.crew.map((c) => new Crew(c)) : [];
     this.Cargo = data && data.cargo ? data.cargo.map((c) => new Cargo(c)) : [];
-    this.Tags = data?.tags || [];
 
     if (!this.Icon.size) this.Icon.size = 24;
     if (!this.Icon.show) this.Icon.show = 1;
 
-    if (data?.show) this.Icon.show = data.show;
-    if (data?.color) this.Icon.color = data.color;
+    if (data?.icon) this.Icon.icon = data.icon || 'mdi-rhombus-outline';
+    if (data?.show) this.Icon.show = data.show || 1;
+    this.Icon.color = data?.color || 'green';
+
+    if (data?.subitems) {
+      this.Subitems = data.subitems.map((s) => Poi.GenerateSubitem(this, s) as Poi);
+    }
   }
 
   public get Title(): string {
     return this.Name;
   }
 
+  public get Subtitle(): string {
+    return `${this.Owner} ${this.PoiType}`;
+  }
+
   public get SizeValue(): number {
     return poiSizeClasses.find((s) => s.id === this.Size)?.value || 1;
   }
+
+  public static GenerateSubitem(parent: Poi, data: SubitemPoiData): Poi {
+    const subitemData: PoiData = {
+      id: data.id,
+      name: data.name,
+      faction: parent.Faction,
+      owner: parent.Owner,
+      size: data.size || 'tiny',
+      icon: data.icon || 'mdi-rhombus-outline',
+      map: parent.Location.map,
+      lat: parent.Location.coords[0] + data.offset[0],
+      lon: parent.Location.coords[1] + data.offset[1],
+      color: data.color || 'yellow',
+      show: data.show || (parent.Icon.show || 7) + 1,
+      poitype: data.poitype,
+      description: data.description || '',
+    };
+
+    return new Poi(subitemData);
+  }
 }
 
-export { Poi, PoiData, poiSizeClasses, poiRoles };
+export { Poi, PoiData, poiSizeClasses };

@@ -14,18 +14,18 @@
     <v-window v-model="railValue">
       <v-window-item transition="fade">
         <v-list-item>
-          {{ map.title }}
+          {{ map.Name }}
           <template #append>
             <v-btn size="x-small" icon color="accent" variant="plain" @click="drawer = !drawer">
               <v-icon size="large" icon="mdi-chevron-double-left" />
             </v-btn>
           </template>
-          <v-list-item-subtitle v-text="map.subtitle" />
+          <v-list-item-subtitle v-text="map.Subtitle" />
         </v-list-item>
         <v-divider />
         <div class="text-center">
           <v-chip size="small" color="#991E2A" class="ma-2" variant="elevated">
-            <b>{{ map.control }}</b>
+            <b>{{ map.Control }}</b>
             <span class="text-disabled pl-1">Controlled Space</span>
           </v-chip>
         </div>
@@ -45,7 +45,7 @@
           <v-divider class="my-2" />
           <div class="text-caption text-disabled">INFORMATION</div>
 
-          <p class="text-caption" v-html="map.description" />
+          <p class="text-caption" v-html="map.Description" />
         </div>
       </v-window-item>
       <v-window-item transition="fade">
@@ -61,61 +61,29 @@
             hide-details
             clearable />
           <v-list dense>
-            <v-list-item v-for="t in map.terrain" :title="t.name" @click="select(t)" />
+            <v-list-item v-for="t in map.Terrain" :title="t.Name" @click="select(t)" />
           </v-list>
         </div>
         <div v-else>
           <viewer :item="selected" :map="map" @deselect="deselect()" @select="select($event)" />
         </div>
       </v-window-item>
-      <v-window-item transition="fade">
-        <div v-if="!selected">
-          <div class="text-caption text-disabled">POINTS OF INTEREST</div>
-          <v-text-field
-            v-model="search"
-            prepend-inner-icon="mdi-magnify"
-            class="ma-1"
-            item-text="name"
-            density="compact"
-            variant="outlined"
-            hide-details
-            clearable />
-          <v-list dense>
-            <v-list-item
-              v-for="poi in pois"
-              :title="poi.Name"
-              :subtitle="`${poi.Owner} ${poi.PoiType}`"
-              @click="select(poi)" />
-          </v-list>
-        </div>
-        <div v-else>
-          <viewer :item="selected" :map="map" @deselect="deselect()" @select="select($event)" />
-        </div>
-      </v-window-item>
-      <v-window-item transition="fade">
-        <div v-if="!selected">
-          <div class="text-caption text-disabled">VESSELS</div>
-          <v-text-field
-            v-model="search"
-            prepend-inner-icon="mdi-magnify"
-            class="ma-1"
-            item-text="name"
-            density="compact"
-            variant="outlined"
-            hide-details
-            clearable />
-          <v-list dense>
-            <v-list-item
-              v-for="ship in ships"
-              :title="ship.Title"
-              :subtitle="`${ship.Owner} ${ship.Hull.Class}`"
-              @click="select(ship)" />
-          </v-list>
-        </div>
-        <div v-else>
-          <viewer :item="selected" :map="map" @deselect="deselect()" @select="select($event)" />
-        </div>
-      </v-window-item>
+      <rail-list
+        :items="pois"
+        :map="map"
+        :selected="selected"
+        @setSelected="select($event)"
+        @clearSelection="deselect">
+        <template #title>Points of Interest</template>
+      </rail-list>
+      <rail-list
+        :items="ships"
+        :map="map"
+        :selected="selected"
+        @setSelected="select($event)"
+        @clearSelection="deselect">
+        <template #title>Vessels</template>
+      </rail-list>
       <v-window-item transition="fade">
         <div class="text-caption text-disabled">PERSONNEL</div>
         <v-divider />
@@ -138,15 +106,17 @@
 </template>
 
 <script lang="ts">
-import { useMapStore } from '../mapStore';
+import { useMapStore } from '../stores/mapStore';
 import MapRenderer from './map/renderer.vue';
 import Viewer from './map/viewer.vue';
+import RailList from './map/viewers/railList.vue';
 
 export default {
   name: 'Map',
   components: {
     MapRenderer,
     Viewer,
+    RailList,
   },
   data: () => ({
     search: '',
@@ -166,21 +136,21 @@ export default {
       return useMapStore().map;
     },
     ships() {
-      const s = useMapStore().ships.filter((s) => s.Location.map === this.map.id);
+      const s = useMapStore().ships.filter((s) => s.Location.map === this.map.ID);
       if (this.search) {
         return s.filter((s) => s.Name.toLowerCase().includes(this.search.toLowerCase()));
       }
       return s;
     },
     pois() {
-      const p = useMapStore().pois.filter((p) => p.Location.map === this.map.id);
+      const p = useMapStore().pois.filter((p) => p.Location.map === this.map.ID);
       if (this.search) {
         return p.filter((p) => p.Name.toLowerCase().includes(this.search.toLowerCase()));
       }
       return p;
     },
     crew() {
-      return useMapStore().crew.filter((c) => c.location.map === this.map.id);
+      return useMapStore().crew.filter((c) => c.location.map === this.map.ID);
     },
   },
   methods: {

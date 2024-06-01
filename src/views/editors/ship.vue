@@ -159,12 +159,12 @@
 <script lang="ts">
 import _ from 'lodash';
 import { Ship } from '../../models/ships/ship';
-import { useMapStore } from '../../mapStore';
+import { useMapStore } from '../../stores/mapStore';
 
 import HullSelector from './components/hullselector.vue';
 
 export default {
-  name: 'Ship Editor',
+  name: 'ShipEditor',
   components: {
     HullSelector,
   },
@@ -228,6 +228,14 @@ export default {
           .ships.filter((s) => s.Faction)
           .map((s) => s.Faction)
       );
+    },
+  },
+  methods: {
+    deleteShip() {
+      console.log('nyi');
+    },
+    submitChanges() {
+      console.log('nyi');
     },
   },
 };

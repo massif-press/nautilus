@@ -4,18 +4,14 @@ import { cargoData, Cargo } from '../cargo';
 import { crewData, Crew } from '../crew';
 import { itemHistoryData, ItemHistory } from '../itemHistory';
 import { missionData, Mission } from '../mission';
-import { useCompendiumStore } from '../../compendiumStore';
+import { useCompendiumStore } from '../../stores/compendiumStore';
 import { Hull } from './hull';
 import { Tag } from '../tag';
+import { Submap, SubmapData } from '../submap';
+import { MapItem, MapItemData } from '../maps/mapitem';
 
-type ShipData = {
-  id: string;
-  name: string;
+type ShipData = MapItemData & {
   prefix: string;
-  faction: string;
-  owner: string;
-
-  icon?: string;
   map: string;
   lat: number;
   lon: number;
@@ -32,10 +28,22 @@ type ShipData = {
   crew?: crewData[];
   cargo?: cargoData[];
 
-  tags?: string;
+  subitems?: SubitemShipData[];
 };
 
-class Ship {
+type SubitemShipData = {
+  id: string;
+  name: string;
+  prefix: string;
+  hull: string;
+  offset: number[];
+  size?: string;
+  icon?: string;
+  color?: string;
+  description?: string;
+};
+
+class Ship extends MapItem {
   public readonly ItemType = 'ship';
   public readonly Collection = 'ship';
 
@@ -53,17 +61,17 @@ class Ship {
   public Crew: Crew[];
   public Cargo: Cargo[];
   public Mission: Mission;
-  private _tags: Tag[];
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
+  public Subitems: Ship[];
+
+  public Submap?: any;
+
   constructor(data?: ShipData) {
-    this.ID = data?.id || _.uniqueId('ship_');
-    this.Name = data?.name || '';
+    super(data);
     this.Prefix = data?.prefix || '';
     this.Description = data?.description || '';
     this.HomePort = data?.homeport || '';
-    this.Faction = data?.faction || '';
-    this.Owner = data?.owner || '';
 
     if (data) {
       const hull = useCompendiumStore().hull(data.hull);
@@ -73,16 +81,9 @@ class Ship {
       this.Hull = hull;
     }
 
-    this.Status = 'Approved';
-
-    // this.Icon = { icon: data?.icon || 'mdi-delta', color: 'blue' };
-    this.Icon = { icon: 'cc:ship', color: 'blue' };
+    this.Icon.icon = data?.icon || 'cc:ship';
     this.Icon.show = this.Hull.Size.show || 1;
-
-    this.Location = {
-      map: data?.map || 'unknown',
-      coords: [data?.lat || 0, data?.lon || 0],
-    };
+    if (!this.Icon.size) this.Icon.size = 24;
 
     this.Details = data?.details || [];
     this.Crew = data && data.crew ? data.crew.map((c) => new Crew(c)) : [];
@@ -93,15 +94,6 @@ class Ship {
       destination_id: data?.destination || 'unknown',
       mission_type: data?.mission || 'unknown',
     });
-
-    const tags = data?.tags?.split(', ') || [];
-
-    this._tags = tags.length
-      ? useCompendiumStore().tags.filter((tag) => tags.includes(tag.ID))
-      : [];
-
-    if (!this.Icon.size) this.Icon.size = 24;
-    if (!this.Icon.show) this.Icon.show = 1;
 
     if (this.Mission.Destination) {
       this.Location.heading = this.getHeading(
@@ -114,11 +106,19 @@ class Ship {
     } else {
       this.Location.heading = Math.random() * 360;
     }
+
+    if (data?.subitems) {
+      this.Subitems = data.subitems.map((s) => Ship.GenerateSubitem(this, s) as Ship);
+    }
   }
 
   public get Title(): string {
     if (!this.Prefix) return `${this.Hull.Code} ${this.Name}`;
     return `${this.Prefix}-${this.Hull.Code} ${this.Name}`;
+  }
+
+  public get Subtitle(): string {
+    return `${this.Owner} ${this.Hull.Class}`;
   }
 
   public get SizeValue(): number {
@@ -134,6 +134,25 @@ class Ship {
     const deltaX = x2 - x1;
     const angle = Math.atan2(deltaY, deltaX);
     return angle;
+  }
+
+  public static GenerateSubitem(parent: Ship, data: SubitemShipData): Ship {
+    const subitemData: ShipData = {
+      id: data.id,
+      name: data.name,
+      prefix: data.prefix,
+      hull: data.hull,
+      faction: parent.Faction,
+      owner: parent.Owner,
+      description: data.description || '',
+      icon: data.icon || 'cc:ship',
+      map: parent.Location.map,
+      lat: parent.Location.coords[0] + data.offset[0],
+      lon: parent.Location.coords[1] + data.offset[1],
+      homeport: parent.HomePort,
+    };
+
+    return new Ship(subitemData);
   }
 }
 

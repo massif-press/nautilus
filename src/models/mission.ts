@@ -1,4 +1,4 @@
-import { useMapStore } from '../mapStore';
+import { useMapStore } from '../stores/mapStore';
 import { Poi } from './poi';
 
 const missionTypes = [
@@ -28,8 +28,20 @@ class Mission {
   constructor(data: missionData) {
     this.Status = data.status;
     this.DestinationID = data.destination_id;
-    const dest = useMapStore().pois.find((poi) => poi.ID === data.destination_id);
-    this.Destination = dest || null;
+    useMapStore().pois.forEach((poi) => {
+      if (poi.ID === data.destination_id) {
+        this.Destination = poi;
+        return;
+      }
+      if (poi.Subitems) {
+        poi.Subitems.forEach((subitem) => {
+          if (subitem.ID === data.destination_id) {
+            this.Destination = subitem;
+            return;
+          }
+        });
+      }
+    });
     this.Mission = data.mission_type;
   }
 }

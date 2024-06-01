@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { useCompendiumStore } from '../../../compendiumStore';
+import { useCompendiumStore } from '../../../stores/compendiumStore';
 import HullCard from '../../compendium/cards/hullCard.vue';
 
 export default {

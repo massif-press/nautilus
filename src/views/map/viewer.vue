@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts">
-import shipViewer from './shipViewer.vue';
-import poiViewer from './poiViewer.vue';
-import TerrainViewer from './terrainViewer.vue';
+import shipViewer from './viewers/shipViewer.vue';
+import poiViewer from './viewers/poiViewer.vue';
+import TerrainViewer from './viewers/terrainViewer.vue';
 
 export default {
   name: 'Viewer',

@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useCompendiumStore } from '../../compendiumStore';
+import { useCompendiumStore } from '../../stores/compendiumStore';
 import TagCard from './cards/tagCard.vue';
 
 export default {

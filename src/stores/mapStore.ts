@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
-import { Ship, ShipData } from './models/ships/ship';
-import { Poi, PoiData } from './models/poi';
-import crew from './assets/test_data/crew.json';
-import cargo from './assets/test_data/cargo.json';
-import pois from './assets/test_data/pois.json';
-import ships from './assets/test_data/ships.json';
-import maps from './assets/test_data/maps.json';
+import { Ship, ShipData } from '../models/ships/ship';
+import { Poi, PoiData } from '../models/poi';
+import crew from '../assets/test_data/crew.json';
+import cargo from '../assets/test_data/cargo.json';
+import pois from '../assets/test_data/pois.json';
+import ships from '../assets/test_data/ships.json';
+import maps from '../assets/test_data/maps.json';
+import { SystemMap, MapData } from '../models/maps/systemMap';
 
 export const useMapStore = defineStore('map', {
   state: () => ({
@@ -33,7 +34,7 @@ export const useMapStore = defineStore('map', {
     },
     load() {
       // temporary testing data
-      this.maps = maps;
+      this.maps = maps.map((m) => new SystemMap(m as MapData));
       this.pois = pois.map((p) => new Poi(p as PoiData));
       this.ships = ships.map((s) => new Ship(s as ShipData));
 
