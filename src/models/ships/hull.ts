@@ -67,6 +67,7 @@ type HullData = {
   class: string;
   description?: string;
   tags?: string;
+  author?: string;
 };
 
 class Hull {

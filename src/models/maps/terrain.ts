@@ -1,5 +1,5 @@
 import { locationData } from '../dataTypes';
-import { Submap, SubmapData } from '../submap';
+import { Submap, SubmapData } from './submap';
 import { SystemMap } from './systemMap';
 
 type TerrainData = {

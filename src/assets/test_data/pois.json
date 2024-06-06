@@ -232,29 +232,31 @@
     "lon": 23.65,
     "icon": "mdi-star-four-points-circle-outline",
     "map": "ganymede",
-    "submap": {
-      "img": "chapelco_station.svg",
-      "show": 7,
-      "size": 0.5
-    },
-    "subitems": [
+    "submaps": [
       {
-        "id": "g-chapelco-anchor",
-        "name": "Chapelco Station Blink Anchor",
-        "poitype": "Station",
-        "offset": [-0.305, 0],
-        "icon": "mdi-star-three-points",
-        "color": "yellow",
-        "show": 8
-      },
-      {
-        "id": "g-chapelco-berth-224",
-        "name": "Chapelco Docking Ring, Berth 224",
-        "poitype": "Station",
-        "offset": [-0.38, -0.28],
-        "icon": "mdi-rhombus-outline",
-        "color": "yellow",
-        "show": 8
+        "img": "chapelco_station.svg",
+        "show": 7,
+        "size": 0.5,
+        "subitems": [
+          {
+            "id": "g-chapelco-anchor",
+            "name": "Chapelco Station Blink Anchor",
+            "poitype": "Station",
+            "offset": [-0.305, 0],
+            "icon": "mdi-star-three-points",
+            "color": "yellow",
+            "show": 8
+          },
+          {
+            "id": "g-chapelco-berth-224",
+            "name": "Chapelco Docking Ring, Berth 224",
+            "poitype": "Station",
+            "offset": [-0.38, -0.28],
+            "icon": "mdi-rhombus-outline",
+            "color": "yellow",
+            "show": 8
+          }
+        ]
       }
     ]
   },

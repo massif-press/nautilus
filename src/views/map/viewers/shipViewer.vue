@@ -50,7 +50,7 @@
               <div class="text-caption text-disabled">Mission Status</div>
               <div>{{ item.Mission.Status }}</div>
             </v-col>
-            <v-col cols="auto">
+            <v-col cols="auto" v-if="item.Mission.Destination && item.Mission.Destination.Name">
               <div class="text-caption text-disabled">Destination</div>
               <div>
                 {{ item.Mission.Destination.Name }}

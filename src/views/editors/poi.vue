@@ -1,75 +1,35 @@
 <template>
-  <v-container>
-    <div class="text-center">
-      <div class="text-h3">{{ poi.Title }}</div>
-      <div class="text-caption mb-n2">
-        Review Status:
-        <b class="text-success">{{ poi.Status }}</b>
-      </div>
-    </div>
-    <v-divider class="my-4" />
-    <v-card border variant="tonal" class="pa-1 mb-4">
-      <v-row>
-        <v-col cols="6">
-          <v-select density="compact" hide-details v-model="poi.Location.map" label="Map" />
-        </v-col>
-        <v-col>
-          <v-text-field
-            density="compact"
-            hide-details
-            v-model="poi.Location.coords[0]"
-            label="Y Position"
-            type="number" />
-        </v-col>
-        <v-col>
-          <v-text-field
-            density="compact"
-            hide-details
-            v-model="poi.Location.coords[1]"
-            label="X Position"
-            type="number" />
-        </v-col>
-      </v-row>
-    </v-card>
-
+  <editor-base :item="poi">
     <v-row>
-      <v-col cols="3">
+      <v-col>
         <v-select density="compact" hide-details v-model="poi.Faction" label="Faction" />
       </v-col>
-      <v-col cols="3">
+      <v-col>
         <v-text-field density="compact" hide-details v-model="poi.Owner" label="Owner" />
       </v-col>
-      <v-col>
-        <v-text-field density="compact" hide-details v-model="poi.Name" label="Name" />
-      </v-col>
     </v-row>
     <v-row>
-      <v-col cols="3">
-        <v-select density="compact" hide-details v-model="poi.Size" label="Size" />
-      </v-col>
-      <v-col cols="3">
-        <v-select density="compact" hide-details v-model="poi.Role" label="Role" />
+      <v-col>
+        <v-text-field hide-details v-model="poi.Name" label="Name" />
       </v-col>
       <v-col>
-        <v-combobox density="compact" hide-details v-model="poi.PoiType" label="Type" />
+        <v-combobox hide-details v-model="poi.PoiType" :items="poiTypes" label="Type" />
       </v-col>
     </v-row>
-    <!-- <v-card>selected hull type info</v-card>
-    <v-card>selected hull info</v-card>
-    <v-row>
-      <v-col>selected tags</v-col>
-      <v-col>available tags</v-col>
-    </v-row>
-    <div>Details</div> -->
-  </v-container>
+  </editor-base>
 </template>
 
 <script lang="ts">
-import { Poi, poiSizeClasses } from '../../models/poi';
+import _ from 'lodash';
+import { Poi } from '../../models/poi';
 import { useMapStore } from '../../stores/mapStore';
+import EditorBase from './components/editorBase.vue';
 
 export default {
   name: 'PoiEditor',
+  components: {
+    EditorBase,
+  },
   props: {
     id: { type: String, required: true },
     lat: { type: String, required: false },
@@ -105,8 +65,8 @@ export default {
     }
   },
   computed: {
-    poiSizeClasses() {
-      return poiSizeClasses;
+    poiTypes() {
+      return _.uniq(useMapStore().pois.map((poi) => poi.PoiType));
     },
   },
 };

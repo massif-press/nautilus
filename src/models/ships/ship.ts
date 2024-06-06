@@ -7,7 +7,7 @@ import { missionData, Mission } from '../mission';
 import { useCompendiumStore } from '../../stores/compendiumStore';
 import { Hull } from './hull';
 import { Tag } from '../tag';
-import { Submap, SubmapData } from '../submap';
+import { Submap, SubmapData } from '../maps/submap';
 import { MapItem, MapItemData } from '../maps/mapitem';
 
 type ShipData = MapItemData & {
@@ -82,7 +82,7 @@ class Ship extends MapItem {
     }
 
     this.Icon.icon = data?.icon || 'cc:ship';
-    this.Icon.show = this.Hull.Size.show || 1;
+    this.Icon.show = this.Hull?.Size.show || 1;
     if (!this.Icon.size) this.Icon.size = 24;
 
     this.Details = data?.details || [];
@@ -113,6 +113,7 @@ class Ship extends MapItem {
   }
 
   public get Title(): string {
+    if (!this.Hull) return this.Name;
     if (!this.Prefix) return `${this.Hull.Code} ${this.Name}`;
     return `${this.Prefix}-${this.Hull.Code} ${this.Name}`;
   }

@@ -1,6 +1,9 @@
 <template>
   <v-window-item transition="fade">
-    <div v-if="!selected">
+    <div v-if="!items.length" class="text-center mt-2">
+      <i class="text-caption text-disabled">No Items</i>
+    </div>
+    <div v-else-if="!selected">
       <div class="text-caption text-disabled text-uppercase pl-1"><slot name="title" /></div>
       <v-row dense align="center">
         <v-col>
@@ -16,8 +19,8 @@
         </v-col>
         <v-col cols="auto" class="ml-n3 mr-3">
           <v-badge
-            :color="filters.length ? 'primary' : 'transparent'"
-            :content="filters.length > 0 ? filters.length : ''">
+            :color="filterLength ? 'primary' : 'transparent'"
+            :content="filterLength > 0 ? filterLength : ''">
             <v-btn icon variant="plain" size="x-small" @click="filterDialog = true">
               <v-icon size="x-large" icon="mdi-filter" />
             </v-btn>
@@ -38,7 +41,7 @@
       <viewer :item="selected" :map="map" @deselect="deselect()" @select="select($event)" />
     </div>
   </v-window-item>
-  <v-dialog v-model="filterDialog" persistent max-width="600px">
+  <v-dialog v-model="filterDialog" max-width="60vw">
     <v-card>
       <v-toolbar density="compact" color="primary" flat>
         <v-toolbar-title>Filter Items</v-toolbar-title>
@@ -46,11 +49,17 @@
           <v-icon icon="mdi-close" />
         </v-btn>
       </v-toolbar>
-      <v-card-text>filters</v-card-text>
+      <itemFilter
+        ref="filter"
+        :filter-type="items[0].ItemType"
+        :filters="filters"
+        :map="map"
+        @set-filter="filters = $event" />
+      <v-divider />
       <v-card-actions>
         <v-spacer />
-        <v-btn text @click="filters = []">Clear Filters</v-btn>
-        <v-btn text @click="filterDialog = false">Close</v-btn>
+        <v-btn variant="text" size="small" @click="$refs.filter.clearAll()">Clear Filters</v-btn>
+        <v-btn variant="text" size="small" @click="filterDialog = false">Close</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -58,6 +67,8 @@
 
 <script lang="ts">
 import Viewer from '../viewer.vue';
+import itemFilter from '../../../_components/filters/filter.vue';
+import f from '../../../_components/filters/itemFilter';
 
 export default {
   name: 'rail-list',
@@ -68,16 +79,32 @@ export default {
   },
   components: {
     Viewer,
+    itemFilter,
   },
   data: () => ({
     search: '',
-    filters: [],
+    filters: {},
     filterDialog: false,
   }),
   emits: ['setSelected', 'clearSelection'],
   computed: {
     filteredItems() {
-      return this.items.filter((i) => i.Name.toLowerCase().includes(this.search.toLowerCase()));
+      let out = this.items;
+      if (this.search) {
+        out = out.filter((i) => i.Name.toLowerCase().includes(this.search.toLowerCase()));
+      }
+      if (this.filterLength) {
+        out = f(out, this.filters);
+      }
+      return out;
+    },
+    filterLength() {
+      console.log(this.filters);
+      let count = 0;
+      Object.keys(this.filters).forEach((key) => {
+        count += this.filters[key]?.length || 0;
+      });
+      return count;
     },
   },
   methods: {

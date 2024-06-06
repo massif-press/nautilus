@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { cargoData, Cargo } from './cargo';
 import { crewData, Crew } from './crew';
-import { itemHistoryData, ItemHistory } from './itemHistory';
-import { MapItem, MapItemData } from './maps/mapitem';
+import { ItemHistory } from './itemHistory';
+import { MapItemData, MapItem } from './maps/mapitem';
 
 const poiSizeClasses = [
   {
@@ -42,20 +42,6 @@ type PoiData = MapItemData & {
 
   crew?: crewData[];
   cargo?: cargoData[];
-
-  subitems?: SubitemPoiData[];
-};
-
-type SubitemPoiData = {
-  id: string;
-  name: string;
-  poitype: string;
-  offset: number[];
-  size?: string;
-  icon?: string;
-  color?: string;
-  show?: number;
-  description?: string;
 };
 
 class Poi extends MapItem {
@@ -71,8 +57,6 @@ class Poi extends MapItem {
   public Cargo: Cargo[];
 
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
-
-  public Subitems: Poi[];
 
   constructor(data?: PoiData) {
     super(data);
@@ -92,10 +76,6 @@ class Poi extends MapItem {
     if (data?.icon) this.Icon.icon = data.icon || 'mdi-rhombus-outline';
     if (data?.show) this.Icon.show = data.show || 1;
     this.Icon.color = data?.color || 'green';
-
-    if (data?.subitems) {
-      this.Subitems = data.subitems.map((s) => Poi.GenerateSubitem(this, s) as Poi);
-    }
   }
 
   public get Title(): string {
@@ -108,26 +88,6 @@ class Poi extends MapItem {
 
   public get SizeValue(): number {
     return poiSizeClasses.find((s) => s.id === this.Size)?.value || 1;
-  }
-
-  public static GenerateSubitem(parent: Poi, data: SubitemPoiData): Poi {
-    const subitemData: PoiData = {
-      id: data.id,
-      name: data.name,
-      faction: parent.Faction,
-      owner: parent.Owner,
-      size: data.size || 'tiny',
-      icon: data.icon || 'mdi-rhombus-outline',
-      map: parent.Location.map,
-      lat: parent.Location.coords[0] + data.offset[0],
-      lon: parent.Location.coords[1] + data.offset[1],
-      color: data.color || 'yellow',
-      show: data.show || (parent.Icon.show || 7) + 1,
-      poitype: data.poitype,
-      description: data.description || '',
-    };
-
-    return new Poi(subitemData);
   }
 }
 

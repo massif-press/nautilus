@@ -44,9 +44,6 @@ import TagCard from './cards/tagCard.vue';
 export default {
   name: 'Tags',
   components: { TagCard },
-  props: {
-    type: { type: String, default: 'ship' },
-  },
   data: () => ({
     all_selections: [
       { title: 'Ship', value: 'ship' },
@@ -56,11 +53,7 @@ export default {
     search: '',
   }),
   mounted() {
-    if (this.type === 'ship') {
-      this.t_selections = ['ship'];
-    } else if (this.type === 'poi') {
-      this.t_selections = ['poi'];
-    } else this.t_selections = this.all_selections.map((s) => s.value);
+    this.t_selections = this.all_selections.map((s) => s.value);
   },
   computed: {
     filteredTags() {

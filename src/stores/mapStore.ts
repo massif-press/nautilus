@@ -27,6 +27,14 @@ export const useMapStore = defineStore('map', {
     getMapById: (state) => (id: string) => {
       return state.maps.find((map) => map.ID === id);
     },
+    getSubmaps: (state) => (map_id: string) => {
+      console.log(map_id);
+      console.log([...state.ships, ...state.pois].filter((item) => item.Location.map === map_id));
+      return [...state.ships, ...state.pois]
+        .filter((item) => item.Location.map === map_id)
+        .filter((item) => !!item.Submap)
+        .map((item) => item.Submap);
+    },
   },
   actions: {
     setMap(map) {

@@ -3,6 +3,9 @@
     <v-footer border>
       <div>
         <span>{{ user.username }}</span>
+        <i v-if="user.discord && user.showDiscord" class="text-caption text-accent pl-2">
+          {{ user.discord }}
+        </i>
         <br />
         <span class="text-caption">
           {{ user.user_id }}
@@ -12,7 +15,8 @@
         </span>
       </div>
       <v-spacer />
-      <v-btn size="x-small" variant="tonal">request dev access</v-btn>
+      <user-control-panel />
+      <!-- <v-btn size="x-small" variant="tonal">request dev access</v-btn> -->
     </v-footer>
 
     <v-divider class="my-4" />
@@ -74,13 +78,6 @@
             {{ item.Status }}
           </v-chip>
         </template>
-        <template #body.append>
-          <tr>
-            <td :colspan="shipHeaders.length" class="text-right">
-              <v-btn size="small" color="accent" variant="tonal">ADD Item</v-btn>
-            </td>
-          </tr>
-        </template>
       </v-data-table>
     </v-card>
   </v-container>
@@ -89,9 +86,11 @@
 <script lang="ts">
 import { useMapStore } from '../../stores/mapStore';
 import { useUserStore } from '../../stores/userStore';
+import UserControlPanel from './components/userControlPanel.vue';
 
 export default {
   name: 'Overview',
+  components: { UserControlPanel },
   data: () => ({
     tab: 0,
     search: '',

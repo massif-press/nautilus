@@ -86,18 +86,6 @@
             If it's something that's not possible in the editor, but you think it should be, also let me know in the Discord. I'm always looking for ways to improve the editor, and I'm happy to take suggestions. However, once this gets off the ground I'll be focusing on the COMP/CON v3 release, so it might be a (long) while before I can get to it. If you want to take a crack at it yourself, let me know and we'll figure out a way to get you the assets you need so you can make a PR.
           </div>
         </p>
-        <p class="py-2">
-          <div class="text-h6">Can military vessels engage in combat?</div>
-          <div class="blockquote border-s-xl mt-1">
-            At the time of this writing, no, not yet. That'll be reserved for a later phase of this project, if there's interest.
-          </div>
-        </p>
-        <p class="py-2">
-          <div class="text-h6">What about higher-detail maps? Station layouts?</div>
-          <div class="blockquote border-s-xl mt-1">
-            Currently, everything is just very simple shapes, polylines, and markers. However, getting really fine-grained is possible, the map can display vector data in a a variety of formats, and we can add these in. It will be, however, a considerable amount of work so it's not something I'll be able to do myself at this point in time. If you're interested in working on this, let me know in the Discord.
-          </div>
-        </p>   
       </v-card-text>
     </v-card>
         <v-card variant="text" max-width="800px" class="mx-auto pt-4">

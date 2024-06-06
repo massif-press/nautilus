@@ -45,7 +45,7 @@
             </div>
           </v-list-item>
         </template>
-        <v-list-item v-for="c in crew" link :to="`/main/editor/edit/poi/new`">
+        <v-list-item v-for="c in crew" link :to="``">
           <v-icon :icon="c.Icon" size="x-small" class="mt-n1" />
           {{ c.Name }}
         </v-list-item>
@@ -59,7 +59,7 @@
             </div>
           </v-list-item>
         </template>
-        <v-list-item v-for="c in cargo" link :to="`/main/editor/edit/poi/new`">
+        <v-list-item v-for="c in cargo" link :to="``">
           <v-icon icon="mdi-cube" size="x-small" class="mt-n1" />
           {{ c.name }}
         </v-list-item>
@@ -74,7 +74,7 @@
       </template>
       <v-list>
         <v-list-item link title="Add new Vessel" to="/main/editor/edit/ship/new" />
-        <v-list-item link title="Add new Point of Interest" to="/main/editor/edit/ship/new" />
+        <v-list-item link title="Add new Point of Interest" to="/main/editor/edit/poi/new" />
         <v-list-item link title="Add new Personnel" to="/main/editor/edit/ship/new" disabled />
         <v-list-item link title="Add new Cargo" to="/main/editor/edit/ship/new" disabled />
       </v-list>

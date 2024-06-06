@@ -12,6 +12,7 @@ import Compendium from './views/compendium.vue';
 
 import Hulls from './views/compendium/hulls.vue';
 import Tags from './views/compendium/tags.vue';
+import Submaps from './views/compendium/submaps.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -71,10 +72,14 @@ const router = createRouter({
               component: Hulls,
             },
             {
-              path: 'tags/:type',
+              path: 'tags',
               name: 'tags',
               component: Tags,
-              props: true,
+            },
+            {
+              path: 'submaps',
+              name: 'submaps',
+              component: Submaps,
             },
           ],
         },

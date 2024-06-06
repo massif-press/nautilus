@@ -54,7 +54,9 @@ export default {
     const store = useMapStore();
     if (!store.map) {
       if (!store.maps.length) store.load();
-      store.setMap(store.maps[0]);
+      const preload = localStorage.getItem('cc-n-mapid');
+      if (preload) store.setMap(store.maps.find((m) => m.ID === preload));
+      else store.setMap(store.maps[0]);
     }
     this.selectedMap = store.map?.ID;
   },
@@ -65,6 +67,7 @@ export default {
   },
   methods: {
     setMap(map: string) {
+      localStorage.setItem('cc-n-mapid', map);
       useMapStore().setMap(this.maps.find((m) => m.ID === map));
     },
   },

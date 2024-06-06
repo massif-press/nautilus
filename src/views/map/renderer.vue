@@ -5,8 +5,8 @@
       v-model:zoom="zoom"
       :center="[0, 0]"
       :maxBounds="[
-        [900, 1000],
-        [-900, -1000],
+        [900, 800],
+        [-900, -800],
       ]"
       :use-global-leaflet="false"
       :options="{
@@ -15,6 +15,7 @@
         minZoom: 1,
         maxZoom: 12,
         preferCanvas: true,
+        trackResize: true,
       }"
       style="background-color: rgb(var(--v-background))"
       @click="setClickLocation($event)">
@@ -32,15 +33,33 @@
         :bounds="t.Submap.Bounds" />
 
       <template v-for="item in items">
-        <l-image-overlay
-          v-if="item.Submap && item.Submap.Show <= zoom"
-          :url="getImgPath(item.Submap.Img)"
-          :crossOrigin="true"
-          :visible="item.Submap.Show <= zoom"
-          :bounds="item.Submap.Bounds" />
+        <template v-for="submap in item.Submaps">
+          <l-image-overlay
+            v-if="submapVisible(submap)"
+            :url="getImgPath(submap.Img)"
+            :crossOrigin="true"
+            :bounds="submap.Bounds" />
+          <template v-for="subitem in submap.Subitems">
+            <l-marker
+              :visible="subitem.Icon.show && zoom >= subitem.Icon.show"
+              :lat-lng="subitem.Location.coords"
+              @click="select(subitem)">
+              <l-icon>
+                <v-icon
+                  class="mt-n1"
+                  :size="getIconSize(subitem)[0]"
+                  :color="selected && subitem.ID === selected.ID ? 'warning' : subitem.Icon.color"
+                  :icon="subitem.Icon.icon" />
+              </l-icon>
+              <l-tooltip :options="{ sticky: true, direction: 'bottom', offset: [0, 30] }">
+                {{ subitem.Name }}
+              </l-tooltip>
+            </l-marker>
+          </template>
+        </template>
 
         <l-marker
-          v-else
+          v-if="!itemSubmapsVisible(item)"
           :visible="item.Icon.show && zoom >= item.Icon.show"
           :lat-lng="item.Location.coords"
           @click="select(item)">
@@ -207,6 +226,15 @@ export default {
     getImgPath(img) {
       const path = 'submaps';
       return `/${path}/${img}`;
+    },
+    submapVisible(item) {
+      console.log(item);
+      // TODO: only show if the submap bounds are within the current view
+
+      return item.Show <= this.zoom;
+    },
+    itemSubmapsVisible(item) {
+      return item.Submaps.some((s) => s.Show <= this.zoom);
     },
     getIconSize(item) {
       let base = this.baseSize;

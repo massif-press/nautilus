@@ -2,6 +2,7 @@ type ShipwrightData = {
   id: string;
   name: string;
   description: string;
+  author?: string;
 };
 
 class Shipwright {

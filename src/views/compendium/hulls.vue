@@ -97,11 +97,8 @@ export default {
       return useCompendiumStore().hulls;
     },
     shipwrights() {
-      return (
-        usestores /
-        compendiumStore().shipwrights.filter((s) =>
-          this.hulls.some((h) => h.Shipwright.ID === s.ID)
-        )
+      return useCompendiumStore().shipwrights.filter((s) =>
+        this.hulls.some((h) => h.Shipwright.ID === s.ID)
       );
     },
     classes() {

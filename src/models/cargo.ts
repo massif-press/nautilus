@@ -3,6 +3,7 @@ type cargoData = {
   description: string;
   quantity: number;
   value: number;
+  author?: string;
 };
 
 class Cargo {

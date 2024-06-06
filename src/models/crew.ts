@@ -2,6 +2,7 @@ type crewData = {
   name: string;
   role: string;
   description: string;
+  author?: string;
 };
 
 class Crew {
