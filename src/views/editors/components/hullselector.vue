@@ -62,7 +62,7 @@ export default {
       { title: 'Hull', value: 'Name', sortable: true },
       { title: 'Size', value: 'Size.name', sortable: true },
       { title: 'Class', value: 'Class', sortable: true },
-      { title: 'Shipwright', value: 'Shipwright.Name', sortable: true },
+      { title: 'Shipwright', value: 'Shipwright', sortable: true },
       { title: 'Tags', value: 'Tags', sortable: true },
     ],
     dialog: false,

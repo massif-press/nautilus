@@ -1,5 +1,5 @@
 <template>
-  <editor-base :item="ship">
+  <map-item-editor :item="ship">
     <v-row>
       <v-col>
         <v-autocomplete
@@ -38,25 +38,31 @@
 
     <div class="mx-2 mt-6">
       <div class="text-caption text-disabled ml-n2">Hull</div>
-
       <hull-selector :selected="ship.Hull" @select="ship.Hull = $event" />
     </div>
-  </editor-base>
+
+    <div class="mx-2 mt-6">
+      <div class="text-caption text-disabled ml-n2">Crew</div>
+      <crew-selector :crewed-item="ship" />
+    </div>
+  </map-item-editor>
 </template>
 
 <script lang="ts">
 import _ from 'lodash';
-import { Ship } from '../../models/ships/ship';
 import { useMapStore } from '../../stores/mapStore';
 
 import HullSelector from './components/hullSelector.vue';
-import EditorBase from './components/editorBase.vue';
+import CrewSelector from './components/crewAssignment.vue';
+import MapItemEditor from './components/mapItemEditor.vue';
+import { Ship } from '../../models/maps/ship';
 
 export default {
   name: 'ShipEditor',
   components: {
     HullSelector,
-    EditorBase,
+    MapItemEditor,
+    CrewSelector,
   },
   props: {
     id: { type: String, required: true },
@@ -64,7 +70,7 @@ export default {
     lon: { type: String, required: false },
   },
   data: () => ({
-    ship: {},
+    ship: {} as Ship,
     detailSuggestions: [
       { title: 'Description', body: '' },
       { title: 'History', body: '' },
@@ -85,15 +91,12 @@ export default {
   },
   created() {
     if (this.id === 'new') {
-      console.log('creating new ship');
       this.ship = new Ship();
 
       if (this.lat && this.lon) {
         this.ship.Location.coords = [Number(this.lat), Number(this.lon)];
       }
     } else {
-      console.log('loading ship');
-      console.log(useMapStore().getShipById(this.id));
       this.ship = useMapStore().getShipById(this.id);
     }
   },

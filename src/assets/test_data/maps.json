@@ -7,8 +7,9 @@
     "description": "Ganymede is the largest moon of Jupiter and one of the most heavily populated locales in the Cradle. It is a nexus of Union culture, science, and industry. First colonized in the immediate precollapse period, it was reinhabited in the in the early 1400s and has since served as a center for Union outer system activities, as well as a major blink gate and omninet nexus. More recently, in the late 4400s, the Jovian minor satellite Cyllene was moved into Ganymede's orbit to serve as a mining base to supply Union's extensive orbital and deep space industry in the region.",
     "terrain": [
       {
-        "id": "ganymede",
+        "id": "ganymede1",
         "name": "Ganymede",
+        "type": "Moon",
         "center": [0, 0],
         "submap": {
           "img": "ganymede.svg",
@@ -20,6 +21,7 @@
       {
         "id": "cyllene",
         "name": "Cyllene",
+        "type": "Moon",
         "center": [50, 185],
         "submap": {
           "img": "cyllene.svg",
@@ -40,6 +42,7 @@
       {
         "id": "rim1a",
         "name": "Gliese 581 IV",
+        "type": "Asteroid",
         "center": [0, -800],
         "submap": {
           "img": "hugeplanet.svg",
@@ -51,6 +54,7 @@
       {
         "id": "rim-asteroid-1",
         "name": "rock",
+        "type": "Asteroid",
         "center": [0, 0],
         "submap": {
           "img": "cyllene.svg",
@@ -62,6 +66,7 @@
       {
         "id": "rim-asteroid-2",
         "name": "rock",
+        "type": "Asteroid",
         "center": [17, 15],
         "submap": {
           "img": "cyllene.svg",
@@ -73,6 +78,7 @@
       {
         "id": "rim-asteroid-5",
         "name": "rock",
+        "type": "Asteroid",
         "center": [25, 28],
         "submap": {
           "img": "cyllene.svg",
@@ -84,6 +90,7 @@
       {
         "id": "rim-asteroid-3",
         "name": "rock",
+        "type": "Asteroid",
         "center": [-13, -19],
         "submap": {
           "img": "cyllene.svg",
@@ -95,6 +102,7 @@
       {
         "id": "rim-asteroid-4",
         "name": "rock",
+        "type": "Asteroid",
         "center": [-28, -34],
         "submap": {
           "img": "cyllene.svg",

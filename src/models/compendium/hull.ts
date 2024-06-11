@@ -1,6 +1,7 @@
 import { useCompendiumStore } from '../../stores/compendiumStore';
-import { Tag } from '../tag';
-import { Shipwright } from './shipwright';
+import { Submap, SubmapData } from '../maps/submap';
+import { CompendiumItem, CompendiumItemData } from './compendiumItem';
+import { Tag } from './tag';
 
 const sizes = [
   {
@@ -58,8 +59,7 @@ const sizes = [
   },
 ];
 
-type HullData = {
-  id: string;
+type HullData = CompendiumItemData & {
   name: string;
   code: string;
   size: string;
@@ -67,37 +67,40 @@ type HullData = {
   class: string;
   description?: string;
   tags?: string;
-  author?: string;
+  submaps?: SubmapData[];
 };
 
-class Hull {
+class Hull extends CompendiumItem {
   public readonly ItemType = 'hull';
 
-  public readonly ID: string;
   public Name: string;
   public Code: string;
-  public Shipwright: Shipwright;
+  public Shipwright: string;
   public Size: { id: string; name: string; code: string; show: number; value: number };
   public Class: string;
   public Description: string;
   public Tags: Tag[];
 
-  constructor(data: HullData) {
-    this.ID = data.id;
-    this.Name = data.name;
-    this.Code = data.code;
-    const shipwright = useCompendiumStore().shipwright(data.shipwright);
-    if (!shipwright) {
-      throw new Error(`Shipwright ${data.shipwright} not found in compendium`);
-    }
-    this.Shipwright = shipwright;
-    this.Size = sizes.find((s) => s.id === data.size) || sizes[0];
-    this.Class = data.class;
-    this.Description = data.description || '';
+  public Submaps: Submap[];
+
+  constructor(data?: HullData) {
+    super(data);
+    this.Name = data?.name || 'New Hull';
+    this.Code = data?.code || '';
+    this.Shipwright = data?.shipwright || '';
+    this.Size = sizes.find((s) => s.id === data?.size) || sizes[0];
+    this.Class = data?.class || '';
+    this.Description = data?.description || '';
+
     const tags = data?.tags?.split(', ') || [];
 
-    this.Tags = tags.length ? useCompendiumStore().tags.filter((tag) => tags.includes(tag.ID)) : [];
+    this.Tags = tags.length
+      ? (useCompendiumStore().tags.filter((tag) => tags.includes(tag.ID)) as Tag[])
+      : ([] as Tag[]);
+
+    if (data?.submaps) this.Submaps = data.submaps.map((s) => new Submap(s, [0, 0]));
+    else this.Submaps = [];
   }
 }
 
-export { Hull, HullData };
+export { Hull, HullData, sizes as HullSizes };

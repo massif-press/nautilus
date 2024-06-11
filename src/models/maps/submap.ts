@@ -35,7 +35,7 @@ class Subitem {
   public Offset: number[];
   public Show: number;
   public Description: string;
-  public Author: string;
+  public AuthorID: string;
 
   constructor(map: Submap, data: SubitemData) {
     this.ID = data.id;
@@ -54,7 +54,7 @@ class Subitem {
       coords: [map.Center[0] + data.offset[0], map.Center[1] + data.offset[1]],
     };
     this.Description = data.description || '';
-    this.Author = data.author || '';
+    this.AuthorID = data.author || '';
   }
 }
 
@@ -77,13 +77,17 @@ class Submap {
     this.Size = data.size || 1;
     if (parent instanceof Array) this.Center = parent;
     else {
-      this.Center = parent.Location.coords;
+      this.Center = parent.Location?.coords || [0, 0];
       this.Parent = parent;
 
       if (data.subitems) {
         this.Subitems = data.subitems.map((s) => new Subitem(this, s));
       }
     }
+  }
+
+  public SetCenter(coords: number[]): void {
+    this.Center = coords;
   }
 
   get Bounds(): number[][] {

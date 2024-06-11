@@ -60,7 +60,7 @@
 import _ from 'lodash';
 import { useCompendiumStore } from '../../stores/compendiumStore';
 import { useMapStore } from '../../stores/mapStore';
-import { Ship } from '../../models/ships/ship';
+import { Ship } from '../../models/maps/ship';
 
 export default {
   name: 'ShipFilter',

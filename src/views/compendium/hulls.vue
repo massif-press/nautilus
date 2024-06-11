@@ -16,13 +16,12 @@
         </v-col>
         <v-spacer />
         <v-col cols="auto">
-          <v-chip-group v-model="sw_selections" multiple :items="shipwrights" column>
+          <v-chip-group v-model="sw_selections" multiple column>
             <v-chip
               v-for="s in shipwrights"
-              :value="s.ID"
-              :text="s.Name"
-              :color="sw_selections.includes(s.ID) ? 'accent' : ''"
+              :color="sw_selections.includes(s) ? 'accent' : ''"
               label
+              :text="s"
               size="small" />
           </v-chip-group>
         </v-col>
@@ -57,12 +56,51 @@
           </v-list-item>
         </template>
       </v-select>
+      <div class="text-caption text-disabled text-right">
+        <i>
+          Showing {{ filteredHulls.length }} of {{ hulls.length }} hulls from
+          {{ authors.length }} authors
+        </i>
+      </div>
     </v-card>
 
     <v-card-text>
-      <div v-for="hull in filteredHulls" class="mb-3">
-        <hull-card :hull="hull" />
-      </div>
+      <v-data-table
+        v-model:expanded="expanded"
+        :search="search"
+        :headers="headers"
+        :items="hulls"
+        item-value="ID"
+        :items-per-page="100"
+        show-expand>
+        <template #item.Name="{ item }">
+          <v-btn
+            size="small"
+            color="secondary"
+            :text="item.Name"
+            :to="`/main/editor/edit/${item.ItemType}/${item.ID}`" />
+        </template>
+        <template #item.Tags="{ item }">
+          <v-tooltip v-for="t in item.Tags" location="top">
+            <template #activator="{ props }">
+              <v-chip
+                size="x-small"
+                variant="tonal"
+                prepend-icon="mdi-tag"
+                :text="t.Name"
+                v-bind="props" />
+            </template>
+            <b>{{ t.Description }}</b>
+          </v-tooltip>
+        </template>
+        <template #expanded-row="{ columns, item }">
+          <tr>
+            <td :colspan="columns.length" class="px-0">
+              <hull-card :hull="item" />
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
     </v-card-text>
   </v-container>
 </template>
@@ -76,33 +114,39 @@ export default {
   name: 'Hulls',
   components: { HullCard },
   data: () => ({
-    sw_selections: [],
-    cl_selections: [],
+    expanded: [],
+    sw_selections: [] as string[],
+    cl_selections: [] as string[],
     search: '',
+    headers: [
+      { title: 'Name', key: 'Name' },
+      { title: 'Size', key: 'Size.name' },
+      { title: 'Shipwright', key: 'Shipwright' },
+      { title: 'Tags', key: 'Tags' },
+      { title: 'Author', key: 'Author.Name' },
+    ],
   }),
   mounted() {
-    this.sw_selections = this.shipwrights.map((s) => s.ID);
+    this.sw_selections = this.shipwrights;
     this.cl_selections = this.classes;
   },
   computed: {
     filteredHulls() {
       return this.hulls.filter(
-        (h) =>
-          this.sw_selections.includes(h.Shipwright.ID) &&
-          this.cl_selections.includes(h.Class) &&
-          (this.search === '' || h.Name.toLowerCase().includes(this.search.toLowerCase()))
+        (h) => this.sw_selections.includes(h.Shipwright) && this.cl_selections.includes(h.Class)
       );
     },
     hulls() {
       return useCompendiumStore().hulls;
     },
     shipwrights() {
-      return useCompendiumStore().shipwrights.filter((s) =>
-        this.hulls.some((h) => h.Shipwright.ID === s.ID)
-      );
+      return _.uniqBy(this.hulls.map((h) => h.Shipwright));
     },
     classes() {
       return _.uniq(this.hulls.map((h) => h.Class));
+    },
+    authors() {
+      return _.uniqBy(this.hulls, 'Author.Name').map((hull) => hull.Author.Name);
     },
   },
   methods: {

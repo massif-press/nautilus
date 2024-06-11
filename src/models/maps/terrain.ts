@@ -5,6 +5,7 @@ import { SystemMap } from './systemMap';
 type TerrainData = {
   id: string;
   name: string;
+  type: string;
   center: number[];
   submap: SubmapData;
   description: string;
@@ -14,6 +15,7 @@ class Terrain {
   public readonly Collection = 'terrain';
   public readonly ID: string;
   public Name: string;
+  public TerrainType: string;
   public Center: number[];
   public Submap: Submap;
   public Description: string;
@@ -21,6 +23,7 @@ class Terrain {
 
   constructor(map: SystemMap, data: TerrainData) {
     this.ID = data.id;
+    this.TerrainType = data.type;
     this.MapID = map.ID;
     this.Name = data.name;
     this.Center = data.center;

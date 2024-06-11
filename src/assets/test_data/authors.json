@@ -1,0 +1,14 @@
+[
+  {
+    "id": "system",
+    "name": "System"
+  },
+  {
+    "id": "admin",
+    "name": "Admin"
+  },
+  {
+    "id": "beef",
+    "name": "Beef"
+  }
+]

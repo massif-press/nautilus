@@ -1,5 +1,5 @@
 import { useMapStore } from '../stores/mapStore';
-import { Poi } from './poi';
+import { Poi } from './maps/poi';
 
 const missionTypes = [
   'Patrol',

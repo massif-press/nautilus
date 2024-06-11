@@ -1,4 +1,4 @@
-import { Ship } from '../../models/ships/ship';
+import { Ship } from '../../models/maps/ship';
 
 const filter = (items: any[], filter: any): any[] => {
   let out = items;
@@ -10,7 +10,7 @@ const filter = (items: any[], filter: any): any[] => {
       out = out.filter((item) => !filter[key].includes(item[key]));
     if (key === 'Shipwright') {
       console.log('filter[key]', filter[key]);
-      out = out.filter((item) => !filter[key].includes((item as Ship).Hull.Shipwright.Name));
+      out = out.filter((item) => !filter[key].includes((item as Ship).Hull.Shipwright));
     }
     if (key === 'Size')
       out = out.filter((item) => !filter[key].includes(item.Size?.name || item.Hull?.Size.name));

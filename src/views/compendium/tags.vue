@@ -27,6 +27,12 @@
           </v-chip-group>
         </v-col>
       </v-row>
+      <div class="text-caption text-disabled text-right">
+        <i>
+          Showing {{ filteredTags.length }} of {{ tags.length }} tags from
+          {{ authors.length }} authors
+        </i>
+      </div>
     </v-card>
     <v-card-text>
       <div v-for="tag in filteredTags" class="mb-3">
@@ -49,7 +55,7 @@ export default {
       { title: 'Ship', value: 'ship' },
       { title: 'Point of Interest', value: 'poi' },
     ],
-    t_selections: [],
+    t_selections: [] as string[],
     search: '',
   }),
   mounted() {
@@ -66,6 +72,9 @@ export default {
     },
     tags() {
       return useCompendiumStore().tags;
+    },
+    authors() {
+      return _.uniqBy(this.tags, 'Author.Name').map((t) => t.Author.Name);
     },
   },
 };

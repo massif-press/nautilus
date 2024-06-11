@@ -4,7 +4,7 @@
     "name": "Combahee",
     "code": "SL",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Corvette"
   },
   {
@@ -12,7 +12,7 @@
     "name": "Somonauk",
     "code": "SL",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Corvette"
   },
   {
@@ -20,7 +20,7 @@
     "name": "Tsaratanana ",
     "code": "SL",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Cruiser"
   },
   {
@@ -28,7 +28,7 @@
     "name": "Orontes",
     "code": "SL",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Destroyer"
   },
   {
@@ -36,7 +36,7 @@
     "name": "Haechi",
     "code": "SL",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Destroyer"
   },
   {
@@ -44,7 +44,7 @@
     "name": "Kibali",
     "code": "SL",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Destroyer"
   },
   {
@@ -52,7 +52,7 @@
     "name": "Benue",
     "code": "SL",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "High Speed Transport"
   },
   {
@@ -60,7 +60,7 @@
     "name": "Cổ Chiên",
     "code": "LS",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Oiler"
   },
   {
@@ -68,7 +68,7 @@
     "name": "Mishongnovi",
     "code": "RS",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Hospital Ship"
   },
   {
@@ -76,7 +76,7 @@
     "name": "Monte Vista",
     "code": "RS",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Rescue and Salvage"
   },
   {
@@ -84,7 +84,7 @@
     "name": "Mukalla ",
     "code": "LS",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Logistics Support"
   },
   {
@@ -92,7 +92,7 @@
     "name": "Yangxiangzhen",
     "code": "NAV",
     "size": "small",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Navigation Support"
   },
   {
@@ -100,7 +100,7 @@
     "name": "Caspian Sea",
     "code": "LS",
     "size": "medium",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Frigate"
   },
   {
@@ -108,7 +108,7 @@
     "name": "Superior",
     "code": "LS",
     "size": "medium",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Frigate"
   },
   {
@@ -116,7 +116,7 @@
     "name": "Huron",
     "code": "LS",
     "size": "medium",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Frigate"
   },
   {
@@ -124,7 +124,7 @@
     "name": "Poyang",
     "code": "LS",
     "size": "medium",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Troop Transport"
   },
   {
@@ -132,7 +132,7 @@
     "name": "Sarygamysh ",
     "code": "RS",
     "size": "medium",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Hospital Ship"
   },
   {
@@ -140,7 +140,7 @@
     "name": "Amazon",
     "code": "CV",
     "size": "large",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Carrier",
     "tags": "tag-fighters"
   },
@@ -149,7 +149,7 @@
     "name": "Tongass",
     "code": "CV",
     "size": "large",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Carrier",
     "tags": "tag-fighters"
   },
@@ -158,7 +158,7 @@
     "name": "Gobi",
     "code": "DCV",
     "size": "large",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Drone Platform",
     "tags": "tag-dronecontrol"
   },
@@ -167,7 +167,7 @@
     "name": "Marmara",
     "code": "TT",
     "size": "large",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Barracks Ship"
   },
   {
@@ -175,7 +175,7 @@
     "name": "Muire",
     "code": "BB",
     "size": "massive",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Battleship"
   },
   {
@@ -183,7 +183,7 @@
     "name": "Thoreau",
     "code": "BB",
     "size": "massive",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Battleship"
   },
   {
@@ -191,7 +191,7 @@
     "name": "Humboldt ",
     "code": "DN",
     "size": "massive",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Dreadnaught",
     "tags": "tag-mooring"
   },
@@ -200,7 +200,7 @@
     "name": "Bolaño",
     "code": "MCP",
     "size": "platform",
-    "shipwright": "un",
+    "shipwright": "Union Navy",
     "class": "Mobile Command Platform",
     "tags": "tag-mooring"
   },
@@ -209,7 +209,7 @@
     "name": "Stratford",
     "code": "ST",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Shuttle",
     "tags": "tag_shuttle"
   },
@@ -218,7 +218,7 @@
     "name": "Takagi",
     "code": "ST",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Shuttle",
     "tags": "tag_shuttle"
   },
@@ -227,7 +227,7 @@
     "name": "Renzuhang",
     "code": "LND",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Lander",
     "tags": "tag_lander"
   },
@@ -236,7 +236,7 @@
     "name": "Tortuga",
     "code": "LND",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Lander",
     "tags": "tag_lander"
   },
@@ -245,7 +245,7 @@
     "name": "Pine",
     "code": "TG",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Tug",
     "tags": "tag_tug"
   },
@@ -254,7 +254,7 @@
     "name": "Hachong",
     "code": "TG",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Tug",
     "tags": "tag_tug"
   },
@@ -263,7 +263,7 @@
     "name": "Carysfort",
     "code": "STS",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Stevedore",
     "tags": "tag_stevedore"
   },
@@ -272,7 +272,7 @@
     "name": "Kosong",
     "code": "FF",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Ferry"
   },
   {
@@ -280,7 +280,7 @@
     "name": "Michelbach",
     "code": "MT",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Multipurpose Transport"
   },
   {
@@ -288,7 +288,7 @@
     "name": "Indravati",
     "code": "MT",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Multipurpose Transport"
   },
   {
@@ -296,7 +296,7 @@
     "name": "Apeldoorn",
     "code": "TR",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Tender"
   },
   {
@@ -304,7 +304,7 @@
     "name": "Ezpeleta",
     "code": "MTR",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Maintenance Tender"
   },
   {
@@ -312,7 +312,7 @@
     "name": "Hombetsu",
     "code": "FF",
     "size": "medium",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Ferry"
   },
   {
@@ -320,7 +320,7 @@
     "name": "Gbambiasso",
     "code": "RV",
     "size": "medium",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Research Vessel"
   },
   {
@@ -328,7 +328,7 @@
     "name": "Muqdadiyah",
     "code": "MTT",
     "size": "medium",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Multipurpose Transport"
   },
   {
@@ -336,7 +336,7 @@
     "name": "Jaheyna",
     "code": "P3",
     "size": "large",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "S3 Printship"
   },
   {
@@ -344,7 +344,7 @@
     "name": "Nannewiid",
     "code": "CC",
     "size": "large",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Containerized Cargo Carrier"
   },
   {
@@ -352,7 +352,7 @@
     "name": "Vaquiro",
     "code": "MT",
     "size": "large",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Multipurpose Transport"
   },
   {
@@ -360,7 +360,7 @@
     "name": "Koloma",
     "code": "GHS",
     "size": "large",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Gas Harvester"
   },
   {
@@ -368,7 +368,7 @@
     "name": "Bryn-mawr",
     "code": "TNK",
     "size": "large",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Tanker"
   },
   {
@@ -376,7 +376,7 @@
     "name": "Castle Hill",
     "code": "CC",
     "size": "massive",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Containerized Cargo Carrier",
     "tags": "tag-mooring"
   },
@@ -385,7 +385,7 @@
     "name": "Foel Grach",
     "code": "BC",
     "size": "massive",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Bulk Cargo Carrier",
     "tags": "tag-mooring"
   },
@@ -394,7 +394,7 @@
     "name": "San Pietro",
     "code": "MSY",
     "size": "massive",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Mobile Shipyard",
     "tags": "tag-mooring"
   },
@@ -403,7 +403,7 @@
     "name": "Broniarth",
     "code": "MMP",
     "size": "platform",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Mobile Mining Platform",
     "tags": "tag-mooring"
   },
@@ -412,7 +412,7 @@
     "name": "Acoma",
     "code": "SDV",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Personal Transport"
   },
   {
@@ -420,7 +420,7 @@
     "name": "Parallax II",
     "code": "SDV",
     "size": "small",
-    "shipwright": "mg",
+    "shipwright": "Migliore Group",
     "class": "Yacht"
   },
   {
@@ -428,7 +428,7 @@
     "name": "True Lotus",
     "code": "SDV",
     "size": "small",
-    "shipwright": "yd",
+    "shipwright": "Yamaoka Driveworks",
     "class": "Yacht"
   },
   {
@@ -436,7 +436,7 @@
     "name": "Scheherazade ",
     "code": "SDV",
     "size": "small",
-    "shipwright": "ac",
+    "shipwright": "Atelier Celeste",
     "class": "Yacht"
   },
   {
@@ -444,7 +444,7 @@
     "name": "Kewa",
     "code": "SDV",
     "size": "small",
-    "shipwright": "gms",
+    "shipwright": "General Massive Systems",
     "class": "Homeship"
   },
   {
@@ -452,7 +452,7 @@
     "name": "Celadon",
     "code": "DDV",
     "size": "medium",
-    "shipwright": "yd",
+    "shipwright": "Yamaoka Driveworks",
     "class": "Homeship"
   },
   {
@@ -460,7 +460,7 @@
     "name": "Horizon",
     "code": "QGDV",
     "size": "large",
-    "shipwright": "mg",
+    "shipwright": "Migliore Group",
     "class": "Cruise Liner"
   }
 ]

@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "beef",
+    "name": "Beef J. Computers",
+    "pronouns": "he/him",
+    "role": "Chief Engineer",
+    "assignment": "0922624b-3f16-4bfc-9dfb-7ad5266c543f",
+    "background": "Cosmopolitan",
+    "description": "Bad code writer",
+    "author": "system"
+  }
+]

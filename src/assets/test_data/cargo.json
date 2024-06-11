@@ -1,16 +1,9 @@
 [
   {
-    "id": "01",
-    "title": "New Thebes Launch Complex",
-    "collection": "poi",
-    "type": "spaceport",
-    "code": "SOL-5B-NTLC",
-    "location": {
-      "coords": [14, 16],
-      "show": 3
-    },
-    "icon": "mdi-rhombus-outline",
-    "color": "green",
-    "description": "The New Thebes Launch Complex is a spaceport on Ganymede, the largest moon of Jupiter. It is the primary launch site for the Ganymede Space Agency, which operates a fleet of rockets and spacecraft for scientific research and exploration. The New Thebes Launch Complex is located near the equator of Ganymede, in a region known as the Galileo Regio. The complex consists of a series of launch pads, assembly buildings, and support facilities, as well as a control center for monitoring and coordinating space missions. The New Thebes Launch Complex is named after the ancient Egyptian city of Thebes, which was a center of learning and culture in the ancient world."
+    "id": "testcargo1",
+    "name": "Pelletized Rawmat",
+    "description": "Small spherical pellets of high-purity materials, coated in a thin layer of non-reactive polymer to prevent clumping and contamination. Used as printer feedstock and in many industrial processes.",
+    "cargo_type": "Bulk",
+    "author": "system"
   }
 ]

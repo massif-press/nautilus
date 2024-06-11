@@ -1,5 +1,5 @@
 <template>
-  <editor-base :item="poi">
+  <map-item-editor :item="poi">
     <v-row>
       <v-col>
         <v-select density="compact" hide-details v-model="poi.Faction" label="Faction" />
@@ -16,19 +16,26 @@
         <v-combobox hide-details v-model="poi.PoiType" :items="poiTypes" label="Type" />
       </v-col>
     </v-row>
-  </editor-base>
+
+    <div class="mx-2 mt-6">
+      <div class="text-caption text-disabled ml-n2">Crew</div>
+      <crew-selector :crewed-item="poi" />
+    </div>
+  </map-item-editor>
 </template>
 
 <script lang="ts">
 import _ from 'lodash';
-import { Poi } from '../../models/poi';
 import { useMapStore } from '../../stores/mapStore';
-import EditorBase from './components/editorBase.vue';
+import MapItemEditor from './components/mapItemEditor.vue';
+import CrewSelector from './components/crewAssignment.vue';
+import { Poi } from '../../models/maps/poi';
 
 export default {
   name: 'PoiEditor',
   components: {
-    EditorBase,
+    MapItemEditor,
+    CrewSelector,
   },
   props: {
     id: { type: String, required: true },
@@ -36,7 +43,7 @@ export default {
     lon: { type: String, required: false },
   },
   data: () => ({
-    poi: {},
+    poi: {} as Poi,
   }),
   watch: {
     id: {

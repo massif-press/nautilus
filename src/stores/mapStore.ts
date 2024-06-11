@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
-import { Ship, ShipData } from '../models/ships/ship';
-import { Poi, PoiData } from '../models/poi';
+import { Ship, ShipData } from '../models/maps/ship';
+import { Poi, PoiData } from '../models/maps/poi';
 import crew from '../assets/test_data/crew.json';
-import cargo from '../assets/test_data/cargo.json';
 import pois from '../assets/test_data/pois.json';
 import ships from '../assets/test_data/ships.json';
 import maps from '../assets/test_data/maps.json';
 import { SystemMap, MapData } from '../models/maps/systemMap';
+import { Crew, CrewData } from '../models/maps/crew';
 
 export const useMapStore = defineStore('map', {
   state: () => ({
@@ -15,9 +15,14 @@ export const useMapStore = defineStore('map', {
     ships: [] as any[],
     pois: [] as any[],
     crew: [] as any[],
-    cargo: [] as any[],
   }),
   getters: {
+    items: (state) => {
+      return [...state.ships, ...state.pois];
+    },
+    getItemById: (state) => (id: string) => {
+      return state.ships.find((ship) => ship.ID === id) || state.pois.find((poi) => poi.ID === id);
+    },
     getShipById: (state) => (id: string) => {
       return state.ships.find((ship) => ship.ID === id);
     },
@@ -27,18 +32,31 @@ export const useMapStore = defineStore('map', {
     getMapById: (state) => (id: string) => {
       return state.maps.find((map) => map.ID === id);
     },
+    getCrewById: (state) => (id: string) => {
+      return state.crew.find((crew) => crew.ID === id);
+    },
     getSubmaps: (state) => (map_id: string) => {
-      console.log(map_id);
-      console.log([...state.ships, ...state.pois].filter((item) => item.Location.map === map_id));
       return [...state.ships, ...state.pois]
         .filter((item) => item.Location.map === map_id)
         .filter((item) => !!item.Submap)
         .map((item) => item.Submap);
     },
+    getMapItemsByAuthor: (state) => (author_id: string) => {
+      return [...state.ships, ...state.pois].filter((item) => item.Author.ID === author_id);
+    },
+    getTerrainByMap: (state) => (map_id: string) => {
+      return state.maps.find((map) => map.ID === map_id)?.Terrain || [];
+    },
+    terrain: (state) => {
+      return state.maps.flatMap((m) => m.Terrain);
+    },
   },
   actions: {
     setMap(map) {
       this.map = map;
+    },
+    setMapFromId(id) {
+      this.map = this.maps.find((m) => m.ID === id);
     },
     load() {
       // temporary testing data
@@ -46,8 +64,7 @@ export const useMapStore = defineStore('map', {
       this.pois = pois.map((p) => new Poi(p as PoiData));
       this.ships = ships.map((s) => new Ship(s as ShipData));
 
-      this.crew = crew;
-      this.cargo = cargo;
+      this.crew = crew.map((c) => new Crew(c as CrewData));
     },
   },
 });

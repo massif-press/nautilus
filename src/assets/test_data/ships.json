@@ -10,7 +10,7 @@
     "map": "ganymede",
     "lat": 21.63700521110632,
     "lon": 23.227844238281254,
-    "status": "Approaching Docking Ring",
+    "mission_status": "Approaching Docking Ring",
     "mission": "Docking at Chapelco Station",
     "destination": "g-chapelco-berth-224"
   },
@@ -25,7 +25,7 @@
     "map": "ganymede",
     "lat": 69.6570862730117,
     "lon": 104.4140625,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Io",
     "destination": "g-j1gate"
   },
@@ -40,7 +40,7 @@
     "map": "ganymede",
     "lat": 60.4138523504649,
     "lon": 30.234375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Enceladus",
     "destination": "g-j1gate"
   },
@@ -56,7 +56,7 @@
     "map": "ganymede",
     "lat": 32,
     "lon": 76.157,
-    "status": "Retrofitting",
+    "mission_status": "Retrofitting",
     "mission": "Upgrade underway",
     "destination": "g-manamoc"
   },
@@ -71,7 +71,7 @@
     "map": "ganymede",
     "lat": 36.1733569352216,
     "lon": 59.4140625,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mars",
     "destination": "g-chapelco"
   },
@@ -86,7 +86,7 @@
     "map": "ganymede",
     "lat": 75.2306674128157,
     "lon": 38.49609375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mercury",
     "destination": "g-j1gate"
   },
@@ -101,7 +101,7 @@
     "map": "ganymede",
     "lat": 70.1403642720717,
     "lon": 46.7578125,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mercury",
     "destination": "g-j1gate"
   },
@@ -116,7 +116,7 @@
     "map": "ganymede",
     "lat": -40.4469470596005,
     "lon": 121.9482421875,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -131,7 +131,7 @@
     "map": "ganymede",
     "lat": 33.6877817584393,
     "lon": 76.376953125,
-    "status": "Docked",
+    "mission_status": "Docked",
     "mission": "Undergoing Maintenance"
   },
   {
@@ -145,7 +145,7 @@
     "map": "ganymede",
     "lat": 43.06,
     "lon": -23.2,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-node-r2"
   },
@@ -160,7 +160,7 @@
     "map": "ganymede",
     "lat": -72.8938019336228,
     "lon": -10.6787109375,
-    "status": "Queued for Gate",
+    "mission_status": "Queued for Gate",
     "mission": "In transit to Sol/Charon",
     "destination": "g-ungate"
   },
@@ -175,7 +175,7 @@
     "map": "ganymede",
     "lat": 32.2871326326163,
     "lon": 80.3759765625,
-    "status": "Docked",
+    "mission_status": "Docked",
     "mission": "Retrofitting"
   },
   {
@@ -189,7 +189,7 @@
     "map": "ganymede",
     "lat": 43.48,
     "lon": -22.89,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-node-r2"
   },
@@ -204,7 +204,7 @@
     "map": "ganymede",
     "lat": 42.79,
     "lon": -22.54,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-node-r2"
   },
@@ -219,7 +219,7 @@
     "map": "ganymede",
     "lat": 43.24,
     "lon": -22.34,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-node-r2"
   },
@@ -234,7 +234,7 @@
     "map": "ganymede",
     "lat": -39.9097362345371,
     "lon": 124.189453125,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -249,7 +249,7 @@
     "map": "ganymede",
     "lat": -41.0793511494689,
     "lon": 124.62890625,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -264,7 +264,7 @@
     "map": "ganymede",
     "lat": -42.5854442573849,
     "lon": 124.8486328125,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -279,7 +279,7 @@
     "map": "ganymede",
     "lat": -41.0130657870063,
     "lon": 122.16796875,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -294,7 +294,7 @@
     "map": "ganymede",
     "lat": 42.9242517538706,
     "lon": -22.796630859375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Escorting UNS-CV INDUS",
     "destination": "g-node-r2"
   },
@@ -309,7 +309,7 @@
     "map": "ganymede",
     "lat": -42.8115217450978,
     "lon": 120.6298828125,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -324,7 +324,7 @@
     "map": "ganymede",
     "lat": -43.7393520791547,
     "lon": 125.1123046875,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -339,7 +339,7 @@
     "map": "ganymede",
     "lat": -41.7057285152375,
     "lon": 120.8935546875,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -354,7 +354,7 @@
     "map": "ganymede",
     "lat": -73.8492864567524,
     "lon": -12.3046875,
-    "status": "Approaching Gate",
+    "mission_status": "Approaching Gate",
     "mission": "Gating to SOL-3",
     "destination": "g-ungate"
   },
@@ -369,7 +369,7 @@
     "map": "ganymede",
     "lat": -73.3278580984069,
     "lon": -11.865234375,
-    "status": "Queued for Gate",
+    "mission_status": "Queued for Gate",
     "mission": "In transit to Sol/Charon",
     "destination": "g-ungate"
   },
@@ -384,7 +384,7 @@
     "map": "ganymede",
     "lat": -72.6464858514937,
     "lon": -10.1953125,
-    "status": "Queued for Gate",
+    "mission_status": "Queued for Gate",
     "mission": "In transit to Sol/Charon",
     "destination": "g-ungate"
   },
@@ -399,7 +399,7 @@
     "map": "ganymede",
     "lat": 75.4088542284645,
     "lon": 65.478515625,
-    "status": "Standing By",
+    "mission_status": "Standing By",
     "mission": "Gate Sentry",
     "destination": "g-j1gate"
   },
@@ -414,7 +414,7 @@
     "map": "ganymede",
     "lat": -73.1504399116301,
     "lon": -11.2939453125,
-    "status": "Queued for Gate",
+    "mission_status": "Queued for Gate",
     "mission": "In transit to Sol/Charon",
     "destination": "g-ungate"
   },
@@ -430,7 +430,7 @@
     "map": "ganymede",
     "lat": -75.89,
     "lon": -11.53,
-    "status": "Moored",
+    "mission_status": "Moored",
     "mission": "Awaiting departure",
     "destination": "g-m-1"
   },
@@ -445,7 +445,7 @@
     "map": "ganymede",
     "lat": 28.3043806829627,
     "lon": 14.58984375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mars",
     "destination": "g-chapelco"
   },
@@ -460,7 +460,7 @@
     "map": "ganymede",
     "lat": -76.289541619162,
     "lon": -12.3046875,
-    "status": "Docked",
+    "mission_status": "Docked",
     "mission": "Loading"
   },
   {
@@ -474,7 +474,7 @@
     "map": "ganymede",
     "lat": 66.4431065081646,
     "lon": 69.2578125,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Venus",
     "destination": "g-j1gate"
   },
@@ -489,7 +489,7 @@
     "map": "ganymede",
     "lat": 26.4312280645064,
     "lon": 58.359375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mars",
     "destination": "g-chapelco"
   },
@@ -504,7 +504,7 @@
     "map": "ganymede",
     "lat": 64.6991054420476,
     "lon": 73.30078125,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Venus",
     "destination": "g-j1gate"
   },
@@ -519,7 +519,7 @@
     "map": "ganymede",
     "lat": -27.8779283336794,
     "lon": -29.0478515625,
-    "status": "Docked",
+    "mission_status": "Docked",
     "mission": "Crew Transfer",
     "destination": "g-arbolillo"
   },
@@ -534,7 +534,7 @@
     "map": "ganymede",
     "lat": 25.9580446733178,
     "lon": 35.859375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mars",
     "destination": "g-chapelco"
   },
@@ -549,7 +549,7 @@
     "map": "ganymede",
     "lat": 68.0733047407902,
     "lon": 70.6640625,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Io",
     "destination": "g-j1gate"
   },
@@ -564,7 +564,7 @@
     "map": "ganymede",
     "lat": 36.8796206050267,
     "lon": 66.62109375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Cradle",
     "destination": "g-chapelco"
   },
@@ -579,7 +579,7 @@
     "map": "ganymede",
     "lat": -76.0796677337899,
     "lon": -12.919921875,
-    "status": "Docked",
+    "mission_status": "Docked",
     "mission": "Loading"
   },
   {
@@ -593,7 +593,7 @@
     "map": "ganymede",
     "lat": 33.504759069226,
     "lon": 75.41015625,
-    "status": "Docked",
+    "mission_status": "Docked",
     "mission": "Undergoing Maintenance"
   },
   {
@@ -607,7 +607,7 @@
     "map": "ganymede",
     "lat": 37.1603165467367,
     "lon": 25.6640625,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Venus",
     "destination": "g-j1gate"
   },
@@ -622,7 +622,7 @@
     "map": "ganymede",
     "lat": 5.61598581915534,
     "lon": 31.640625,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mars",
     "destination": "g-chapelco"
   },
@@ -637,7 +637,7 @@
     "map": "ganymede",
     "lat": 32.4356130411627,
     "lon": 77.51953125,
-    "status": "Docked",
+    "mission_status": "Docked",
     "mission": "Undergoing Maintenance"
   },
   {
@@ -651,7 +651,7 @@
     "map": "ganymede",
     "lat": -39.3682791491601,
     "lon": 121.9921875,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "Patrol",
     "destination": "g-sanjavier"
   },
@@ -666,7 +666,7 @@
     "map": "ganymede",
     "lat": 29.8406438998344,
     "lon": 56.77734375,
-    "status": "Underway",
+    "mission_status": "Underway",
     "mission": "In transit to Sol/Mars",
     "destination": "g-chapelco"
   }

@@ -20,7 +20,7 @@
         variant="tonal"
         color="accent"
         class="ml-3"
-        to="/main/map"
+        to="/main/map/#"
         :disabled="!selectedMap">
         OPEN
       </v-btn>
@@ -33,7 +33,7 @@
       <v-spacer />
       <v-btn size="small" variant="tonal" color="accent" to="/main/compendium">COMPENDIUM</v-btn>
       <v-spacer />
-      <v-btn size="small" variant="tonal" color="accent" to="/main/about" disabled>ABOUT</v-btn>
+      <v-btn size="small" variant="tonal" color="accent" to="/main/about">ABOUT</v-btn>
       <v-spacer />
       <div style="width: 1px; height: 40px; opacity: 0.3" class="bg-grey" />
       <v-spacer />
@@ -48,7 +48,7 @@ import { useMapStore } from '../stores/mapStore';
 export default {
   name: 'main-view',
   data: () => ({
-    selectedMap: null,
+    selectedMap: null as any,
   }),
   mounted() {
     const store = useMapStore();

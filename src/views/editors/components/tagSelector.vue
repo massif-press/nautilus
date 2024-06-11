@@ -1,7 +1,7 @@
 <template>
-  <v-row dense v-if="selected.length" v-for="t in selected">
+  <v-row dense v-if="selected && selected.length" v-for="t in selected">
     <v-col>
-      <tag-card :tag="t" small class="ma-1" />
+      <tag-card :tag="<any>t" small class="ma-1" />
     </v-col>
     <v-col cols="auto" class="align-self-center">
       <v-btn
@@ -32,31 +32,24 @@
             <v-text-field v-model="search" label="Search" />
           </template>
         </v-toolbar>
-        <v-card-text>
-          <v-data-table :headers="headers" :items="filteredTags" :items-per-page="-1">
-            <template #item.Name="{ item }">
-              <v-btn color="secondary" size="small" @click="select(item)">
-                {{ item.Name }}
-              </v-btn>
-            </template>
-            <template #item.Tags="{ item }">
-              <v-tooltip v-for="tag in item.Tags" location="top">
-                <template #activator="{ props }">
-                  <v-chip v-bind="props" prepend-icon="mdi-tag">
-                    {{ tag.Name }}
-                  </v-chip>
-                </template>
-                <b>{{ tag.Description }}</b>
-              </v-tooltip>
-            </template>
-          </v-data-table>
-        </v-card-text>
+        <v-data-table
+          density="compact"
+          :headers="headers"
+          :items="filteredTags"
+          :items-per-page="-1">
+          <template #item.Name="{ item }">
+            <v-btn color="secondary" size="small" @click="select(item)">
+              {{ item.Name }}
+            </v-btn>
+          </template>
+        </v-data-table>
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script lang="ts">
+import { Tag } from '../../../models/compendium/tag';
 import { useCompendiumStore } from '../../../stores/compendiumStore';
 import tagCard from '../../compendium/cards/tagCard.vue';
 
@@ -77,10 +70,10 @@ export default {
     dialog: false,
   }),
   computed: {
-    tags() {
-      return useCompendiumStore().tags;
+    tags(): Tag[] {
+      return useCompendiumStore().tags as Tag[];
     },
-    filteredTags() {
+    filteredTags(): Tag[] {
       const t = this.tags.filter((h) => h.AppliesTo.includes(this.type));
       return t.filter((h) => h.Name.toLowerCase().includes(this.search.toLowerCase()));
     },

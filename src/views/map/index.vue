@@ -106,10 +106,10 @@
 </template>
 
 <script lang="ts">
-import { useMapStore } from '../stores/mapStore';
-import MapRenderer from './map/renderer.vue';
-import Viewer from './map/viewer.vue';
-import RailList from './map/viewers/railList.vue';
+import { useMapStore } from '../../stores/mapStore';
+import MapRenderer from './renderer.vue';
+import Viewer from './viewer.vue';
+import RailList from './viewers/railList.vue';
 
 export default {
   name: 'Map',
@@ -117,6 +117,9 @@ export default {
     MapRenderer,
     Viewer,
     RailList,
+  },
+  props: {
+    itemId: { type: String, required: false },
   },
   data: () => ({
     search: '',
@@ -129,8 +132,20 @@ export default {
       { icon: 'mdi-delta' },
       { icon: 'mdi-account' },
     ],
-    selected: null,
+    selected: null as any,
   }),
+  async mounted() {
+    if (this.itemId) {
+      const item = useMapStore().items.find((i) => i.ID === this.itemId);
+      if (item) {
+        if (!item.Location.map !== this.map.ID) {
+          useMapStore().setMapFromId(item.Location.map);
+        }
+        await this.$nextTick();
+        this.select(item);
+      }
+    }
+  },
   computed: {
     map() {
       return useMapStore().map;
@@ -163,12 +178,14 @@ export default {
       this.railValue = i;
       this.deselect();
     },
-    select(item) {
+    async select(item) {
       this.selected = item;
+      await this.$nextTick();
       this.$refs.renderer.setSelected(item);
     },
-    deselect() {
+    async deselect() {
       this.selected = null;
+      await this.$nextTick();
       this.$refs.renderer.clearSelection();
     },
     openFromMap(item) {

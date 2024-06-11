@@ -29,7 +29,7 @@
         <v-row>
           <v-col cols="auto">
             <div class="text-caption text-disabled">Shipwright</div>
-            <div>{{ item.Hull.Shipwright.Name }}</div>
+            <div>{{ item.Hull.Shipwright }}</div>
           </v-col>
           <v-col cols="auto">
             <div class="text-caption text-disabled">Home Port</div>

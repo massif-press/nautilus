@@ -1,7 +1,12 @@
 <template>
-  <v-tabs v-model="tab" density="compact" height="30px" class="mt-n2">
+  <v-tabs
+    v-if="!noAdd || item.Submaps.length"
+    v-model="tab"
+    density="compact"
+    height="30px"
+    class="mt-n2">
     <v-tab v-for="(s, i) in item.Submaps" :value="i">{{ s.Name }}</v-tab>
-    <v-tab prepend-icon="mdi-plus" @click="addLOD">Add</v-tab>
+    <v-tab v-if="!noAdd" prepend-icon="mdi-plus" @click="addLOD">Add</v-tab>
   </v-tabs>
   <div v-if="!item.Submaps.length" class="text-center text-caption text-disabled">
     <i>No submaps</i>
@@ -186,11 +191,12 @@ export default {
     SubmapRenderer,
   },
   props: {
-    item: Object,
+    item: { type: Object, required: true },
+    noAdd: { type: Boolean, default: false },
   },
   data: () => ({
     tab: 0,
-    selected: null,
+    selected: null as any,
     icons: [
       'mdi-circle',
       'mdi-circle-outline',

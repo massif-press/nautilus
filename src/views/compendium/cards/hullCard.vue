@@ -4,7 +4,7 @@
       <div class="text-h5">{{ hull.Name }}</div>
       <v-row dense justify="space-between">
         <v-col cols="auto">
-          {{ hull.Shipwright.Name }} {{ hull.Class }}
+          {{ hull.Shipwright }} {{ hull.Class }}
           <span class="text-caption text-disabled">({{ hull.Code }})</span>
         </v-col>
         <v-col cols="auto">

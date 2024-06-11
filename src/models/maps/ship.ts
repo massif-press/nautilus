@@ -1,21 +1,18 @@
 import _ from 'lodash';
 import { iconData, locationData } from '../dataTypes';
-import { cargoData, Cargo } from '../cargo';
-import { crewData, Crew } from '../crew';
-import { itemHistoryData, ItemHistory } from '../itemHistory';
 import { missionData, Mission } from '../mission';
 import { useCompendiumStore } from '../../stores/compendiumStore';
-import { Hull } from './hull';
-import { Tag } from '../tag';
-import { Submap, SubmapData } from '../maps/submap';
-import { MapItem, MapItemData } from '../maps/mapitem';
+import { Tag } from '../compendium/tag';
+import { MapItem, MapItemData } from './mapitem';
+import { Hull } from '../compendium/hull';
+import { Submap } from './submap';
 
 type ShipData = MapItemData & {
   prefix: string;
   map: string;
   lat: number;
   lon: number;
-  status?: string;
+  mission_status?: string;
   mission?: string;
   destination?: string;
 
@@ -24,9 +21,6 @@ type ShipData = MapItemData & {
   description: string;
 
   details?: { title: string; body: string }[];
-
-  crew?: crewData[];
-  cargo?: cargoData[];
 
   subitems?: SubitemShipData[];
 };
@@ -45,9 +39,7 @@ type SubitemShipData = {
 
 class Ship extends MapItem {
   public readonly ItemType = 'ship';
-  public readonly Collection = 'ship';
 
-  public readonly ID: string;
   public Name: string;
   public Prefix: string;
   public Hull: Hull;
@@ -58,14 +50,10 @@ class Ship extends MapItem {
   public Icon: iconData;
   public Location: locationData;
   public Details: { title: string; body: string }[];
-  public Crew: Crew[];
-  public Cargo: Cargo[];
   public Mission: Mission;
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
   public Subitems: Ship[];
-
-  public Submap?: any;
 
   constructor(data?: ShipData) {
     super(data);
@@ -78,7 +66,11 @@ class Ship extends MapItem {
       if (!hull) {
         throw new Error(`Hull ${data.hull} not found in compendium`);
       }
-      this.Hull = hull;
+      this.Hull = hull as Hull;
+      if (Hull.Submaps) {
+        this.Submaps = Hull.Submaps;
+        this.Submaps.forEach((s) => s.SetCenter(this.Location.coords));
+      }
     }
 
     this.Icon.icon = data?.icon || 'cc:ship';
@@ -86,11 +78,9 @@ class Ship extends MapItem {
     if (!this.Icon.size) this.Icon.size = 24;
 
     this.Details = data?.details || [];
-    this.Crew = data && data.crew ? data.crew.map((c) => new Crew(c)) : [];
-    this.Cargo = data && data.cargo ? data.cargo.map((c) => new Cargo(c)) : [];
 
     this.Mission = new Mission({
-      status: data?.status || 'unknown',
+      status: data?.mission_status || 'unknown',
       destination_id: data?.destination || 'unknown',
       mission_type: data?.mission || 'unknown',
     });
@@ -151,7 +141,7 @@ class Ship extends MapItem {
       lat: parent.Location.coords[0] + data.offset[0],
       lon: parent.Location.coords[1] + data.offset[1],
       homeport: parent.HomePort,
-    };
+    } as ShipData;
 
     return new Ship(subitemData);
   }

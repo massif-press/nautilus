@@ -1,8 +1,5 @@
 import _ from 'lodash';
-import { cargoData, Cargo } from './cargo';
-import { crewData, Crew } from './crew';
-import { ItemHistory } from './itemHistory';
-import { MapItemData, MapItem } from './maps/mapitem';
+import { MapItemData, MapItem } from './mapitem';
 
 const poiSizeClasses = [
   {
@@ -39,22 +36,14 @@ type PoiData = MapItemData & {
   show?: number;
   poitype: string;
   description: string;
-
-  crew?: crewData[];
-  cargo?: cargoData[];
 };
 
 class Poi extends MapItem {
   public readonly ItemType = 'poi';
-  public readonly Collection = 'poi';
 
   public Size: string;
   public Description: string;
   public PoiType: string;
-
-  public History: ItemHistory[];
-  public Crew: Crew[];
-  public Cargo: Cargo[];
 
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
@@ -66,9 +55,6 @@ class Poi extends MapItem {
 
     const sizeClass = poiSizeClasses.find((s) => s.id === this.Size);
     this.Icon.show = sizeClass?.show || 1;
-
-    this.Crew = data && data.crew ? data.crew.map((c) => new Crew(c)) : [];
-    this.Cargo = data && data.cargo ? data.cargo.map((c) => new Cargo(c)) : [];
 
     if (!this.Icon.size) this.Icon.size = 24;
     if (!this.Icon.show) this.Icon.show = 1;

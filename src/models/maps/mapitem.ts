@@ -2,9 +2,13 @@ import _ from 'lodash';
 import { useCompendiumStore } from '../../stores/compendiumStore';
 import { iconData, locationData } from '../dataTypes';
 import { Submap, SubmapData } from './submap';
-import { Tag } from '../tag';
+import { Tag } from '../compendium/tag';
+import { Author } from '../author';
+import { EditableItem, EditableItemData } from '../editableItem';
+import { Crew } from './crew';
+import { useMapStore } from '../../stores/mapStore';
 
-type MapItemData = {
+type MapItemData = EditableItemData & {
   id: string;
   name: string;
   faction: string;
@@ -12,35 +16,31 @@ type MapItemData = {
   map: string;
   lat: number;
   lon: number;
-  author?: string;
   icon?: string;
   color?: string;
   tags?: string;
 
   submaps?: SubmapData[];
+  crew_ids?: string[];
 };
 
-abstract class MapItem {
-  public readonly ID: string;
+abstract class MapItem extends EditableItem {
+  public readonly Collection = 'map';
+
   public Name: string;
-  public AuthorID: string;
   public Faction: string;
   public Owner: string;
   public Icon: iconData;
   public Location: locationData;
   protected _tags: Tag[];
-  public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
   public Submaps: Submap[];
 
   constructor(data?: MapItemData) {
-    this.ID = data?.id || _.uniqueId();
+    super(data);
     this.Name = data?.name || '';
     this.Faction = data?.faction || '';
     this.Owner = data?.owner || '';
-    this.AuthorID = data?.author || 'System';
-
-    this.Status = 'Approved';
 
     this.Icon = { icon: '', color: data?.color || 'blue' };
 
@@ -52,7 +52,7 @@ abstract class MapItem {
     const tags = data?.tags?.split(', ') || [];
 
     this._tags = tags.length
-      ? useCompendiumStore().tags.filter((tag) => tags.includes(tag.ID))
+      ? (useCompendiumStore().tags.filter((tag) => tags.includes(tag.ID)) as Tag[])
       : [];
 
     if (data?.submaps) this.Submaps = data.submaps.map((s) => new Submap(s, this));
@@ -65,6 +65,10 @@ abstract class MapItem {
 
   public set ItemTags(tags: Tag[]) {
     this._tags = tags;
+  }
+
+  public get Crew(): Crew[] {
+    return useMapStore().crew.filter((c) => c.Assignment && c.Assignment.ID === this.ID);
   }
 }
 
