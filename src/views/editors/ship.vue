@@ -159,7 +159,7 @@
 import _ from 'lodash';
 import { useDataStore } from '../../stores/dataStore';
 
-import HullSelector from './components/hullSelector.vue';
+import HullSelector from './components/hullselector.vue';
 import CrewSelector from './components/crewAssignment.vue';
 import HangarAssignment from './components/hangarAssignment.vue';
 import MapItemEditor from './components/mapItemEditor.vue';
