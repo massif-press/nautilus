@@ -14,7 +14,7 @@
       </v-btn>
     </v-col>
   </v-row>
-  <div class="text-right">
+  <div v-if="!readonly" class="text-right">
     <v-dialog v-model="dialog">
       <template #activator="{ props }">
         <v-btn v-bind="props" color="accent" variant="tonal" size="x-small" prepend-icon="mdi-plus">
@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { Tag } from '../../../models/compendium/tag';
-import { useCompendiumStore } from '../../../stores/compendiumStore';
+import { useDataStore } from '../../../stores/dataStore';
 import tagCard from '../../compendium/cards/tagCard.vue';
 
 export default {
@@ -59,6 +59,7 @@ export default {
   props: {
     selected: { type: Array, required: false },
     type: { type: String, required: true },
+    readonly: { type: Boolean, default: false },
   },
   emits: ['select'],
   data: () => ({
@@ -71,7 +72,7 @@ export default {
   }),
   computed: {
     tags(): Tag[] {
-      return useCompendiumStore().tags as Tag[];
+      return useDataStore().tags as Tag[];
     },
     filteredTags(): Tag[] {
       const t = this.tags.filter((h) => h.AppliesTo.includes(this.type));

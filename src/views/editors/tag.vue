@@ -6,13 +6,14 @@
     </div>
     <v-row>
       <v-col cols="8">
-        <v-text-field hide-details v-model="tag.Name" label="Name" />
+        <v-text-field hide-details v-model="tag.Name" :readonly="!tag.isUserOwned" label="Name" />
       </v-col>
       <v-col>
         <v-select
           multiple
           chips
           hide-details
+          :readonly="!tag.isUserOwned"
           v-model="tag.AppliesTo"
           :items="AppliesTo"
           label="Applicable To" />
@@ -21,10 +22,10 @@
 
     <div class="mx-2 mt-3">
       <div class="text-caption text-disabled ml-n2">Description</div>
-      <v-textarea hide-details v-model="tag.Description" />
+      <v-textarea hide-details v-model="tag.Description" :readonly="!tag.isUserOwned" />
     </div>
 
-    <div class="mx-2 mt-3">
+    <div v-if="tag.isUserOwned" class="mx-2 mt-3">
       <div class="text-caption text-disabled ml-n2">Implementation Details</div>
 
       <v-alert
@@ -49,7 +50,7 @@
 import _ from 'lodash';
 import { Tag } from '../../models/compendium/tag';
 import CompendiumItemEditor from './components/compendiumItemEditor.vue';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'TagEditor',
@@ -68,7 +69,7 @@ export default {
         if (this.id === 'new') {
           this.tag = new Tag();
         } else {
-          this.tag = useCompendiumStore().getTagById(this.id);
+          this.tag = useDataStore().getTagById(this.id);
         }
       },
       immediate: true,
@@ -78,7 +79,7 @@ export default {
     if (this.id === 'new') {
       this.tag = new Tag();
     } else {
-      this.tag = useCompendiumStore().getTagById(this.id);
+      this.tag = useDataStore().getTagById(this.id);
     }
   },
   computed: {

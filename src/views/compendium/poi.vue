@@ -14,15 +14,6 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-col cols="auto">
-          <div class="text-caption text-disabled text-right">
-            <i>
-              Showing {{ filteredPois.length }} of {{ pois.length }} points of interest from
-              {{ authors.length }} authors
-            </i>
-          </div>
-        </v-col>
       </v-row>
     </v-card>
     <v-card-text>
@@ -53,7 +44,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'POIs',
@@ -70,7 +61,7 @@ export default {
   }),
   computed: {
     pois() {
-      return useMapStore().pois;
+      return useDataStore().pois;
     },
     filteredPois() {
       if (!this.search) return this.pois;

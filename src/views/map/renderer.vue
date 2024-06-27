@@ -18,10 +18,11 @@
         trackResize: true,
       }"
       style="background-color: rgb(var(--v-background))"
-      @click="setClickLocation($event)">
+      @click="setClickLocation($event)"
+      @moveend="redraw">
       <l-marker v-if="pickMode && lat && lng" :lat-lng="[lat, lng]">
         <l-icon :icon-size="iconSize">
-          <v-icon :size="iconSize[0]" color="yellow" icon="mdi-crosshairs" />
+          <v-icon :size="iconSize[0]" color="deep-orange" icon="mdi-crosshairs" />
         </l-icon>
       </l-marker>
 
@@ -56,6 +57,17 @@
               </l-tooltip>
             </l-marker>
           </template>
+          <template v-for="label in submap.Labels">
+            <l-marker :lat-lng="label.Offset">
+              <l-icon :icon-size="[100 + Number(label.Size * 2), 10]">
+                <div
+                  class="text-center"
+                  :style="`color: ${label.Color}; font-size: ${label.Size}px`">
+                  {{ label.Name }}
+                </div>
+              </l-icon>
+            </l-marker>
+          </template>
         </template>
 
         <l-marker
@@ -72,7 +84,6 @@
               :size="getIconSize(item)[0]"
               :color="selected && item.ID === selected.ID ? 'warning' : item.Icon.color"
               :icon="item.Icon.icon" />
-            <!-- :icon="item.Icon.icon" /> -->
           </l-icon>
           <l-tooltip :options="{ sticky: true, direction: 'bottom', offset: [0, 30] }">
             {{ item.Title }}
@@ -176,7 +187,7 @@ import {
   LImageOverlay,
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'MapRenderer',
@@ -193,7 +204,7 @@ export default {
   data: () => ({
     zoom: 3,
     baseSize: 15,
-    selected: null,
+    selected: null as any,
     loc: ``,
     lat: 0,
     lng: 0,
@@ -204,19 +215,19 @@ export default {
       return [this.baseSize, this.baseSize];
     },
     map() {
-      return useMapStore().map;
+      return useDataStore().map;
     },
     terrain() {
-      return useMapStore().map.Terrain;
+      return useDataStore().map.Terrain;
     },
     ships() {
-      return useMapStore().ships.filter((s) => s.Location.map === this.map.ID);
+      return useDataStore().ships.filter((s) => s.Location.map === this.map.ID);
     },
     pois() {
-      return useMapStore().pois.filter((p) => p.Location.map === this.map.ID);
+      return useDataStore().pois.filter((p) => p.Location.map === this.map.ID);
     },
     crew() {
-      return useMapStore().crew.filter((c) => c.location.map === this.map.ID);
+      return useDataStore().crew.filter((c) => c.location.map === this.map.ID);
     },
     items() {
       return [...this.ships, ...this.pois];
@@ -227,11 +238,26 @@ export default {
       const path = 'submaps';
       return `/${path}/${img}`;
     },
-    submapVisible(item) {
-      console.log(item);
-      // TODO: only show if the submap bounds are within the current view
+    redraw() {
+      this.$refs.lmap.leafletObject.invalidateSize();
 
-      return item.Show <= this.zoom;
+      // this.$refs.lmap[0].rerender();
+    },
+    submapVisible(item) {
+      if (item.Show > this.zoom) return;
+
+      const bounds = this.$refs.lmap.leafletObject.getBounds();
+      const mapBounds = {
+        lowerLeft: { x: bounds._southWest.lng, y: bounds._southWest.lat },
+        upperRight: { x: bounds._northEast.lng, y: bounds._northEast.lat },
+      };
+
+      return (
+        mapBounds.lowerLeft.x <= item.BoundsObject.upperRight.x &&
+        mapBounds.upperRight.x >= item.BoundsObject.lowerLeft.x &&
+        mapBounds.lowerLeft.y <= item.BoundsObject.upperRight.y &&
+        mapBounds.upperRight.y >= item.BoundsObject.lowerLeft.y
+      );
     },
     itemSubmapsVisible(item) {
       return item.Submaps.some((s) => s.Show <= this.zoom);

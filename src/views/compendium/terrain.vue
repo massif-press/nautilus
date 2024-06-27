@@ -14,13 +14,6 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-spacer />
-        <v-col cols="auto">
-          <div class="text-caption text-disabled text-right">
-            <i>Showing {{ filteredTerrain.length }} of {{ terrain.length }} terrain items</i>
-          </div>
-        </v-col>
       </v-row>
     </v-card>
     <v-card-text>
@@ -50,7 +43,7 @@
 </template>
 <script lang="ts">
 import _ from 'lodash';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 import { Terrain } from '../../models/maps/terrain';
 
 export default {
@@ -66,7 +59,7 @@ export default {
   }),
   computed: {
     terrain(): Terrain[] {
-      return useMapStore().terrain;
+      return useDataStore().terrain;
     },
     filteredTerrain(): Terrain[] {
       if (!this.search) return this.terrain;
@@ -77,7 +70,7 @@ export default {
   },
   methods: {
     getMap(mapId: string) {
-      return useMapStore().maps.find((x) => x.ID === mapId);
+      return useDataStore().maps.find((x) => x.ID === mapId);
     },
   },
 };

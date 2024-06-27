@@ -1,12 +1,11 @@
 import _ from 'lodash';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import { iconData, locationData } from '../dataTypes';
 import { Submap, SubmapData } from './submap';
 import { Tag } from '../compendium/tag';
-import { Author } from '../author';
 import { EditableItem, EditableItemData } from '../editableItem';
 import { Crew } from './crew';
-import { useMapStore } from '../../stores/mapStore';
+import { Cargo } from '../compendium/cargo';
 
 type MapItemData = EditableItemData & {
   id: string;
@@ -21,7 +20,6 @@ type MapItemData = EditableItemData & {
   tags?: string;
 
   submaps?: SubmapData[];
-  crew_ids?: string[];
 };
 
 abstract class MapItem extends EditableItem {
@@ -33,6 +31,8 @@ abstract class MapItem extends EditableItem {
   public Icon: iconData;
   public Location: locationData;
   protected _tags: Tag[];
+
+  private _cargoIds: string[];
 
   public Submaps: Submap[];
 
@@ -52,7 +52,7 @@ abstract class MapItem extends EditableItem {
     const tags = data?.tags?.split(', ') || [];
 
     this._tags = tags.length
-      ? (useCompendiumStore().tags.filter((tag) => tags.includes(tag.ID)) as Tag[])
+      ? (useDataStore().tags.filter((tag) => tags.includes(tag.ID)) as Tag[])
       : [];
 
     if (data?.submaps) this.Submaps = data.submaps.map((s) => new Submap(s, this));
@@ -68,7 +68,23 @@ abstract class MapItem extends EditableItem {
   }
 
   public get Crew(): Crew[] {
-    return useMapStore().crew.filter((c) => c.Assignment && c.Assignment.ID === this.ID);
+    return useDataStore().crew.filter((c) => c.Assignment && c.Assignment.ID === this.ID);
+  }
+
+  public Save(): MapItemData {
+    return {
+      ...super.Save(),
+      name: this.Name,
+      faction: this.Faction,
+      owner: this.Owner,
+      map: this.Location.map,
+      lat: this.Location.coords[0],
+      lon: this.Location.coords[1],
+      icon: this.Icon.icon,
+      color: this.Icon.color,
+      tags: this._tags.map((t) => t.ID).join(', '),
+      submaps: this.Submaps.map((s) => s.Save()),
+    };
   }
 }
 

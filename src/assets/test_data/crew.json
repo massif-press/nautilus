@@ -1,6 +1,7 @@
 [
   {
     "id": "beef",
+    "type": "crew",
     "name": "Beef J. Computers",
     "pronouns": "he/him",
     "role": "Chief Engineer",

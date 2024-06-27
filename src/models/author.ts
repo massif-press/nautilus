@@ -1,6 +1,5 @@
 import { MapItem } from './maps/mapitem';
-import { useMapStore } from '../stores/mapStore';
-import { useCompendiumStore } from '../stores/compendiumStore';
+import { useDataStore } from '../stores/dataStore';
 
 type AuthorData = {
   id: string;
@@ -26,11 +25,11 @@ class Author {
   }
 
   public get MapItems(): MapItem[] {
-    return useMapStore().getMapItemsByAuthor(this.ID);
+    return useDataStore().getMapItemsByAuthor(this.ID);
   }
 
   public get CompendiumItems(): any[] {
-    return useCompendiumStore().getItemsByAuthor(this.ID);
+    return useDataStore().getItemsByAuthor(this.ID);
   }
 }
 

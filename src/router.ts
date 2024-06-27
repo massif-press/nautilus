@@ -26,6 +26,12 @@ import Poi from './views/compendium/poi.vue';
 import Crew from './views/compendium/crew.vue';
 import Authors from './views/compendium/authors.vue';
 import Cargo from './views/compendium/cargo.vue';
+import { useUserStore } from './stores/userStore';
+import { useDataStore } from './stores/dataStore';
+import AddImage from './views/editors/add-image.vue';
+import Mod from './views/mod/index.vue';
+import Deployable from './views/compendium/deployable.vue';
+import DeployableEditor from './views/editors/deployable.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -66,6 +72,12 @@ const router = createRouter({
               component: EditorOverview,
             },
             {
+              path: 'add-image/:init',
+              name: 'add-image',
+              component: AddImage,
+              props: true,
+            },
+            {
               path: 'edit/ship/:id/:lat?/:lon?',
               name: 'edit-ship',
               component: ShipEditor,
@@ -103,6 +115,12 @@ const router = createRouter({
               props: true,
             },
             {
+              path: 'edit/deployable/:id/',
+              name: 'edit-deployable',
+              component: DeployableEditor,
+              props: true,
+            },
+            {
               path: 'edit/terrain/:id/',
               name: 'edit-terrain',
               component: TerrainEditor,
@@ -124,6 +142,11 @@ const router = createRouter({
               path: 'hulls',
               name: 'hulls',
               component: Hulls,
+            },
+            {
+              path: 'deployables',
+              name: 'deployables',
+              component: Deployable,
             },
             {
               path: 'cargo',
@@ -174,9 +197,20 @@ const router = createRouter({
           name: 'about',
           component: About,
         },
+        {
+          path: 'mod',
+          name: 'mod',
+          component: Mod,
+        },
       ],
     },
   ],
+});
+
+router.beforeEach(async () => {
+  if (!useUserStore().loaded) await useUserStore().load();
+  if (!useDataStore().loaded) await useDataStore().load();
+  if (!useDataStore().loaded) await useDataStore().load();
 });
 
 export default router;

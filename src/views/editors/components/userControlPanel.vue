@@ -1,12 +1,18 @@
 <template>
-  <v-btn
-    size="x-small"
-    variant="tonal"
-    color="accent"
-    prepend-icon="mdi-pencil"
-    @click="dialog = true">
-    edit user info
-  </v-btn>
+  <div>
+    <v-btn
+      size="x-small"
+      variant="tonal"
+      color="accent"
+      prepend-icon="mdi-pencil"
+      @click="dialog = true">
+      edit user info
+    </v-btn>
+    <br v-if="user.is_mod" />
+    <v-btn v-if="user.is_mod" size="x-small" color="purple" prepend-icon="mdi-star" to="/main/mod">
+      Mod Dashboard
+    </v-btn>
+  </div>
   <v-dialog v-model="dialog" max-width="75vw">
     <v-card>
       <v-toolbar density="compact" color="primary" extended>
@@ -77,7 +83,7 @@
             </v-col>
             <v-col cols="auto" class="ml-3">
               <v-switch
-                v-model="user.showDiscord"
+                v-model="user.show_discord"
                 label="Show Discord Handle"
                 color="accent"
                 hide-details
@@ -86,7 +92,7 @@
               <div class="text-caption text-disabled mt-n3 ml-10">
                 <i>
                   Your Discord handle is
-                  <span v-if="user.showDiscord">
+                  <span v-if="user.show_discord">
                     <b class="text-accent">visible</b>
                     to
                   </span>
@@ -99,6 +105,22 @@
               </div>
             </v-col>
           </v-row>
+
+          <v-alert v-if="!user.image_submission" density="compact" color="primary" class="my-2">
+            <b>Request Image Submission Permissions</b>
+            <br />
+            <p>
+              For the time being, only verified users can submit images to the app. For
+              verification, you must be a Patreon supporter or a member of the LANCER Discord in
+              good standing. If you are a member of the Discord, please provide your Discord handle
+              above and we will verify your status. If you are a Patreon supporter, please message
+              me via Patreon.
+            </p>
+            <div class="text-right">
+              <v-btn color="accent" size="small" @click="requestImage">Request Permissions</v-btn>
+            </div>
+          </v-alert>
+
           <v-alert
             density="compact"
             variant="outlined"
@@ -140,6 +162,9 @@ export default {
     },
     copyID() {
       navigator.clipboard.writeText(this.user.user_id);
+    },
+    requestImage() {
+      console.log('request image');
     },
   },
 };

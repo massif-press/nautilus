@@ -2,27 +2,37 @@
   <div class="px-2 text-caption">
     <v-divider class="my-2" />
     <v-btn color="primary" size="x-small" flat class="my-2" block @click="openDetailTab(0)">
-      View Details
+      Details
     </v-btn>
     <v-btn
+      v-if="item.Crew && item.Crew.length"
       color="primary"
       size="x-small"
       flat
       class="my-2"
       block
-      disabled
       @click="openDetailTab(1)">
-      View Personnel
+      Crew
     </v-btn>
     <v-btn
+      v-if="item.CargoManifest && item.CargoManifest.length"
       color="primary"
       size="x-small"
       flat
       class="my-2"
       block
-      disabled
       @click="openDetailTab(2)">
-      View Cargo
+      Cargo
+    </v-btn>
+    <v-btn
+      v-if="item.Deployables && item.Deployables.length"
+      color="primary"
+      size="x-small"
+      flat
+      class="my-2"
+      block
+      @click="openDetailTab(3)">
+      Hangar
     </v-btn>
   </div>
 
@@ -37,8 +47,9 @@
         <template #extension>
           <v-tabs v-model="tab">
             <v-tab>Details</v-tab>
-            <v-tab disabled>Personnel</v-tab>
-            <v-tab disabled>Cargo</v-tab>
+            <v-tab v-if="item.Crew && item.Crew.length">Crew</v-tab>
+            <v-tab v-if="item.CargoManifest && item.CargoManifest.length">Cargo</v-tab>
+            <v-tab v-if="item.Deployables && item.Deployables.length">Hangar</v-tab>
           </v-tabs>
         </template>
       </v-toolbar>
@@ -51,32 +62,117 @@
           <v-window-item>
             <slot name="details" />
 
-            <div class="text-caption text-disabled">Item Particulars</div>
-            <div v-if="item.Details" v-for="(value, key) in item.Details" :key="key">
-              <div>{{ key }}: {{ value }}</div>
+            <div v-if="item.Details && item.Details.length" v-for="d in item.Details">
+              <div class="text-caption text-center">{{ d.title }}</div>
+              <p text="d.body" />
             </div>
-            <div class="text-caption text-center"><i>No Data Available</i></div>
-            <div class="text-caption text-disabled">Item History</div>
-            <div v-if="item.History" v-for="(value, key) in item.History" :key="key">
-              <div>{{ key }}: {{ value }}</div>
-            </div>
-            <div class="text-caption text-center"><i>No Data Available</i></div>
           </v-window-item>
-          <v-window-item>personnel</v-window-item>
-          <v-window-item>cargo</v-window-item>
+          <v-window-item v-if="item.Crew && item.Crew.length">
+            <div class="text-h6">Crew List</div>
+            <v-expansion-panels variant="accordion">
+              <v-expansion-panel density="compact" v-for="c in item.Crew">
+                <template #title>
+                  <v-row dense align="center">
+                    <v-col cols="auto">
+                      <v-avatar color="grey-darken-4" class="rounded">
+                        <v-icon icon="mdi-account" />
+                      </v-avatar>
+                    </v-col>
+                    <v-col cols="auto">
+                      {{ c.Name }}
+                      <span class="text-caption text-disabled">//</span>
+                      {{ c.Role }}
+                    </v-col>
+                  </v-row>
+                </template>
+                <template #text>
+                  <crew-card :crew="c" />
+                </template>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-window-item>
+          <v-window-item v-if="item.CargoManifest && item.CargoManifest.length">
+            <div class="text-h6">Cargo Manifest</div>
+            <v-expansion-panels variant="accordion">
+              <v-expansion-panel density="compact" v-for="c in item.CargoManifest">
+                <template #title>
+                  <v-row dense align="center">
+                    <v-col cols="auto">
+                      <v-avatar color="grey-darken-4" class="rounded">
+                        <v-icon icon="mdi-cube" />
+                      </v-avatar>
+                    </v-col>
+                    <v-col cols="auto">
+                      {{ c.item.Name }}
+                      <span class="text-caption text-disabled px-2">
+                        // {{ c.item.CargoType }} Cargo
+                      </span>
+                    </v-col>
+                    <v-col cols="auto" class="ml-auto">
+                      {{ c.quantity }}
+                    </v-col>
+                  </v-row>
+                </template>
+                <template #text>
+                  <cargo-card :cargo="c.item" />
+                </template>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-window-item>
+          <v-window-item v-if="item.Deployables && item.Deployables.length">
+            <div class="text-h6">Hangar</div>
+            <v-expansion-panels variant="accordion">
+              <v-expansion-panel v-for="c in item.Deployables">
+                <template #title>
+                  <v-row dense align="center">
+                    <v-col cols="auto">
+                      <v-avatar color="grey-darken-4" class="rounded">
+                        <v-icon :icon="c.item.Icon" />
+                      </v-avatar>
+                    </v-col>
+                    <v-col cols="5">
+                      {{ c.name }}
+                      <span class="text-caption text-disabled px-2">
+                        // {{ c.item.Name }} ({{ c.item.DeployableType }}
+                        <span v-if="c.complement !== 'Single Unit'" />
+                        {{ c.complement }})
+                      </span>
+                    </v-col>
+
+                    <v-col cols="auto" class="ml-auto mr-12 mt-n1">
+                      <div class="text-caption text-disabled">STATUS</div>
+                      {{ c.status }}
+                    </v-col>
+                  </v-row>
+                </template>
+                <template #text>
+                  <deployable-card :deployable="c.item" />
+                </template>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-window-item>
         </v-window>
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn color="accent" text @click="dialog = false">Close</v-btn>
+        <v-btn color="accent" variant="text" @click="dialog = false">Close</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts">
+import CrewCard from '../../../compendium/cards/crewCard.vue';
+import DeployableCard from '../../../compendium/cards/deployableCard.vue';
+import CargoCard from '../../../compendium/cards/cargoCard.vue';
+
 export default {
-  name: 'BaseSidebarView',
+  name: 'DetailMenu',
+  components: {
+    CrewCard,
+    DeployableCard,
+    CargoCard,
+  },
   props: {
     item: { type: Object, required: true },
     map: { type: Object, required: true },

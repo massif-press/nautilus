@@ -1,6 +1,7 @@
 [
   {
     "id": "ganymede",
+    "type": "map",
     "name": "Ganymede",
     "subtitle": "CRADLE//SOL 5b",
     "control": "Union",
@@ -34,6 +35,7 @@
   },
   {
     "id": "rim1",
+    "type": "map",
     "name": "Gliese 581",
     "subtitle": "subtitle",
     "control": "control",

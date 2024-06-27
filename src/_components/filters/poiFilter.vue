@@ -58,8 +58,8 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useMapStore } from '../../stores/mapStore';
-import { Poi } from '../../models/poi';
+import { Poi, poiSizeClasses } from '../../models/maps/poi';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'ShipFilter',
@@ -85,7 +85,7 @@ export default {
     this.shownOwner = [...this.owners];
     this.shownType = [...this.poitypes];
     this.shownSize = [...this.sizes];
-    this.shownTag = [...this.tags];
+    this.shownTags = [...this.tags];
     this.shownAuthor = [...this.authors];
 
     this.tabs.forEach((tab) => {
@@ -100,7 +100,7 @@ export default {
   emits: ['set-filter'],
   computed: {
     pois() {
-      return useMapStore().pois.filter((s: Poi) => s.Location.map === this.map.ID);
+      return useDataStore().pois.filter((s: Poi) => s.Location.map === this.map.ID);
     },
     owners() {
       return _.uniq(this.pois.map((h) => h.Owner));
@@ -109,13 +109,15 @@ export default {
       return _.uniq(this.pois.map((p) => p.PoiType));
     },
     tags() {
-      return _.uniq(this.pois.map((s) => s.ItemTags).flat()).map((t) => t.Name);
+      return _.uniq(this.pois.map((s) => s.Tags).flat()).map((t) => t.Name);
     },
     sizes() {
-      return _.uniq(this.pois.map((p) => p.Size));
+      return _.uniq(this.pois.map((p) => poiSizeClasses.find((x) => x.id === p.Size))).map(
+        (s) => s.name
+      );
     },
     authors() {
-      return _.uniq(this.pois.map((s) => s.Author));
+      return _.uniq(this.pois.map((s) => s.Author.Name));
     },
     filterObject() {
       return {
@@ -131,7 +133,6 @@ export default {
     hide(type: string, index: number) {
       this[`hidden${type}`].push(this[`shown${type}`][index]);
       this[`shown${type}`].splice(index, 1);
-      console.log(this.filterObject);
       this.$emit('set-filter', this.filterObject);
     },
     show(type: string, index: number) {

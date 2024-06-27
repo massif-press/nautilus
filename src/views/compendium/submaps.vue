@@ -14,15 +14,6 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-col cols="auto">
-          <div class="text-caption text-disabled text-right">
-            <i>
-              Showing {{ filteredSubmaps.length }} of {{ submaps.length }} points of interest from
-              {{ authors.length }} authors
-            </i>
-          </div>
-        </v-col>
       </v-row>
     </v-card>
     <v-card-text>
@@ -70,7 +61,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'SubmapSelector',
@@ -84,7 +75,7 @@ export default {
   }),
   computed: {
     submaps() {
-      return useCompendiumStore().submaps;
+      return useDataStore().submaps;
     },
     filteredSubmaps() {
       if (!this.search) return this.submaps;
@@ -100,7 +91,7 @@ export default {
       return `/${path}/${img}`;
     },
     getAuthor(submap: any) {
-      return useCompendiumStore().author(submap.author);
+      return useDataStore().author(submap.author);
     },
   },
 };

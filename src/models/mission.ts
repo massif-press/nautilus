@@ -1,48 +1,38 @@
-import { useMapStore } from '../stores/mapStore';
+import { useDataStore } from '../stores/dataStore';
 import { Poi } from './maps/poi';
-
-const missionTypes = [
-  'Patrol',
-  'Resupply',
-  'Redeploy',
-  'Repair',
-  'Deploy',
-  'Transit',
-  'Local Survey',
-  'In Transit',
-  'Awaiting Orders',
-];
+import { Ship } from './maps/ship';
 
 type missionData = {
+  mission_type: string;
   status: string;
   destination_id: string;
-  mission_type: string;
 };
 
 class Mission {
-  public readonly Status: string;
+  public Status: string;
   public DestinationID: string;
-  public Destination: Poi | null;
   public Mission: string;
 
   constructor(data: missionData) {
     this.Status = data.status;
     this.DestinationID = data.destination_id;
-    useMapStore().pois.forEach((poi) => {
-      if (poi.ID === data.destination_id) {
-        this.Destination = poi;
-        return;
-      }
-      if (poi.Subitems) {
-        poi.Subitems.forEach((subitem) => {
-          if (subitem.ID === data.destination_id) {
-            this.Destination = subitem;
-            return;
-          }
-        });
-      }
-    });
     this.Mission = data.mission_type;
+  }
+
+  public get Destination(): Poi | Ship | null {
+    if (!this.DestinationID || this.DestinationID === 'unknown') return null;
+    let d = useDataStore().getShipById(this.DestinationID);
+    if (!d) d = useDataStore().getPoiById(this.DestinationID);
+    if (!d)
+      d = useDataStore()
+        .pois.flatMap((p) => p.Submaps.flatMap((s) => s.Subitems))
+        .find((s) => s.ID === this.DestinationID);
+
+    return d || null;
+  }
+
+  public set Destination(destination: Poi | Ship | null) {
+    this.DestinationID = destination?.ID || '';
   }
 }
 

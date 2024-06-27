@@ -12,9 +12,9 @@ import ipsn from './assets/theme';
 import router from './router';
 
 import App from './App.vue';
-import { useMapStore } from './stores/mapStore';
 import { useUserStore } from './stores/userStore';
-import { useCompendiumStore } from './stores/compendiumStore';
+import { useDataStore } from './stores/dataStore';
+import { Initialize } from './storage';
 
 const nautilus = createApp(App);
 
@@ -47,6 +47,8 @@ nautilus.use(createPinia());
 
 nautilus.mount('#app');
 
-useCompendiumStore().load();
-useMapStore().load();
-useUserStore().loadUser();
+await Initialize();
+
+await useUserStore().load();
+await useDataStore().load();
+await useDataStore().load();

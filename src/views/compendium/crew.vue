@@ -14,15 +14,6 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-col cols="auto">
-          <div class="text-caption text-disabled text-right">
-            <i>
-              Showing {{ filteredCrew.length }} of {{ crew.length }} crew from
-              {{ authors.length }} authors
-            </i>
-          </div>
-        </v-col>
       </v-row>
     </v-card>
 
@@ -36,6 +27,12 @@
         :items-per-page="100"
         show-expand>
         <template #item.Name="{ item }">
+          <v-tooltip v-if="item.IsNhp" location="top">
+            <template #activator="{ props }">
+              <v-icon v-bind="props" icon="mdi-chip" start />
+            </template>
+            <b>NHP</b>
+          </v-tooltip>
           <v-btn
             size="small"
             color="secondary"
@@ -64,7 +61,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 import CrewCard from './cards/crewCard.vue';
 
 export default {
@@ -85,7 +82,7 @@ export default {
   }),
   computed: {
     crew() {
-      return useMapStore().crew;
+      return useDataStore().crew;
     },
     filteredCrew() {
       if (!this.search) return this.crew;

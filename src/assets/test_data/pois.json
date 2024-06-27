@@ -1,11 +1,12 @@
 [
   {
     "id": "g-node",
+    "type": "poi",
     "name": "andes.sol5.chapelco",
     "faction": "Union",
     "owner": "UOB",
     "role": "infrastructure",
-    "size": "medium",
+    "size": "small",
     "poitype": "Omninet Node",
     "lat": 56,
     "lon": -113,
@@ -14,6 +15,7 @@
   },
   {
     "id": "g-node-r2",
+    "type": "poi",
     "name": "andes.sol5.chapelco::2",
     "faction": "Union",
     "owner": "UOB",
@@ -27,6 +29,7 @@
   },
   {
     "id": "g-node-r3",
+    "type": "poi",
     "name": "andes.sol5.chapelco::3",
     "faction": "Union",
     "owner": "UOB",
@@ -40,6 +43,7 @@
   },
   {
     "id": "g-node-r4",
+    "type": "poi",
     "name": "andes.sol5.chapelco::4",
     "faction": "Union",
     "owner": "UOB",
@@ -53,6 +57,7 @@
   },
   {
     "id": "g-node-r5",
+    "type": "poi",
     "name": "andes.sol5.chapelco::5",
     "faction": "Union",
     "owner": "UOB",
@@ -66,6 +71,7 @@
   },
   {
     "id": "g-node-r6",
+    "type": "poi",
     "name": "andes.sol5.chapelco::6",
     "faction": "Union",
     "owner": "UOB",
@@ -79,6 +85,7 @@
   },
   {
     "id": "g-nav-1",
+    "type": "poi",
     "name": "SOL-5-NAV::DSNA-095",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -92,6 +99,7 @@
   },
   {
     "id": "g-nav-2",
+    "type": "poi",
     "name": "SOL-5-NAV::DSNA-098",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -105,6 +113,7 @@
   },
   {
     "id": "g-nav-3",
+    "type": "poi",
     "name": "SOL-5-NAV::DSNA-106",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -118,6 +127,7 @@
   },
   {
     "id": "g-nav-4",
+    "type": "poi",
     "name": "SOL-5-NAV::DSNA-118",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -131,6 +141,7 @@
   },
   {
     "id": "g-nav-5",
+    "type": "poi",
     "name": "SOL-5-NAV::NBNA-GL1",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -144,6 +155,7 @@
   },
   {
     "id": "g-nav-6",
+    "type": "poi",
     "name": "SOL-5-NAV::NBNA-GL2",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -157,6 +169,7 @@
   },
   {
     "id": "g-nav-7",
+    "type": "poi",
     "name": "SOL-5-NAV::NBNA-GL3",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -170,6 +183,7 @@
   },
   {
     "id": "g-nav-8",
+    "type": "poi",
     "name": "SOL-5-NAV::NBNA-CL1",
     "faction": "Union",
     "owner": "UBO/NTM (OCUP)",
@@ -183,6 +197,7 @@
   },
   {
     "id": "g-j1gate",
+    "type": "poi",
     "name": "J1 Gate",
     "faction": "Union",
     "owner": "UBO/NTM (OIT)",
@@ -196,11 +211,12 @@
   },
   {
     "id": "g-cyllenegate",
+    "type": "poi",
     "name": "Cyllene Transfer Gate",
     "faction": "Union",
     "owner": "UBO/NTM (OIT)",
     "role": "infrastructure",
-    "size": "medium",
+    "size": "small",
     "poitype": "Blink Gate",
     "lat": 54,
     "lon": 174,
@@ -209,11 +225,12 @@
   },
   {
     "id": "g-ungate",
+    "type": "poi",
     "name": "UN-SOL5",
     "faction": "Union",
     "owner": "UBO/NTM (OIT)",
     "role": "military",
-    "size": "medium",
+    "size": "small",
     "poitype": "Blink Gate",
     "lat": -74,
     "lon": -14,
@@ -222,6 +239,7 @@
   },
   {
     "id": "g-chapelco",
+    "type": "poi",
     "name": "Chapelco Station",
     "faction": "Union",
     "owner": "Union",
@@ -240,6 +258,7 @@
         "subitems": [
           {
             "id": "g-chapelco-anchor",
+            "type": "poi",
             "name": "Chapelco Station Blink Anchor",
             "poitype": "Station",
             "offset": [-0.305, 0],
@@ -249,6 +268,7 @@
           },
           {
             "id": "g-chapelco-berth-224",
+            "type": "poi",
             "name": "Chapelco Docking Ring, Berth 224",
             "poitype": "Station",
             "offset": [-0.38, -0.28],
@@ -263,6 +283,7 @@
 
   {
     "id": "g-j1",
+    "type": "poi",
     "name": "J1 Gate Station",
     "faction": "Union",
     "owner": "Union",
@@ -276,6 +297,7 @@
   },
   {
     "id": "g-j1customs",
+    "type": "poi",
     "name": "J1 Gate Customs",
     "faction": "Union",
     "owner": "UEB",
@@ -289,6 +311,7 @@
   },
   {
     "id": "g-j1uad",
+    "type": "poi",
     "name": "UAD Outer System Command",
     "faction": "Union",
     "owner": "UAD",
@@ -302,6 +325,7 @@
   },
   {
     "id": "g-so5maintenance",
+    "type": "poi",
     "name": "SOL5 Maintenance Station",
     "faction": "Union",
     "owner": "UOB",
@@ -315,6 +339,7 @@
   },
   {
     "id": "g-cyllenemine",
+    "type": "poi",
     "name": "Cyllene Mining Facility",
     "faction": "Union",
     "owner": "UEB",
@@ -328,6 +353,7 @@
   },
   {
     "id": "g-ntlc",
+    "type": "poi",
     "name": "New Thebes Launch Complex",
     "faction": "Union",
     "owner": "Ganymede",
@@ -341,6 +367,7 @@
   },
   {
     "id": "g-ger",
+    "type": "poi",
     "name": "Ganymede Equatorial Rail",
     "faction": "Union",
     "owner": "Ganymede",
@@ -354,6 +381,7 @@
   },
   {
     "id": "g-ombos",
+    "type": "poi",
     "name": "Ombos Crater Spaceport",
     "faction": "Union",
     "owner": "Ganymede",
@@ -367,11 +395,12 @@
   },
   {
     "id": "g-nirivilo",
+    "type": "poi",
     "name": "Platform Nirivilo",
     "faction": "Union",
     "owner": "UN",
     "role": "military",
-    "size": "medium",
+    "size": "small",
     "poitype": "Defense Platform",
     "lat": 34,
     "lon": -2,
@@ -380,11 +409,12 @@
   },
   {
     "id": "g-arbolillo",
+    "type": "poi",
     "name": "Platform Arbolillo",
     "faction": "Union",
     "owner": "UN",
     "role": "military",
-    "size": "medium",
+    "size": "small",
     "poitype": "Defense Platform",
     "lat": -28,
     "lon": -28,
@@ -393,11 +423,12 @@
   },
   {
     "id": "g-sanjavier",
+    "type": "poi",
     "name": "Platform San Javier",
     "faction": "Union",
     "owner": "UN",
     "role": "military",
-    "size": "medium",
+    "size": "small",
     "poitype": "Defense Platform",
     "lat": -22,
     "lon": 33,
@@ -406,11 +437,12 @@
   },
   {
     "id": "g-gwipc",
+    "type": "poi",
     "name": "Ganymede Water Ice Processing Complex",
     "faction": "Union",
     "owner": "UEB",
     "role": "industry",
-    "size": "medium",
+    "size": "small",
     "poitype": "Refinery",
     "description": "Processes and refines Ganymede's water ice surface mining products into potable water and reaction mass for system-wide distribution",
     "lat": -25.32,
@@ -420,6 +452,7 @@
   },
   {
     "id": "g-c-volatile",
+    "type": "poi",
     "name": "Cylenne Volatiles Processing",
     "faction": "Union",
     "owner": "UEB",
@@ -433,6 +466,7 @@
   },
   {
     "id": "g-c-rawmat",
+    "type": "poi",
     "name": "Cyllene Rawmat Processing",
     "faction": "Union",
     "owner": "UEB",
@@ -446,6 +480,7 @@
   },
   {
     "id": "g-c-bulk",
+    "type": "poi",
     "name": "Cyllene Bulk Storage",
     "faction": "Union",
     "owner": "UEB",
@@ -459,6 +494,7 @@
   },
   {
     "id": "g-c-drydock",
+    "type": "poi",
     "name": "Ganymede Drydocks",
     "faction": "Union",
     "owner": "Ganymede",
@@ -472,6 +508,7 @@
   },
   {
     "id": "g-j1warehouse",
+    "type": "poi",
     "name": "J1 Warehousing Complex",
     "faction": "Union",
     "owner": "UEB",
@@ -485,6 +522,7 @@
   },
   {
     "id": "g-gmsbulk",
+    "type": "poi",
     "name": "GMS Bulk Storage #106",
     "faction": "Union",
     "owner": "UEB",
@@ -498,6 +536,7 @@
   },
   {
     "id": "g-godc",
+    "type": "poi",
     "name": "Ganymede Orbital Distribution Complex",
     "faction": "Union",
     "owner": "UEB",
@@ -511,6 +550,7 @@
   },
   {
     "id": "g-abeline",
+    "type": "poi",
     "name": "GMS S4 Printer 072 \"Abeline\"",
     "faction": "Union",
     "owner": "GMS",
@@ -524,6 +564,7 @@
   },
   {
     "id": "g-gprint",
+    "type": "poi",
     "name": "GMS Ganymede Printbays",
     "faction": "Union",
     "owner": "GMS",
@@ -537,6 +578,7 @@
   },
   {
     "id": "g-manamoc",
+    "type": "poi",
     "name": "UN Manamoc Yards",
     "faction": "Union",
     "owner": "UN",
@@ -550,6 +592,7 @@
   },
   {
     "id": "g-gshipyard",
+    "type": "poi",
     "name": "GMS Ganymede Shipbuilding",
     "faction": "Union",
     "owner": "GMS",
@@ -563,11 +606,12 @@
   },
   {
     "id": "g-c-onsite",
+    "type": "poi",
     "name": "Cylenne Onsite Manufacturing",
     "faction": "Union",
     "owner": "UEB",
     "role": "industry",
-    "size": "medium",
+    "size": "small",
     "poitype": "Fabricator",
     "lat": 51.45,
     "lon": 187,
@@ -576,6 +620,7 @@
   },
   {
     "id": "g-oprint",
+    "type": "poi",
     "name": "Ganymede Orbital Printbays",
     "faction": "Union",
     "owner": "Ganymede",
@@ -589,6 +634,7 @@
   },
   {
     "id": "g-manaprint",
+    "type": "poi",
     "name": "UN Manamoc Printbays",
     "faction": "Union",
     "owner": "UN",
@@ -602,6 +648,7 @@
   },
   {
     "id": "g-gaca",
+    "type": "poi",
     "name": "Ganymede Agricultural Center Alpha",
     "faction": "Union",
     "owner": "Ganymede",
@@ -615,6 +662,7 @@
   },
   {
     "id": "g-gacb",
+    "type": "poi",
     "name": "Ganymede Agricultural Center Beta",
     "faction": "Union",
     "owner": "Ganymede",
@@ -628,6 +676,7 @@
   },
   {
     "id": "g-gacg",
+    "type": "poi",
     "name": "Ganymede Agricultural Center Gamma",
     "faction": "Union",
     "owner": "Ganymede",
@@ -641,6 +690,7 @@
   },
   {
     "id": "g-reflector",
+    "type": "poi",
     "name": "Reflector Array",
     "faction": "Union",
     "owner": "USB",
@@ -655,11 +705,12 @@
   },
   {
     "id": "g-gol",
+    "type": "poi",
     "name": "Ganymede Orbital Labs",
     "faction": "Union",
     "owner": "USB",
     "role": "science",
-    "size": "medium",
+    "size": "small",
     "poitype": "Research Station",
     "lat": -30.2,
     "lon": -2.1,
@@ -668,6 +719,7 @@
   },
   {
     "id": "g-jmoa",
+    "type": "poi",
     "name": "Jovian Magnetosphere Observation Array",
     "faction": "Union",
     "owner": "USB",
@@ -681,6 +733,7 @@
   },
   {
     "id": "g-usbouter",
+    "type": "poi",
     "name": "USB Outer System",
     "faction": "Union",
     "owner": "USB",
@@ -694,11 +747,12 @@
   },
   {
     "id": "g-usbouterpb",
+    "type": "poi",
     "name": "USB Outer System Printbays",
     "faction": "Union",
     "owner": "USB",
     "role": "science",
-    "size": "medium",
+    "size": "small",
     "poitype": "Fabricator",
     "lat": -61.85,
     "lon": 3.5,
@@ -707,11 +761,12 @@
   },
   {
     "id": "g-uofg",
+    "type": "poi",
     "name": "University of Ganymede, Orbital Annex",
     "faction": "Union",
     "owner": "University of Ganymede",
     "role": "science",
-    "size": "medium",
+    "size": "small",
     "poitype": "Academy",
     "lat": -40.44,
     "lon": 3.16,
@@ -720,6 +775,7 @@
   },
   {
     "id": "g-unouter",
+    "type": "poi",
     "name": "UN Outer System Naval Academy",
     "faction": "Union",
     "owner": "UN",
@@ -733,6 +789,7 @@
   },
   {
     "id": "g-m-1",
+    "type": "poi",
     "name": "UAD-OSC Mooring 7",
     "faction": "Union",
     "owner": "UOB",

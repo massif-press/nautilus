@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { useCompendiumStore } from '../../../stores/compendiumStore';
+import { useDataStore } from '../../../stores/dataStore';
 
 export default {
   name: 'SubmapSelector',
@@ -59,7 +59,7 @@ export default {
   }),
   computed: {
     submaps() {
-      return useCompendiumStore().submaps;
+      return useDataStore().submaps;
     },
     filteredSubmaps() {
       return this.submaps.filter((s) => s.name.toLowerCase().includes(this.search.toLowerCase()));

@@ -14,15 +14,6 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-col cols="auto">
-          <div class="text-caption text-disabled text-right">
-            <i>
-              Showing {{ filteredShips.length }} of {{ ships.length }} ships from
-              {{ authors.length }} authors
-            </i>
-          </div>
-        </v-col>
       </v-row>
     </v-card>
     <v-card-text>
@@ -63,8 +54,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useMapStore } from '../../stores/mapStore';
-import { filter } from 'lodash';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'Ships',
@@ -83,7 +73,7 @@ export default {
   }),
   computed: {
     ships() {
-      return useMapStore().ships;
+      return useDataStore().ships;
     },
     filteredShips() {
       if (!this.search) return this.ships;

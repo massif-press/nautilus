@@ -1,4 +1,4 @@
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import { Submap, SubmapData } from '../maps/submap';
 import { CompendiumItem, CompendiumItemData } from './compendiumItem';
 import { Tag } from './tag';
@@ -60,6 +60,7 @@ const sizes = [
 ];
 
 type HullData = CompendiumItemData & {
+  type: 'hull';
   name: string;
   code: string;
   size: string;
@@ -95,11 +96,34 @@ class Hull extends CompendiumItem {
     const tags = data?.tags?.split(', ') || [];
 
     this.Tags = tags.length
-      ? (useCompendiumStore().tags.filter((tag) => tags.includes(tag.ID)) as Tag[])
+      ? (useDataStore().tags.filter((tag) => tags.includes(tag.ID)) as Tag[])
       : ([] as Tag[]);
 
     if (data?.submaps) this.Submaps = data.submaps.map((s) => new Submap(s, [0, 0]));
     else this.Submaps = [];
+  }
+
+  public get IsSaveReady(): boolean {
+    return !!this.Name && !!this.Code && !!this.Shipwright && !!this.Class;
+  }
+
+  public get PreventDelete(): boolean {
+    return useDataStore().ships.some((s) => s.Hull.ID === this.ID);
+  }
+
+  public Save(): HullData {
+    return {
+      ...super.Save(),
+      type: this.ItemType,
+      name: this.Name,
+      code: this.Code,
+      shipwright: this.Shipwright,
+      size: this.Size.id,
+      class: this.Class,
+      description: this.Description,
+      tags: this.Tags.map((t) => t.ID).join(', '),
+      submaps: this.Submaps.map((s) => s.Save()),
+    };
   }
 }
 

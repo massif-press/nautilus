@@ -1,6 +1,7 @@
 import { TerrainData, Terrain } from './terrain';
 
 type MapData = {
+  type: 'map';
   id: string;
   name: string;
   subtitle: string;

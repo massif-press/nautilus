@@ -99,7 +99,6 @@ export default {
       return out;
     },
     filterLength() {
-      console.log(this.filters);
       let count = 0;
       Object.keys(this.filters).forEach((key) => {
         count += this.filters[key]?.length || 0;

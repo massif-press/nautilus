@@ -2,16 +2,25 @@
   <compendium-item-editor :item="cargo">
     <v-row>
       <v-col cols="8">
-        <v-text-field hide-details v-model="cargo.Name" label="Name" />
+        <v-text-field
+          hide-details
+          v-model="cargo.Name"
+          :readonly="!cargo.isUserOwned"
+          label="Name" />
       </v-col>
       <v-col>
-        <v-select hide-details v-model="cargo.CargoType" :items="cargoTypes" label="Type" />
+        <v-select
+          hide-details
+          v-model="cargo.CargoType"
+          :readonly="!cargo.isUserOwned"
+          :items="cargoTypes"
+          label="Type" />
       </v-col>
     </v-row>
 
     <div class="mx-2 mt-3">
       <div class="text-caption text-disabled ml-n2">Description</div>
-      <v-textarea hide-details v-model="cargo.Description" />
+      <v-textarea hide-details :readonly="!cargo.isUserOwned" v-model="cargo.Description" />
     </div>
   </compendium-item-editor>
 </template>
@@ -19,7 +28,7 @@
 <script lang="ts">
 import _ from 'lodash';
 import { Cargo, CargoTypes } from '../../models/compendium/cargo';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import CompendiumItemEditor from './components/compendiumItemEditor.vue';
 
 export default {
@@ -39,7 +48,7 @@ export default {
         if (this.id === 'new') {
           this.cargo = new Cargo();
         } else {
-          this.cargo = useCompendiumStore().getCargoById(this.id);
+          this.cargo = useDataStore().getCargoById(this.id);
         }
       },
       immediate: true,
@@ -49,7 +58,7 @@ export default {
     if (this.id === 'new') {
       this.cargo = new Cargo();
     } else {
-      this.cargo = useCompendiumStore().getCargoById(this.id);
+      this.cargo = useDataStore().getCargoById(this.id);
     }
   },
   computed: {

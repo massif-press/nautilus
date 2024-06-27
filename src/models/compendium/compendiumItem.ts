@@ -8,6 +8,12 @@ abstract class CompendiumItem extends EditableItem {
   constructor(data?: any) {
     super(data);
   }
+
+  public Save(): CompendiumItemData {
+    return {
+      ...super.Save(),
+    };
+  }
 }
 
 export { CompendiumItem, CompendiumItemData };

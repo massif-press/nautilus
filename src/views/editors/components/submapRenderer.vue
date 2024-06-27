@@ -21,7 +21,7 @@
       @click="setClickLocation($event)">
       <l-marker v-if="pickMode && lat && lng" :lat-lng="[lat, lng]">
         <l-icon :icon-size="iconSize">
-          <v-icon :size="iconSize[0]" color="yellow" icon="mdi-crosshairs" />
+          <v-icon :size="iconSize[0]" color="deep-orange" icon="mdi-crosshairs" />
         </l-icon>
       </l-marker>
 
@@ -47,9 +47,19 @@
             </l-tooltip>
           </l-marker>
         </template>
+
+        <template v-for="label in submap.Labels">
+          <l-marker :lat-lng="label.Offset">
+            <l-icon :icon-size="[100 + Number(label.Size * 2), 10]">
+              <div class="text-center" :style="`color: ${label.Color}; font-size: ${label.Size}px`">
+                {{ label.Name }}
+              </div>
+            </l-icon>
+          </l-marker>
+        </template>
       </template>
 
-      <l-control position="bottomright">
+      <l-control v-if="!readonly" position="bottomright">
         <div class="text-caption ma-n1">
           <v-btn
             v-if="!pickMode"
@@ -78,6 +88,16 @@
                   @click="addSubitem">
                   Add Subitem
                 </v-btn>
+                <v-btn
+                  block
+                  size="small"
+                  variant="tonal"
+                  color="accent"
+                  class="mt-1"
+                  prepend-icon="mdi-plus"
+                  @click="addLabel">
+                  Add Label
+                </v-btn>
               </div>
             </v-card-text>
             <v-divider />
@@ -96,7 +116,7 @@
 </template>
 
 <script lang="ts">
-import { Subitem, SubitemData } from '../../../models/maps/submap';
+import { Label, LabelData, Subitem, SubitemData } from '../../../models/maps/submap';
 import {
   LMap,
   LIcon,
@@ -131,7 +151,8 @@ export default {
     pickMode: false,
   }),
   props: {
-    submap: Object,
+    submap: { type: Object, required: true },
+    readonly: Boolean,
   },
   computed: {
     iconSize() {
@@ -202,6 +223,18 @@ export default {
           name: 'New Subitem',
           offset: [this.lat, this.lng],
         } as SubitemData)
+      );
+    },
+    addLabel() {
+      if (!this.submap.Labels) this.submap.Labels = [];
+      this.submap.Labels.push(
+        new Label(this.submap, {
+          id: `${this.submap.Name}_label_${this.submap.Subitems.length + 1}`,
+          name: 'New Label',
+          offset: [this.lat, this.lng],
+          color: '#fff',
+          size: 12,
+        } as LabelData)
       );
     },
   },

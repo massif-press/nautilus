@@ -1,13 +1,17 @@
 import _ from 'lodash';
 import { iconData, locationData } from '../dataTypes';
 import { missionData, Mission } from '../mission';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import { Tag } from '../compendium/tag';
 import { MapItem, MapItemData } from './mapitem';
 import { Hull } from '../compendium/hull';
-import { Submap } from './submap';
+import { Cargo } from '../compendium/cargo';
+import { generateCargoManifest } from '../generators/cargoGenerator';
+import { Deployable } from '../compendium/deployable';
+import { Subitem, SubitemData } from './submap';
 
 type ShipData = MapItemData & {
+  type: 'ship';
   prefix: string;
   map: string;
   lat: number;
@@ -22,19 +26,7 @@ type ShipData = MapItemData & {
 
   details?: { title: string; body: string }[];
 
-  subitems?: SubitemShipData[];
-};
-
-type SubitemShipData = {
-  id: string;
-  name: string;
-  prefix: string;
-  hull: string;
-  offset: number[];
-  size?: string;
-  icon?: string;
-  color?: string;
-  description?: string;
+  deployables?: { item: string; name: string; complement: string; status: string }[];
 };
 
 class Ship extends MapItem {
@@ -53,22 +45,27 @@ class Ship extends MapItem {
   public Mission: Mission;
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
-  public Subitems: Ship[];
+  public Subitems: Subitem[];
+
+  public CargoManifest: { item: Cargo; quantity: string }[] = [];
+  public Deployables: { item: Deployable; name: string; complement: string; status: string }[] = [];
 
   constructor(data?: ShipData) {
     super(data);
+    this.Name = data?.name || 'New Ship';
     this.Prefix = data?.prefix || '';
     this.Description = data?.description || '';
     this.HomePort = data?.homeport || '';
 
     if (data) {
-      const hull = useCompendiumStore().hull(data.hull);
+      const hull = useDataStore().hull(data.hull);
       if (!hull) {
         throw new Error(`Hull ${data.hull} not found in compendium`);
       }
       this.Hull = hull as Hull;
-      if (Hull.Submaps) {
-        this.Submaps = Hull.Submaps;
+
+      if (this.Hull.Submaps) {
+        this.Submaps = [...this.Hull.Submaps];
         this.Submaps.forEach((s) => s.SetCenter(this.Location.coords));
       }
     }
@@ -97,9 +94,24 @@ class Ship extends MapItem {
       this.Location.heading = Math.random() * 360;
     }
 
-    if (data?.subitems) {
-      this.Subitems = data.subitems.map((s) => Ship.GenerateSubitem(this, s) as Ship);
+    if (data?.deployables) {
+      this.Deployables = data.deployables.map((d) => {
+        const item = useDataStore().getDeployableById(d.item);
+        if (!item) {
+          throw new Error(`Deployable ${d.item} not found in compendium`);
+        }
+        return {
+          item: item as Deployable,
+          name: d.name,
+          complement: d.complement,
+          status: d.status,
+        };
+      });
     }
+
+    if (this.Deployables.length > 0) this.deployUnits();
+
+    this.CargoManifest = generateCargoManifest(this);
   }
 
   public get Title(): string {
@@ -117,7 +129,44 @@ class Ship extends MapItem {
   }
 
   public get Tags(): Tag[] {
-    return this._tags.concat(this.Hull.Tags);
+    if (!this.Hull) return this.ItemTags;
+    return this.ItemTags.concat(this.Hull.Tags);
+  }
+
+  public get HasCargoCapacity() {
+    return this.Tags.some((x) => x.Enables === 'cargo');
+  }
+
+  public get HasDeployableCapacity() {
+    return this.Tags.some((x) => x.Enables === 'deployables');
+  }
+
+  public get IsLander() {
+    return this.Tags.some((x) => x.ID === 'tag-lander');
+  }
+
+  public get IsSolidState() {
+    return this.Tags.some((x) => x.ID === 'tag-solidstate');
+  }
+
+  public get Show() {
+    return this.Hull.Size.show || 1;
+  }
+
+  public get Center(): number[] {
+    return this.Location.coords;
+  }
+
+  public get IsSaveReady(): boolean {
+    return (
+      !!this.Hull.ID &&
+      !!this.Location.map &&
+      !!this.Faction &&
+      !!this.Owner &&
+      !!this.HomePort &&
+      !!this.Prefix &&
+      !!this.Name
+    );
   }
 
   private getHeading(y1, x1, y2, x2) {
@@ -127,23 +176,53 @@ class Ship extends MapItem {
     return angle;
   }
 
-  public static GenerateSubitem(parent: Ship, data: SubitemShipData): Ship {
-    const subitemData: ShipData = {
+  private deployUnits() {
+    this.Deployables.forEach((d) => {
+      if (d.item.CanDeploy(this)) {
+        d.status = 'Deployed';
+        Ship.GenerateSubitem(this, {
+          id: `${this.ID}_${d.item.ID}`,
+          name: `${d.item.Name} (${this.Title})`,
+          type: d.item.DeployableType,
+          offset: [_.random(-0.1, 0.1), _.random(-0.1, 0.1)],
+          description: d.item.Description,
+          icon: d.item.Icon,
+          color: d.item.Color,
+        });
+      }
+    });
+  }
+
+  public static GenerateSubitem(parent: Ship, data: any): Subitem {
+    const subitemData: SubitemData = {
       id: data.id,
       name: data.name,
-      prefix: data.prefix,
-      hull: data.hull,
-      faction: parent.Faction,
-      owner: parent.Owner,
-      description: data.description || '',
-      icon: data.icon || 'cc:ship',
+      poitype: data.type,
+      icon: data.icon || 'mdi-triangle',
+      color: data.color || 'blue',
       map: parent.Location.map,
-      lat: parent.Location.coords[0] + data.offset[0],
-      lon: parent.Location.coords[1] + data.offset[1],
-      homeport: parent.HomePort,
-    } as ShipData;
+      offset: data.offset,
+    } as SubitemData;
 
-    return new Ship(subitemData);
+    return new Subitem(parent, subitemData);
+  }
+
+  public Save(): ShipData {
+    return {
+      ...super.Save(),
+      type: this.ItemType,
+      prefix: this.Prefix,
+      hull: this.Hull.ID,
+      homeport: this.HomePort,
+      description: this.Description,
+      details: this.Details,
+      mission_status: this.Mission.Status,
+      mission: this.Mission.Mission,
+      destination: this.Mission.Destination?.ID,
+      deployables: this.Deployables.map((d) => {
+        return { item: d.item.ID, name: d.name, complement: d.complement, status: d.status };
+      }),
+    };
   }
 }
 

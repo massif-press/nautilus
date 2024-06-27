@@ -1,0 +1,71 @@
+[
+  {
+    "id": "drone-1",
+    "type": "deployable",
+    "deployable_type": "Drone",
+    "icon": "mdi-quadcopter",
+    "color": "#82B1FF",
+    "name": "GMS Pattern-V \"Mule\" Cargo Drone",
+    "description": "The Pattern-V chassis cargo drone is a GMS-standard unmanned cargo drone designed to transport supplies and equipment between ships and stations. Constellations of these utilitarian drones swarm most stations and orbital facilities, directed by onboard COMP/CON units, or orchestrated with uncanny precision by NHP coordinators.",
+    "deploy_keywords": ["load", "unload", "deploy", "transfer", "discharge", "offload", "deliver"],
+    "recall_keywords": ["return", "retrieve", "dock", "land", "recover", "collect"],
+    "author": "system"
+  },
+  {
+    "id": "drone-2",
+    "type": "deployable",
+    "deployable_type": "Drone",
+    "icon": "mdi-quadcopter",
+    "color": "#82B1FF",
+    "name": "GMS Pattern-V \"Remora\" Maintenance Drone",
+    "description": "Built off the ubiquitous GMS-standard Pattern-V chassis, these autonomous or choral-coordinated drones are equipped with a variety of tools and sensors to assist in the repair and upkeep of ships and stations. These drones are a common sight in the maintenance bays of most stations and orbital facilities, or mounted to vacuum-exposed quick deployment racks on ships.",
+    "deploy_keywords": ["repair", "refit", "dock", "maintenance", "fix", "service", "prepare"],
+    "recall_keywords": ["return", "retrieve", "dock", "land", "recover", "collect"],
+    "author": "system"
+  },
+  {
+    "id": "fighter-1",
+    "type": "deployable",
+    "deployable_type": "Fighter",
+    "icon": "mdi-triangle",
+    "color": "#82B1FF",
+    "name": "GMS Peregrine",
+    "description": "A single-pilot fighter designed for rapid response and interception. Like all GMS fighter platforms, the Peregrine is designed for ease of maintenance and modification, but unlike most a substantial majority of its systems are dedicated to speed and agility: it is equipped with dual Frame-grade Type-I drives, fed by the same Hyperspec Fuel Injector system found on the GMS Standard Pattern I Everest. The extreme stresses put on the pilot by the Peregrine's acceleration and maneuverability are mitigated by a quick spool k-comp system, managed by the Peregrine's onboard COMP/CON unit.",
+    "deploy_keywords": ["patrol", "engage", "intercept", "defend", "attack", "pursue", "protect"],
+    "recall_keywords": ["return", "retrieve", "dock", "land", "recover", "collect"],
+    "author": "system"
+  },
+  {
+    "id": "fighter-2",
+    "type": "deployable",
+    "deployable_type": "Fighter",
+    "icon": "mdi-triangle",
+    "color": "#82B1FF",
+    "name": "GMS Everest (Chassis Mount)",
+    "description": "A GMS Everest frame equipped with a Pattern I Deep Space Operation module, an upscaled EVA module rated for ship engagements. These frames are often mounted to the hulls of larger ships, or deployed from stations to engage in ship-to-ship combat. The Everest is a versatile and reliable frame, capable of mounting a variety of weapons and systems to suit mission requirements.",
+    "deploy_keywords": ["patrol", "engage", "intercept", "defend", "attack", "pursue", "protect"],
+    "recall_keywords": ["return", "retrieve", "dock", "land", "recover", "collect"],
+    "author": "system"
+  },
+  {
+    "id": "shuttle-1",
+    "type": "deployable",
+    "deployable_type": "Tender",
+    "icon": "mdi-quadcopter",
+    "color": "#82B1FF",
+    "name": "GMS Starling",
+    "description": "The GMS Pattern-Y \"Starling\" Ship's Tender is a small crewed utility craft designed, like much of GMS's line, for rapid and easy configuration for a variety of ship-to-ship and ship-to-station tasks, including cargo transport, personnel shuttling, and planetary landings.",
+    "deploy_keywords": [
+      "transfer",
+      "shuttle",
+      "transport",
+      "deliver",
+      "land",
+      "dock",
+      "embark",
+      "disembark"
+    ],
+    "recall_keywords": ["return", "retrieve", "dock", "land", "recover", "collect"],
+    "author": "system"
+  }
+]

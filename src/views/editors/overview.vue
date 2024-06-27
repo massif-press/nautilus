@@ -3,7 +3,7 @@
     <v-footer border>
       <div>
         <span>{{ user.username }}</span>
-        <i v-if="user.discord && user.showDiscord" class="text-caption text-accent pl-2">
+        <i v-if="user.discord && user.show_discord" class="text-caption text-accent pl-2">
           {{ user.discord }}
         </i>
         <br />
@@ -16,8 +16,26 @@
       </div>
       <v-spacer />
       <user-control-panel />
-      <!-- <v-btn size="x-small" variant="tonal">request dev access</v-btn> -->
     </v-footer>
+    <div class="text-right mt-1">
+      <v-btn
+        to="/main/editor/add-image/0"
+        color="accent"
+        variant="tonal"
+        size="small"
+        class="mx-3"
+        prepend-icon="mdi-image-plus">
+        Add Image
+      </v-btn>
+      <v-btn
+        to="/main/editor/add-image/1"
+        color="accent"
+        variant="tonal"
+        size="small"
+        prepend-icon="mdi-svg">
+        Add Submap
+      </v-btn>
+    </div>
 
     <v-divider class="my-4" />
 
@@ -37,12 +55,38 @@
           clearable />
         <template #extension>
           <v-tabs v-model="tab">
-            <v-tab>Ships</v-tab>
-            <v-tab>Points of Interest</v-tab>
-            <v-tab>Personnel</v-tab>
-            <v-tab>Hull</v-tab>
-            <v-tab>Cargo</v-tab>
-            <v-tab>Tags</v-tab>
+            <v-tab>
+              <v-badge v-if="ships.length" :content="ships.length" color="secondary" inline />
+              Ships
+            </v-tab>
+            <v-tab>
+              <v-badge v-if="pois.length" :content="pois.length" color="secondary" inline />
+              Points of Interest
+            </v-tab>
+            <v-tab>
+              <v-badge v-if="crew.length" :content="crew.length" color="secondary" inline />
+              Crew
+            </v-tab>
+            <v-tab>
+              <v-badge v-if="hulls.length" :content="hulls.length" color="secondary" inline />
+              Hulls
+            </v-tab>
+            <v-tab>
+              <v-badge
+                v-if="deployables.length"
+                :content="deployables.length"
+                color="secondary"
+                inline />
+              Deployables
+            </v-tab>
+            <v-tab>
+              <v-badge v-if="cargo.length" :content="cargo.length" color="secondary" inline />
+              Cargo
+            </v-tab>
+            <v-tab>
+              <v-badge v-if="tags.length" :content="tags.length" color="secondary" inline />
+              Tags
+            </v-tab>
           </v-tabs>
         </template>
       </v-toolbar>
@@ -61,7 +105,7 @@
               <v-icon
                 v-bind="props"
                 size="small"
-                :icon="!item.Tags || item.Tags.length === 0 ? 'mdi-tag' : 'mdi-tag-outline'"
+                :icon="!item.Tags || item.Tags.length === 0 ? 'mdi-tag-outline' : 'mdi-tag'"
                 :disabled="!item.Tags || item.Tags.length === 0" />
             </template>
             <v-card>
@@ -108,8 +152,7 @@
 </template>
 
 <script lang="ts">
-import { useCompendiumStore } from '../../stores/compendiumStore';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 import { useUserStore } from '../../stores/userStore';
 import UserControlPanel from './components/userControlPanel.vue';
 
@@ -156,6 +199,11 @@ export default {
       { title: 'Type', key: 'CargoType' },
       { title: 'Status', value: 'Status' },
     ],
+    deployableHeaders: [
+      { title: 'Name', key: 'Name' },
+      { title: 'Type', key: 'DeployableType' },
+      { title: 'Status', value: 'Status' },
+    ],
     tagHeaders: [
       { title: 'Name', key: 'Name' },
       { title: 'Type', key: 'AppliesTo' },
@@ -168,8 +216,9 @@ export default {
       if (this.tab === 1) c = this.pois;
       if (this.tab === 2) c = this.crew;
       if (this.tab === 3) c = this.hulls;
-      if (this.tab === 4) c = this.cargo;
-      if (this.tab === 5) c = this.tags;
+      if (this.tab === 4) c = this.deployables;
+      if (this.tab === 5) c = this.cargo;
+      if (this.tab === 6) c = this.tags;
 
       if (!this.search) return c;
 
@@ -185,28 +234,32 @@ export default {
       if (this.tab === 1) c = this.poiHeaders;
       if (this.tab === 2) c = this.crewHeaders;
       if (this.tab === 3) c = this.hullHeaders;
-      if (this.tab === 4) c = this.cargoHeaders;
-      if (this.tab === 5) c = this.tagHeaders;
+      if (this.tab === 4) c = this.deployableHeaders;
+      if (this.tab === 5) c = this.cargoHeaders;
+      if (this.tab === 6) c = this.tagHeaders;
 
       return c;
     },
     ships() {
-      return useMapStore().ships;
+      return useDataStore().ships.filter((x) => x.isUserOwned);
     },
     pois() {
-      return useMapStore().pois;
+      return useDataStore().pois.filter((x) => x.isUserOwned);
     },
     crew() {
-      return useMapStore().crew;
+      return useDataStore().crew.filter((x) => x.isUserOwned);
     },
     hulls() {
-      return useCompendiumStore().hulls;
+      return useDataStore().hulls.filter((x) => x.isUserOwned);
     },
     cargo() {
-      return useCompendiumStore().cargo;
+      return useDataStore().cargo.filter((x) => x.isUserOwned);
     },
     tags() {
-      return useCompendiumStore().tags;
+      return useDataStore().tags.filter((x) => x.isUserOwned);
+    },
+    deployables() {
+      return useDataStore().deployables.filter((x) => x.isUserOwned);
     },
   },
   methods: {

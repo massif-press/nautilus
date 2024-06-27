@@ -4,6 +4,7 @@ import type { IconSet, IconProps } from 'vuetify';
 import logo from './icons/logo.vue';
 import gms from './icons/gms.vue';
 import ship from './icons/ship.vue';
+import discord from './icons/discord.vue';
 import test from './icons/testItem.vue';
 
 const svgs: any = {
@@ -11,6 +12,7 @@ const svgs: any = {
   gms,
   ship,
   test,
+  discord,
 };
 
 const ccIcons: IconSet = {

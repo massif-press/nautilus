@@ -85,7 +85,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'Authors',
@@ -126,7 +126,7 @@ export default {
       });
     },
     authors() {
-      return useCompendiumStore().authors;
+      return useDataStore().authors;
     },
   },
 };

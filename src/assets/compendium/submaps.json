@@ -1,6 +1,7 @@
 [
   {
     "id": "submap-chapelco",
+    "type": "submap",
     "name": "Chapelco",
     "img": "chapelco_station.svg",
     "category": "poi",
@@ -8,6 +9,7 @@
   },
   {
     "id": "submap-ntlc",
+    "type": "submap",
     "name": "New Thebes Launch Complex",
     "img": "ntlc.svg",
     "category": "poi",

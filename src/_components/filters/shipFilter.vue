@@ -58,8 +58,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useCompendiumStore } from '../../stores/compendiumStore';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 import { Ship } from '../../models/maps/ship';
 
 export default {
@@ -91,7 +90,7 @@ export default {
     this.shownShipwright = [...this.shipwrights];
     this.shownClass = [...this.classes];
     this.shownHull = [...this.hulls];
-    this.shownTag = [...this.tags];
+    this.shownTags = [...this.tags];
     this.shownSize = [...this.sizes];
     this.shownAuthor = [...this.authors];
 
@@ -107,32 +106,28 @@ export default {
   emits: ['set-filter'],
   computed: {
     ships() {
-      return useMapStore().ships.filter((s: Ship) => s.Location.map === this.map.ID);
+      return useDataStore().ships.filter((s: Ship) => s.Location.map === this.map.ID);
     },
     owners() {
       return _.uniq(this.ships.map((h) => h.Owner));
     },
     hulls() {
-      return useCompendiumStore().hulls.map((h) => h.Name);
+      return useDataStore().hulls.map((h) => h.Name);
     },
     shipwrights() {
-      return _.uniq(
-        useCompendiumStore().shipwrights.filter((s) =>
-          useCompendiumStore().hulls.some((h) => h.Shipwright.ID === s.ID)
-        )
-      ).map((s) => s.Name);
+      return _.uniq(useDataStore().hulls.map((h) => h.Shipwright));
     },
     classes() {
-      return _.uniq(useCompendiumStore().hulls.map((h) => h.Class));
+      return _.uniq(useDataStore().hulls.map((h) => h.Class));
     },
     tags() {
       return _.uniq(this.ships.map((s) => s.Tags).flat()).map((t) => t.Name);
     },
     sizes() {
-      return _.uniq(useCompendiumStore().hulls.map((h) => h.Size.name));
+      return _.uniq(useDataStore().hulls.map((h) => h.Size.name));
     },
     authors() {
-      return _.uniq(this.ships.map((s) => s.Author));
+      return _.uniq(this.ships.map((s) => s.Author.Name));
     },
     filterObject() {
       return {

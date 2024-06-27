@@ -30,9 +30,15 @@
           color="secondary"
           icon
           :to="`/main/editor/edit/crew/${c.ID}`">
-          <v-icon icon="mdi-pencil" />
+          <v-icon :icon="c.isUserOwned ? 'mdi-pencil' : 'mdi-account-box-multiple-outline'" />
         </v-btn>
-        <v-btn size="x-small" variant="plain" color="error" icon @click="c.ClearAssignment()">
+        <v-btn
+          v-if="c.isUserOwned"
+          size="x-small"
+          variant="plain"
+          color="error"
+          icon
+          @click="c.ClearAssignment()">
           <v-icon icon="mdi-account-remove" />
         </v-btn>
       </v-col>
@@ -84,7 +90,11 @@
               class="text-caption text-disabled">
               Assigned to {{ crewedItem.Title || crewedItem.Name }}
             </i>
-            <v-btn v-else size="small" color="secondary" @click="assignCrew(item)">
+            <v-btn
+              v-else-if="item.isUserOwned"
+              size="small"
+              color="secondary"
+              @click="assignCrew(item)">
               {{ item.Assignment ? 'Reassign' : 'Assign' }} to
               {{ crewedItem.Title || crewedItem.Name }}
             </v-btn>
@@ -103,7 +113,8 @@
 </template>
 
 <script lang="ts">
-import { useMapStore } from '../../../stores/mapStore';
+import { useDataStore } from '../../../stores/dataStore';
+import { useUserStore } from '../../../stores/userStore';
 import CrewCard from '../../compendium/cards/crewCard.vue';
 
 export default {
@@ -127,7 +138,14 @@ export default {
   }),
   computed: {
     allCrew() {
-      return useMapStore().crew;
+      console.log(this.crewedItem);
+      let c = useDataStore().crew;
+      console.log(c);
+      if (this.crewedItem.IsSolidState) c = c.filter((c) => c.IsNhp);
+      return c.filter((cr) => cr.isUserOwned);
+    },
+    user(): string {
+      return useUserStore().user_id;
     },
   },
   methods: {

@@ -2,31 +2,48 @@
   <map-item-editor :item="poi">
     <v-row>
       <v-col>
-        <v-select density="compact" hide-details v-model="poi.Faction" label="Faction" />
+        <v-combobox
+          density="compact"
+          hide-details
+          v-model="poi.Faction"
+          :readonly="!poi.isUserOwned"
+          label="Faction" />
       </v-col>
       <v-col>
-        <v-text-field density="compact" hide-details v-model="poi.Owner" label="Owner" />
+        <v-text-field
+          density="compact"
+          hide-details
+          v-model="poi.Owner"
+          :readonly="!poi.isUserOwned"
+          label="Owner" />
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <v-text-field hide-details v-model="poi.Name" label="Name" />
+        <v-text-field hide-details v-model="poi.Name" :readonly="!poi.isUserOwned" label="Name" />
       </v-col>
       <v-col>
-        <v-combobox hide-details v-model="poi.PoiType" :items="poiTypes" label="Type" />
+        <v-combobox
+          hide-details
+          v-model="poi.PoiType"
+          :readonly="!poi.isUserOwned"
+          :items="poiTypes"
+          label="Type" />
       </v-col>
     </v-row>
 
-    <div class="mx-2 mt-6">
-      <div class="text-caption text-disabled ml-n2">Crew</div>
-      <crew-selector :crewed-item="poi" />
-    </div>
+    <template #right>
+      <div class="mx-2 mt-6">
+        <div class="text-caption text-disabled ml-n2">Crew</div>
+        <crew-selector :crewed-item="poi" />
+      </div>
+    </template>
   </map-item-editor>
 </template>
 
 <script lang="ts">
 import _ from 'lodash';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 import MapItemEditor from './components/mapItemEditor.vue';
 import CrewSelector from './components/crewAssignment.vue';
 import { Poi } from '../../models/maps/poi';
@@ -51,7 +68,7 @@ export default {
         if (this.id === 'new') {
           this.poi = new Poi();
         } else {
-          this.poi = useMapStore().getPoiById(this.id);
+          this.poi = useDataStore().getPoiById(this.id);
         }
       },
       immediate: true,
@@ -59,21 +76,18 @@ export default {
   },
   created() {
     if (this.id === 'new') {
-      console.log('creating new poi');
       this.poi = new Poi();
 
       if (this.lat && this.lon) {
         this.poi.Location.coords = [Number(this.lat), Number(this.lon)];
       }
     } else {
-      console.log('loading poi');
-      console.log(useMapStore().getPoiById(this.id));
-      this.poi = useMapStore().getPoiById(this.id);
+      this.poi = useDataStore().getPoiById(this.id);
     }
   },
   computed: {
     poiTypes() {
-      return _.uniq(useMapStore().pois.map((poi) => poi.PoiType));
+      return _.uniq(useDataStore().pois.map((poi) => poi.PoiType));
     },
   },
 };

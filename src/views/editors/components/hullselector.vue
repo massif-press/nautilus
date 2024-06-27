@@ -5,7 +5,7 @@
       <div v-if="!selected">No Hull Selected</div>
     </v-card-text>
   </v-card>
-  <div class="text-right">
+  <div v-if="!readonly" class="text-right">
     <v-dialog v-model="dialog">
       <template #activator="{ props }">
         <v-btn v-bind="props" color="accent" variant="tonal" size="small">Select Hull</v-btn>
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { useCompendiumStore } from '../../../stores/compendiumStore';
+import { useDataStore } from '../../../stores/dataStore';
 import HullCard from '../../compendium/cards/hullCard.vue';
 
 export default {
@@ -54,6 +54,7 @@ export default {
   components: { HullCard },
   props: {
     selected: { type: Object, required: false },
+    readonly: { type: Boolean, default: false },
   },
   emits: ['select'],
   data: () => ({
@@ -69,7 +70,7 @@ export default {
   }),
   computed: {
     hulls() {
-      return useCompendiumStore().hulls;
+      return useDataStore().hulls;
     },
     filteredHulls() {
       return this.hulls.filter((h) => h.Name.toLowerCase().includes(this.search.toLowerCase()));

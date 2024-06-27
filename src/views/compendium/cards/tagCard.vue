@@ -35,7 +35,7 @@
 export default {
   name: 'TagCard',
   props: {
-    tag: { type: Object, required: false },
+    tag: { type: Object, required: true },
     small: { type: Boolean },
     hideApplies: { type: Boolean },
   },

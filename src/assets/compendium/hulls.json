@@ -1,6 +1,7 @@
 [
   {
     "id": "hull-gms-combahee",
+    "type": "hull",
     "name": "Combahee",
     "code": "SL",
     "size": "small",
@@ -9,6 +10,7 @@
   },
   {
     "id": "hull-gms-somonauk",
+    "type": "hull",
     "name": "Somonauk",
     "code": "SL",
     "size": "small",
@@ -17,6 +19,7 @@
   },
   {
     "id": "hull-gms-tsaratanana",
+    "type": "hull",
     "name": "Tsaratanana ",
     "code": "SL",
     "size": "small",
@@ -25,6 +28,7 @@
   },
   {
     "id": "hull-gms-orontes",
+    "type": "hull",
     "name": "Orontes",
     "code": "SL",
     "size": "small",
@@ -33,6 +37,7 @@
   },
   {
     "id": "hull-gms-haechi",
+    "type": "hull",
     "name": "Haechi",
     "code": "SL",
     "size": "small",
@@ -41,6 +46,7 @@
   },
   {
     "id": "hull-gms-kibali",
+    "type": "hull",
     "name": "Kibali",
     "code": "SL",
     "size": "small",
@@ -49,6 +55,7 @@
   },
   {
     "id": "hull-gms-benue",
+    "type": "hull",
     "name": "Benue",
     "code": "SL",
     "size": "small",
@@ -57,6 +64,7 @@
   },
   {
     "id": "hull-gms-cochien",
+    "type": "hull",
     "name": "Cổ Chiên",
     "code": "LS",
     "size": "small",
@@ -65,6 +73,7 @@
   },
   {
     "id": "hull-gms-mishongnovi",
+    "type": "hull",
     "name": "Mishongnovi",
     "code": "RS",
     "size": "small",
@@ -73,6 +82,7 @@
   },
   {
     "id": "hull-gms-montevista",
+    "type": "hull",
     "name": "Monte Vista",
     "code": "RS",
     "size": "small",
@@ -81,6 +91,7 @@
   },
   {
     "id": "hull-gms-mukalla",
+    "type": "hull",
     "name": "Mukalla ",
     "code": "LS",
     "size": "small",
@@ -89,6 +100,7 @@
   },
   {
     "id": "hull-gms-yangxiangzhen",
+    "type": "hull",
     "name": "Yangxiangzhen",
     "code": "NAV",
     "size": "small",
@@ -97,6 +109,7 @@
   },
   {
     "id": "hull-gms-caspiansea",
+    "type": "hull",
     "name": "Caspian Sea",
     "code": "LS",
     "size": "medium",
@@ -105,6 +118,7 @@
   },
   {
     "id": "hull-gms-superior",
+    "type": "hull",
     "name": "Superior",
     "code": "LS",
     "size": "medium",
@@ -113,6 +127,7 @@
   },
   {
     "id": "hull-gms-huron",
+    "type": "hull",
     "name": "Huron",
     "code": "LS",
     "size": "medium",
@@ -121,6 +136,7 @@
   },
   {
     "id": "hull-gms-poyang",
+    "type": "hull",
     "name": "Poyang",
     "code": "LS",
     "size": "medium",
@@ -129,6 +145,7 @@
   },
   {
     "id": "hull-gms-sarygamysh",
+    "type": "hull",
     "name": "Sarygamysh ",
     "code": "RS",
     "size": "medium",
@@ -137,6 +154,7 @@
   },
   {
     "id": "hull-gms-amazon",
+    "type": "hull",
     "name": "Amazon",
     "code": "CV",
     "size": "large",
@@ -146,6 +164,7 @@
   },
   {
     "id": "hull-gms-tongass",
+    "type": "hull",
     "name": "Tongass",
     "code": "CV",
     "size": "large",
@@ -155,6 +174,7 @@
   },
   {
     "id": "hull-gms-gobi",
+    "type": "hull",
     "name": "Gobi",
     "code": "DCV",
     "size": "large",
@@ -164,6 +184,7 @@
   },
   {
     "id": "hull-gms-marmara",
+    "type": "hull",
     "name": "Marmara",
     "code": "TT",
     "size": "large",
@@ -172,6 +193,7 @@
   },
   {
     "id": "hull-gms-muire",
+    "type": "hull",
     "name": "Muire",
     "code": "BB",
     "size": "massive",
@@ -180,6 +202,7 @@
   },
   {
     "id": "hull-gms-thoreau",
+    "type": "hull",
     "name": "Thoreau",
     "code": "BB",
     "size": "massive",
@@ -188,6 +211,7 @@
   },
   {
     "id": "hull-gms-humboldt",
+    "type": "hull",
     "name": "Humboldt ",
     "code": "DN",
     "size": "massive",
@@ -197,6 +221,7 @@
   },
   {
     "id": "hull-gms-bolano",
+    "type": "hull",
     "name": "Bolaño",
     "code": "MCP",
     "size": "platform",
@@ -206,6 +231,7 @@
   },
   {
     "id": "hull-gms-stratford",
+    "type": "hull",
     "name": "Stratford",
     "code": "ST",
     "size": "small",
@@ -215,6 +241,7 @@
   },
   {
     "id": "hull-gms-takagi",
+    "type": "hull",
     "name": "Takagi",
     "code": "ST",
     "size": "small",
@@ -224,6 +251,7 @@
   },
   {
     "id": "hull-gms-renzuhang",
+    "type": "hull",
     "name": "Renzuhang",
     "code": "LND",
     "size": "small",
@@ -233,6 +261,7 @@
   },
   {
     "id": "hull-gms-tortuga",
+    "type": "hull",
     "name": "Tortuga",
     "code": "LND",
     "size": "small",
@@ -242,6 +271,7 @@
   },
   {
     "id": "hull-gms-pine",
+    "type": "hull",
     "name": "Pine",
     "code": "TG",
     "size": "small",
@@ -251,6 +281,7 @@
   },
   {
     "id": "hull-gms-hachong",
+    "type": "hull",
     "name": "Hachong",
     "code": "TG",
     "size": "small",
@@ -260,6 +291,7 @@
   },
   {
     "id": "hull-gms-carysfort",
+    "type": "hull",
     "name": "Carysfort",
     "code": "STS",
     "size": "small",
@@ -269,6 +301,7 @@
   },
   {
     "id": "hull-gms-kosong",
+    "type": "hull",
     "name": "Kosong",
     "code": "FF",
     "size": "small",
@@ -277,6 +310,7 @@
   },
   {
     "id": "hull-gms-michelbach",
+    "type": "hull",
     "name": "Michelbach",
     "code": "MT",
     "size": "small",
@@ -285,6 +319,7 @@
   },
   {
     "id": "hull-gms-indravati",
+    "type": "hull",
     "name": "Indravati",
     "code": "MT",
     "size": "small",
@@ -293,6 +328,7 @@
   },
   {
     "id": "hull-gms-apeldoorn",
+    "type": "hull",
     "name": "Apeldoorn",
     "code": "TR",
     "size": "small",
@@ -301,6 +337,7 @@
   },
   {
     "id": "hull-gms-ezpeleta",
+    "type": "hull",
     "name": "Ezpeleta",
     "code": "MTR",
     "size": "small",
@@ -309,6 +346,7 @@
   },
   {
     "id": "hull-gms-hombetsu",
+    "type": "hull",
     "name": "Hombetsu",
     "code": "FF",
     "size": "medium",
@@ -317,6 +355,7 @@
   },
   {
     "id": "hull-gms-gbambiasso",
+    "type": "hull",
     "name": "Gbambiasso",
     "code": "RV",
     "size": "medium",
@@ -325,6 +364,7 @@
   },
   {
     "id": "hull-gms-muqdadiyah",
+    "type": "hull",
     "name": "Muqdadiyah",
     "code": "MTT",
     "size": "medium",
@@ -333,6 +373,7 @@
   },
   {
     "id": "hull-gms-jaheyna",
+    "type": "hull",
     "name": "Jaheyna",
     "code": "P3",
     "size": "large",
@@ -341,6 +382,7 @@
   },
   {
     "id": "hull-gms-nannewiid",
+    "type": "hull",
     "name": "Nannewiid",
     "code": "CC",
     "size": "large",
@@ -349,6 +391,7 @@
   },
   {
     "id": "hull-gms-vaquiro",
+    "type": "hull",
     "name": "Vaquiro",
     "code": "MT",
     "size": "large",
@@ -357,6 +400,7 @@
   },
   {
     "id": "hull-gms-koloma",
+    "type": "hull",
     "name": "Koloma",
     "code": "GHS",
     "size": "large",
@@ -365,6 +409,7 @@
   },
   {
     "id": "hull-gms-brynmawr",
+    "type": "hull",
     "name": "Bryn-mawr",
     "code": "TNK",
     "size": "large",
@@ -373,6 +418,7 @@
   },
   {
     "id": "hull-gms-castlehill",
+    "type": "hull",
     "name": "Castle Hill",
     "code": "CC",
     "size": "massive",
@@ -382,6 +428,7 @@
   },
   {
     "id": "hull-gms-foelgrach",
+    "type": "hull",
     "name": "Foel Grach",
     "code": "BC",
     "size": "massive",
@@ -391,6 +438,7 @@
   },
   {
     "id": "hull-gms-sanpietro",
+    "type": "hull",
     "name": "San Pietro",
     "code": "MSY",
     "size": "massive",
@@ -400,6 +448,7 @@
   },
   {
     "id": "hull-gms-broniarth",
+    "type": "hull",
     "name": "Broniarth",
     "code": "MMP",
     "size": "platform",
@@ -409,6 +458,7 @@
   },
   {
     "id": "hull-gms-acoma",
+    "type": "hull",
     "name": "Acoma",
     "code": "SDV",
     "size": "small",
@@ -417,6 +467,7 @@
   },
   {
     "id": "hull-gms-parallaxii",
+    "type": "hull",
     "name": "Parallax II",
     "code": "SDV",
     "size": "small",
@@ -425,6 +476,7 @@
   },
   {
     "id": "hull-gms-truelotus",
+    "type": "hull",
     "name": "True Lotus",
     "code": "SDV",
     "size": "small",
@@ -433,6 +485,7 @@
   },
   {
     "id": "hull-gms-scheherazade",
+    "type": "hull",
     "name": "Scheherazade ",
     "code": "SDV",
     "size": "small",
@@ -441,6 +494,7 @@
   },
   {
     "id": "hull-gms-kewa",
+    "type": "hull",
     "name": "Kewa",
     "code": "SDV",
     "size": "small",
@@ -449,6 +503,7 @@
   },
   {
     "id": "hull-gms-celadon",
+    "type": "hull",
     "name": "Celadon",
     "code": "DDV",
     "size": "medium",
@@ -457,6 +512,7 @@
   },
   {
     "id": "hull-gms-horizon",
+    "type": "hull",
     "name": "Horizon",
     "code": "QGDV",
     "size": "large",

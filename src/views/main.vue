@@ -37,13 +37,23 @@
       <v-spacer />
       <div style="width: 1px; height: 40px; opacity: 0.3" class="bg-grey" />
       <v-spacer />
+      <v-btn
+        v-if="isMod"
+        size="small"
+        variant="elevated"
+        color="purple"
+        class="mr-8"
+        to="/main/mod">
+        MOD TOOLS
+      </v-btn>
       <v-btn size="small" variant="tonal" color="secondary" to="/">LOG OUT</v-btn>
     </v-footer>
   </v-app>
 </template>
 
 <script lang="ts">
-import { useMapStore } from '../stores/mapStore';
+import { useDataStore } from '../stores/dataStore';
+import { useUserStore } from '../stores/userStore';
 
 export default {
   name: 'main-view',
@@ -51,7 +61,7 @@ export default {
     selectedMap: null as any,
   }),
   mounted() {
-    const store = useMapStore();
+    const store = useDataStore();
     if (!store.map) {
       if (!store.maps.length) store.load();
       const preload = localStorage.getItem('cc-n-mapid');
@@ -62,13 +72,16 @@ export default {
   },
   computed: {
     maps() {
-      return useMapStore().maps;
+      return useDataStore().maps;
+    },
+    isMod() {
+      return useUserStore().is_mod;
     },
   },
   methods: {
     setMap(map: string) {
       localStorage.setItem('cc-n-mapid', map);
-      useMapStore().setMap(this.maps.find((m) => m.ID === map));
+      useDataStore().setMap(this.maps.find((m) => m.ID === map));
     },
   },
 };

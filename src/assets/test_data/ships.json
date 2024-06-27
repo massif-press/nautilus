@@ -1,6 +1,7 @@
 [
   {
     "id": "0922624b-3f16-4bfc-9dfb-7ad5266c543f",
+    "type": "ship",
     "name": "Qinghai",
     "prefix": "UNS",
     "faction": "Union",
@@ -12,10 +13,12 @@
     "lon": 23.227844238281254,
     "mission_status": "Approaching Docking Ring",
     "mission": "Docking at Chapelco Station",
-    "destination": "g-chapelco-berth-224"
+    "destination": "g-chapelco-berth-224",
+    "cargo_ids": ["testcargo1"]
   },
   {
     "id": "86a5f3e3-2241-42c7-b5d8-a5cd5b14295c",
+    "type": "ship",
     "name": "Amadjuak",
     "prefix": "UNS",
     "faction": "Union",
@@ -31,6 +34,7 @@
   },
   {
     "id": "e46707b8-0689-4715-95d8-aa9d785cb04f",
+    "type": "ship",
     "name": "Athabasca",
     "prefix": "UNS",
     "faction": "Union",
@@ -46,6 +50,7 @@
   },
   {
     "id": "e4f03d8e-607e-46d4-adc0-f3b24a9027c7",
+    "type": "ship",
     "name": "Gondwana",
     "prefix": "UNS",
     "faction": "Union",
@@ -62,6 +67,7 @@
   },
   {
     "id": "c2d09922-2faa-4d00-b9ac-75a0ce8b2315",
+    "type": "ship",
     "name": "Toba",
     "prefix": "UNS",
     "faction": "Union",
@@ -77,6 +83,7 @@
   },
   {
     "id": "e586a4aa-4612-462b-a3f4-d4261b4a638d",
+    "type": "ship",
     "name": "Millstatt",
     "prefix": "UNS",
     "faction": "Union",
@@ -92,6 +99,7 @@
   },
   {
     "id": "e01fb6e1-9385-4127-98a3-dcaf2b75e7b4",
+    "type": "ship",
     "name": "Peoria",
     "prefix": "UNS",
     "faction": "Union",
@@ -107,6 +115,7 @@
   },
   {
     "id": "a7353d3d-fff8-4446-b56b-26e4997c8566",
+    "type": "ship",
     "name": "Hanoi",
     "prefix": "UNS",
     "faction": "Union",
@@ -122,6 +131,7 @@
   },
   {
     "id": "8b19d656-01db-49d0-834a-0110a701f50a",
+    "type": "ship",
     "name": "Danube",
     "prefix": "UNS",
     "faction": "Union",
@@ -136,6 +146,7 @@
   },
   {
     "id": "e85e2563-008d-4ce1-930b-afff5ef357c5",
+    "type": "ship",
     "name": "Indus",
     "prefix": "UNS",
     "faction": "Union",
@@ -151,6 +162,7 @@
   },
   {
     "id": "25f52e85-a6cf-43c4-b31c-9d759132c5f2",
+    "type": "ship",
     "name": "Branco",
     "prefix": "UNS",
     "faction": "Union",
@@ -166,6 +178,7 @@
   },
   {
     "id": "0d1bcf9d-353e-4a7d-b43b-df0de9885652",
+    "type": "ship",
     "name": "Lisbon",
     "prefix": "UNS",
     "faction": "Union",
@@ -180,6 +193,7 @@
   },
   {
     "id": "cc4be7f2-22c2-4764-9486-fb72143d2829",
+    "type": "ship",
     "name": "Auburn",
     "prefix": "UNS",
     "faction": "Union",
@@ -195,6 +209,7 @@
   },
   {
     "id": "69e5f892-3325-4919-998e-c8c063fe56cd",
+    "type": "ship",
     "name": "Pawtucket",
     "prefix": "UNS",
     "faction": "Union",
@@ -210,6 +225,7 @@
   },
   {
     "id": "74e520dc-d6c6-4725-910a-05431bd40251",
+    "type": "ship",
     "name": "Shibganj",
     "prefix": "UNS",
     "faction": "Union",
@@ -225,6 +241,7 @@
   },
   {
     "id": "9940439a-e13d-4382-883d-c756a85bacb7",
+    "type": "ship",
     "name": "Waukesha",
     "prefix": "UNS",
     "faction": "Union",
@@ -240,6 +257,7 @@
   },
   {
     "id": "81ba48ce-7163-4349-86c2-3789726ac1f7",
+    "type": "ship",
     "name": "Passaic",
     "prefix": "UNS",
     "faction": "Union",
@@ -255,6 +273,7 @@
   },
   {
     "id": "3051df4d-e760-444c-a91d-692cc5a18f12",
+    "type": "ship",
     "name": "Decatur",
     "prefix": "UNS",
     "faction": "Union",
@@ -270,6 +289,7 @@
   },
   {
     "id": "8a21bf0f-a32b-4149-965c-e3e294ab243f",
+    "type": "ship",
     "name": "Gulfport",
     "prefix": "UNS",
     "faction": "Union",
@@ -285,6 +305,7 @@
   },
   {
     "id": "483ce51c-d6c2-4672-9a73-1de57ed95fcb",
+    "type": "ship",
     "name": "Kankakee",
     "prefix": "UNS",
     "faction": "Union",
@@ -300,6 +321,7 @@
   },
   {
     "id": "bcad4c44-3776-460a-8a86-bfbbe7bff9f9",
+    "type": "ship",
     "name": "Harry Haywood",
     "prefix": "UNS",
     "faction": "Union",
@@ -315,6 +337,7 @@
   },
   {
     "id": "04daf2da-1f43-41f3-8a79-84ac0f80a179",
+    "type": "ship",
     "name": "Königssee",
     "prefix": "UNS",
     "faction": "Union",
@@ -330,6 +353,7 @@
   },
   {
     "id": "7e364060-cc6f-4502-ba29-af3370d8e51a",
+    "type": "ship",
     "name": "Misurina",
     "prefix": "UNS",
     "faction": "Union",
@@ -345,6 +369,7 @@
   },
   {
     "id": "33ec8124-aae4-4f47-9d00-cee17a12610d",
+    "type": "ship",
     "name": "Trübsee",
     "prefix": "UNS",
     "faction": "Union",
@@ -360,6 +385,7 @@
   },
   {
     "id": "8945bb33-6fea-41b3-97b7-af848c4be668",
+    "type": "ship",
     "name": "Tovel",
     "prefix": "UNS",
     "faction": "Union",
@@ -375,6 +401,7 @@
   },
   {
     "id": "7c80d420-3c1c-4fa8-a726-f9302983eff0",
+    "type": "ship",
     "name": "Edward Abbey",
     "prefix": "UNS",
     "faction": "Union",
@@ -390,6 +417,7 @@
   },
   {
     "id": "268c1b14-8ad3-41c2-85f9-7d7184ca1fa4",
+    "type": "ship",
     "name": "Cedric J. Robinson",
     "prefix": "UNS",
     "faction": "Union",
@@ -405,6 +433,7 @@
   },
   {
     "id": "b0414e45-d177-47e4-a17a-105d766e26cb",
+    "type": "ship",
     "name": "Hintersee",
     "prefix": "UNS",
     "faction": "Union",
@@ -420,6 +449,7 @@
   },
   {
     "id": "915922f1-41ab-47c9-9514-586d0d7add45",
+    "type": "ship",
     "name": "Aoraki",
     "prefix": "UNS",
     "faction": "Union",
@@ -436,6 +466,7 @@
   },
   {
     "id": "7ef58d0d-bc9c-4d8e-ad24-97cade1bff1e",
+    "type": "ship",
     "name": "Kumamoto",
     "prefix": "UNS",
     "faction": "Union",
@@ -451,6 +482,7 @@
   },
   {
     "id": "7a374bbf-7d59-4b17-9e3d-a88f629b4f8c",
+    "type": "ship",
     "name": "Niagra",
     "prefix": "UNS",
     "faction": "Union",
@@ -465,6 +497,7 @@
   },
   {
     "id": "f8b40afb-612d-417c-8732-e5ebab0650dd",
+    "type": "ship",
     "name": "Helsinki",
     "prefix": "UNS",
     "faction": "Union",
@@ -480,6 +513,7 @@
   },
   {
     "id": "abaaa78a-b464-479a-b3e9-0f3efb1117de",
+    "type": "ship",
     "name": "Jeonju",
     "prefix": "UNS",
     "faction": "Union",
@@ -495,6 +529,7 @@
   },
   {
     "id": "baa39a81-726c-4961-993c-ba7b1f4c0b53",
+    "type": "ship",
     "name": "Portland",
     "prefix": "UNS",
     "faction": "Union",
@@ -510,6 +545,7 @@
   },
   {
     "id": "052e9e8b-f8c7-4622-8ac1-711b3dc0bcba",
+    "type": "ship",
     "name": "Kangchenjunga",
     "prefix": "UNS",
     "faction": "Union",
@@ -525,6 +561,7 @@
   },
   {
     "id": "8d30db81-9d6f-429f-97c5-5ea380119e2f",
+    "type": "ship",
     "name": "Taymyr",
     "prefix": "UNS",
     "faction": "Union",
@@ -540,6 +577,7 @@
   },
   {
     "id": "95b26a45-af2f-4bc5-b78e-6828a3ab77a5",
+    "type": "ship",
     "name": "Nashville",
     "prefix": "UNS",
     "faction": "Union",
@@ -555,6 +593,7 @@
   },
   {
     "id": "8094e1ee-0aa0-4adc-a4e1-3d013c408211",
+    "type": "ship",
     "name": "Hintersee",
     "prefix": "UNS",
     "faction": "Union",
@@ -570,6 +609,7 @@
   },
   {
     "id": "e57f250f-6893-47c4-9bd2-0b713bc42022",
+    "type": "ship",
     "name": "Emma Tenayuca",
     "prefix": "UNS",
     "faction": "Union",
@@ -584,6 +624,7 @@
   },
   {
     "id": "3577472d-82aa-4725-931c-dd62f9938349",
+    "type": "ship",
     "name": "Larry Itliong",
     "prefix": "UNS",
     "faction": "Union",
@@ -598,6 +639,7 @@
   },
   {
     "id": "43efe314-a99d-4c85-a3ed-0c3b2c66c113",
+    "type": "ship",
     "name": "September",
     "prefix": "UNS",
     "faction": "Union",
@@ -613,6 +655,7 @@
   },
   {
     "id": "be9d7e4d-a183-459e-a6f7-b2bb37453069",
+    "type": "ship",
     "name": "Emma Goldman",
     "prefix": "UNS",
     "faction": "Union",
@@ -628,6 +671,7 @@
   },
   {
     "id": "d82cf680-2c78-4757-8fa4-e7db75a41e69",
+    "type": "ship",
     "name": "Pānihāti",
     "prefix": "UNS",
     "faction": "Union",
@@ -642,6 +686,7 @@
   },
   {
     "id": "133a339d-d389-48c9-a2d1-e228a3d54b35",
+    "type": "ship",
     "name": "McKees Rock",
     "prefix": "UNS",
     "faction": "Union",
@@ -657,6 +702,7 @@
   },
   {
     "id": "bf3f16d3-c570-4765-b446-e7efc65a39e1",
+    "type": "ship",
     "name": "Otto Huiswoud",
     "prefix": "UNS",
     "faction": "Union",

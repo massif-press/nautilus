@@ -12,8 +12,10 @@
     "@mdi/font": "^7.4.47",
     "@vue-leaflet/vue-leaflet": "^0.10.1",
     "leaflet": "^1.9.4",
+    "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
+    "uuid": "^10.0.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2",
     "vuetify": "^3.6.4"

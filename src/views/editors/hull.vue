@@ -2,13 +2,18 @@
   <compendium-item-editor :item="hull">
     <v-row>
       <v-col cols="6">
-        <v-text-field hide-details v-model="hull.Name" label="Name" />
+        <v-text-field hide-details v-model="hull.Name" :readonly="!hull.isUserOwned" label="Name" />
       </v-col>
       <v-col>
-        <v-combobox hide-details v-model="hull.Class" :items="Classes" label="Class" />
+        <v-combobox
+          hide-details
+          v-model="hull.Class"
+          :readonly="!hull.isUserOwned"
+          :items="Classes"
+          label="Class" />
       </v-col>
       <v-col cols="2">
-        <v-text-field hide-details v-model="hull.Code" label="Code" />
+        <v-text-field hide-details v-model="hull.Code" :readonly="!hull.isUserOwned" label="Code" />
       </v-col>
     </v-row>
 
@@ -20,34 +25,47 @@
           return-object
           item-title="name"
           persistent-hint
-          :hint="hull.Size.description"
+          :readonly="!hull.isUserOwned"
+          :hint="(hull.Size as any).description"
           label="Size" />
       </v-col>
       <v-col>
         <v-combobox
           hide-details
           v-model="hull.Shipwright"
+          :readonly="!hull.isUserOwned"
           :items="Shipwrights"
           label="Shipwright" />
       </v-col>
     </v-row>
 
-    <div class="mx-2 mt-3">
-      <div class="text-caption text-disabled ml-n2">Description</div>
-      <v-textarea hide-details v-model="hull.Description" />
-    </div>
+    <v-row>
+      <v-col cols="4"><image-selector :item="hull" /></v-col>
+      <v-col>
+        <div class="mx-2 mt-3">
+          <div class="text-caption text-disabled ml-n2">Description</div>
+          <v-textarea hide-details :readonly="!hull.isUserOwned" v-model="hull.Description" />
+        </div>
+      </v-col>
+    </v-row>
 
     <fieldset
+      v-if="hull.Tags.length > 0 || hull.isUserOwned"
       class="pa-1 mt-2"
       style="border: solid rgba(150, 150, 150, 0.3) 1px; border-radius: 3px">
-      <legend class="text-caption text-disabled ml-2 px-1">Additional Tags</legend>
-      <tag-selector :selected="hull.Tags" type="ship" @select="hull.Tags.push($event)" />
+      <legend class="text-caption text-disabled ml-2 px-1 mb-n3">Additional Tags</legend>
+      <tag-selector
+        :readonly="!hull.isUserOwned"
+        :selected="hull.Tags"
+        type="ship"
+        @select="hull.Tags.push($event)" />
     </fieldset>
 
     <fieldset
+      v-if="hull.Submaps.length > 0 || hull.isUserOwned"
       class="pa-1 mt-2"
       style="border: solid rgba(150, 150, 150, 0.3) 1px; border-radius: 3px">
-      <legend class="text-caption text-disabled ml-2 px-1">Submaps</legend>
+      <legend class="text-caption text-disabled ml-2 px-1 mb-n3">Submaps</legend>
       <submap-editor :item="hull" />
     </fieldset>
   </compendium-item-editor>
@@ -57,9 +75,10 @@
 import _ from 'lodash';
 import { Hull, HullSizes } from '../../models/compendium/hull';
 import CompendiumItemEditor from './components/compendiumItemEditor.vue';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import TagSelector from './components/tagSelector.vue';
 import SubmapEditor from './components/submapEditor.vue';
+import ImageSelector from './components/imageSelector.vue';
 
 export default {
   name: 'HullEditor',
@@ -67,6 +86,7 @@ export default {
     CompendiumItemEditor,
     TagSelector,
     SubmapEditor,
+    ImageSelector,
   },
   props: {
     id: { type: String, required: true },
@@ -80,7 +100,7 @@ export default {
         if (this.id === 'new') {
           this.hull = new Hull();
         } else {
-          this.hull = useCompendiumStore().getHullById(this.id);
+          this.hull = useDataStore().getHullById(this.id);
         }
       },
       immediate: true,
@@ -90,15 +110,15 @@ export default {
     if (this.id === 'new') {
       this.hull = new Hull();
     } else {
-      this.hull = useCompendiumStore().getHullById(this.id);
+      this.hull = useDataStore().getHullById(this.id);
     }
   },
   computed: {
     Classes() {
-      return _.uniq(useCompendiumStore().hulls.map((h) => h.Class));
+      return _.uniq(useDataStore().hulls.map((h) => h.Class));
     },
     Shipwrights() {
-      return _.uniq(useCompendiumStore().hulls.map((h) => h.Shipwright));
+      return _.uniq(useDataStore().hulls.map((h) => h.Shipwright));
     },
     Sizes() {
       return HullSizes;

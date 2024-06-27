@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { MapItemData, MapItem } from './mapitem';
+import { Tag } from '../compendium/tag';
 
 const poiSizeClasses = [
   {
@@ -32,10 +33,12 @@ const poiSizeClasses = [
 ];
 
 type PoiData = MapItemData & {
+  type: 'poi';
   size: string;
   show?: number;
   poitype: string;
   description: string;
+  details?: { title: string; body: string }[];
 };
 
 class Poi extends MapItem {
@@ -44,6 +47,7 @@ class Poi extends MapItem {
   public Size: string;
   public Description: string;
   public PoiType: string;
+  public Details: { title: string; body: string }[];
 
   public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested';
 
@@ -56,16 +60,20 @@ class Poi extends MapItem {
     const sizeClass = poiSizeClasses.find((s) => s.id === this.Size);
     this.Icon.show = sizeClass?.show || 1;
 
-    if (!this.Icon.size) this.Icon.size = 24;
-    if (!this.Icon.show) this.Icon.show = 1;
+    this.Details = data?.details || [];
 
-    if (data?.icon) this.Icon.icon = data.icon || 'mdi-rhombus-outline';
-    if (data?.show) this.Icon.show = data.show || 1;
+    this.Icon.icon = data?.icon || 'mdi-rhombus-outline';
+    this.Icon.show = data?.show || 1;
+    this.Icon.size = data?.size || 24;
     this.Icon.color = data?.color || 'green';
   }
 
   public get Title(): string {
     return this.Name;
+  }
+
+  public get Tags(): Tag[] {
+    return this.ItemTags;
   }
 
   public get Subtitle(): string {
@@ -74,6 +82,25 @@ class Poi extends MapItem {
 
   public get SizeValue(): number {
     return poiSizeClasses.find((s) => s.id === this.Size)?.value || 1;
+  }
+
+  public get IsSaveReady(): boolean {
+    return !!this.Name && !!this.PoiType && !!this.Location.map && !!this.Owner;
+  }
+
+  public get IsDownwell(): boolean {
+    return this.Tags.some((t) => t.ID === 'tag-downwell');
+  }
+
+  public Save(): PoiData {
+    return {
+      ...super.Save(),
+      type: this.ItemType,
+      size: this.Size,
+      poitype: this.PoiType,
+      description: this.Description,
+      details: this.Details,
+    };
   }
 }
 

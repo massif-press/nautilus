@@ -3,9 +3,10 @@ import { Submap, SubmapData } from './submap';
 import { SystemMap } from './systemMap';
 
 type TerrainData = {
+  type: string;
   id: string;
   name: string;
-  type: string;
+  terrain_type: string;
   center: number[];
   submap: SubmapData;
   description: string;

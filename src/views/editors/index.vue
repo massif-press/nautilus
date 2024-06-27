@@ -18,8 +18,18 @@
             {{ `${s.Owner} ${s.Hull.Class}` }}
           </div>
         </v-list-item>
+        <v-btn
+          prepend-icon="mdi-plus"
+          size="x-small"
+          block
+          variant="tonal"
+          color="accent"
+          text="Add new Ship"
+          to="/main/editor/edit/ship/new" />
       </v-list-group>
+
       <v-divider />
+
       <v-list-group value="POI">
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" title="Points of Interest">
@@ -35,12 +45,20 @@
             {{ `${p.Owner} ${p.PoiType}` }}
           </div>
         </v-list-item>
+        <v-btn
+          prepend-icon="mdi-plus"
+          variant="tonal"
+          color="accent"
+          block
+          size="x-small"
+          text="Add new Point of Interest"
+          to="/main/editor/edit/poi/new" />
       </v-list-group>
       <v-divider />
 
       <v-list-group value="Crew">
         <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" title="Personnel">
+          <v-list-item v-bind="props" title="Crew">
             <div class="text-caption text-disabled">
               <i>{{ crew.length }} Registered</i>
             </div>
@@ -50,7 +68,16 @@
           <v-icon icon="mdi-account" size="x-small" class="mt-n1" />
           {{ c.Name }}
         </v-list-item>
+        <v-btn
+          prepend-icon="mdi-plus"
+          variant="tonal"
+          color="accent"
+          block
+          size="x-small"
+          text="Add new Crew"
+          to="/main/editor/edit/crew/new" />
       </v-list-group>
+
       <v-divider />
 
       <v-list-group value="Hull">
@@ -65,7 +92,40 @@
           <v-icon icon="mdi-rocket" size="x-small" class="mt-n1" />
           {{ h.Name }}
         </v-list-item>
+        <v-btn
+          prepend-icon="mdi-plus"
+          variant="tonal"
+          color="accent"
+          block
+          size="x-small"
+          text="Add new Hull"
+          to="/main/editor/edit/hull/new" />
       </v-list-group>
+
+      <v-divider />
+
+      <v-list-group value="Deployable">
+        <template v-slot:activator="{ props }">
+          <v-list-item v-bind="props" title="Deployable">
+            <div class="text-caption text-disabled">
+              <i>{{ deployables.length }} Registered</i>
+            </div>
+          </v-list-item>
+        </template>
+        <v-list-item v-for="d in deployables" link :to="`/main/editor/edit/deployable/${d.ID}`">
+          <v-icon icon="mdi-rocket" size="x-small" class="mt-n1" />
+          {{ d.Name }}
+        </v-list-item>
+        <v-btn
+          prepend-icon="mdi-plus"
+          variant="tonal"
+          color="accent"
+          block
+          size="x-small"
+          text="Add new Deployable"
+          to="/main/editor/edit/deployable/new" />
+      </v-list-group>
+
       <v-divider />
 
       <v-list-group value="Cargo">
@@ -80,6 +140,14 @@
           <v-icon icon="mdi-cube" size="x-small" class="mt-n1" />
           {{ c.Name }}
         </v-list-item>
+        <v-btn
+          prepend-icon="mdi-plus"
+          variant="tonal"
+          color="accent"
+          block
+          size="x-small"
+          text="Add new Cargo"
+          to="/main/editor/edit/cargo/new" />
       </v-list-group>
       <v-divider />
 
@@ -95,24 +163,39 @@
           <v-icon icon="mdi-tag" size="x-small" class="mt-n1" />
           {{ t.Name }}
         </v-list-item>
+        <v-btn
+          prepend-icon="mdi-plus"
+          variant="tonal"
+          color="accent"
+          block
+          size="x-small"
+          text="Add new Tag"
+          to="/main/editor/edit/tag/new" />
       </v-list-group>
     </v-list>
     <v-divider />
 
-    <v-menu location="bottom">
+    <v-menu>
       <template #activator="{ props }">
-        <v-btn v-bind="props" size="small" variant="plain" color="accent" block>
+        <v-btn
+          v-bind="props"
+          size="small"
+          variant="plain"
+          color="accent"
+          block
+          style="position: fixed; bottom: 0">
           <v-icon icon="mdi-plus" start />
           Add New
         </v-btn>
       </template>
-      <v-list>
+      <v-list border>
         <v-list-item link title="Add new Ship" to="/main/editor/edit/ship/new" />
         <v-list-item link title="Add new Point of Interest" to="/main/editor/edit/poi/new" />
-        <v-list-item link title="Add new Personnel" to="/main/editor/edit/ship/new" />
-        <v-list-item link title="Add new Hull" to="/main/editor/edit/ship/new" />
-        <v-list-item link title="Add new Cargo" to="/main/editor/edit/ship/new" />
-        <v-list-item link title="Add new Tag" to="/main/editor/edit/ship/new" />
+        <v-list-item link title="Add new Crew" to="/main/editor/edit/crew/new" />
+        <v-list-item link title="Add new Hull" to="/main/editor/edit/hull/new" />
+        <v-list-item link title="Add new Deployable" to="/main/editor/edit/deployable/new" />
+        <v-list-item link title="Add new Cargo" to="/main/editor/edit/cargo/new" />
+        <v-list-item link title="Add new Tag" to="/main/editor/edit/tag/new" />
       </v-list>
     </v-menu>
   </v-navigation-drawer>
@@ -122,8 +205,7 @@
 </template>
 
 <script lang="ts">
-import { useCompendiumStore } from '../../stores/compendiumStore';
-import { useMapStore } from '../../stores/mapStore';
+import { useDataStore } from '../../stores/dataStore';
 
 export default {
   name: 'Editor',
@@ -133,22 +215,25 @@ export default {
   }),
   computed: {
     ships() {
-      return useMapStore().ships;
+      return useDataStore().ships.filter((x) => x.isUserOwned);
     },
     crew() {
-      return useMapStore().crew;
+      return useDataStore().crew.filter((x) => x.isUserOwned);
     },
     pois() {
-      return useMapStore().pois;
+      return useDataStore().pois.filter((x) => x.isUserOwned);
     },
     cargo() {
-      return useCompendiumStore().cargo;
+      return useDataStore().cargo.filter((x) => x.isUserOwned);
     },
     hulls() {
-      return useCompendiumStore().hulls;
+      return useDataStore().hulls.filter((x) => x.isUserOwned);
     },
     tags() {
-      return useCompendiumStore().tags;
+      return useDataStore().tags.filter((x) => x.isUserOwned);
+    },
+    deployables() {
+      return useDataStore().deployables.filter((x) => x.isUserOwned);
     },
   },
 };

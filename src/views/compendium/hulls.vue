@@ -14,54 +14,7 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-col cols="auto">
-          <v-chip-group v-model="sw_selections" multiple column>
-            <v-chip
-              v-for="s in shipwrights"
-              :color="sw_selections.includes(s) ? 'accent' : ''"
-              label
-              :text="s"
-              size="small" />
-          </v-chip-group>
-        </v-col>
       </v-row>
-      <v-select
-        v-model="cl_selections"
-        :items="classes"
-        density="compact"
-        multiple
-        hide-details
-        prepend-icon="mdi-filter">
-        <template #selection="{ item, index }">
-          <v-chip v-if="index < 7" size="small">
-            {{ item.title }}
-          </v-chip>
-          <span v-if="index === 7" class="text-grey text-caption align-self-center">
-            (+{{ cl_selections.length - 7 }} others)
-          </span>
-        </template>
-        <template #prepend-item>
-          <v-list-item title="Select All" @click="selectAllClass">
-            <template #prepend>
-              <v-icon
-                :icon="
-                  cl_selections.length === 0
-                    ? 'mdi-checkbox-blank-outline'
-                    : cl_selections.length === classes.length
-                    ? 'mdi-checkbox-marked'
-                    : 'mdi-minus-box-outline'
-                " />
-            </template>
-          </v-list-item>
-        </template>
-      </v-select>
-      <div class="text-caption text-disabled text-right">
-        <i>
-          Showing {{ filteredHulls.length }} of {{ hulls.length }} hulls from
-          {{ authors.length }} authors
-        </i>
-      </div>
     </v-card>
 
     <v-card-text>
@@ -107,7 +60,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import HullCard from './cards/hullCard.vue';
 
 export default {
@@ -137,7 +90,7 @@ export default {
       );
     },
     hulls() {
-      return useCompendiumStore().hulls;
+      return useDataStore().hulls;
     },
     shipwrights() {
       return _.uniqBy(this.hulls.map((h) => h.Shipwright));

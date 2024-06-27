@@ -14,25 +14,7 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-col cols="auto">
-          <v-chip-group v-model="t_selections" multiple column>
-            <v-chip
-              v-for="s in all_selections"
-              :value="s.value"
-              :text="s.title"
-              :color="t_selections.includes(s.value) ? 'accent' : ''"
-              label
-              size="small" />
-          </v-chip-group>
-        </v-col>
       </v-row>
-      <div class="text-caption text-disabled text-right">
-        <i>
-          Showing {{ filteredTags.length }} of {{ tags.length }} tags from
-          {{ authors.length }} authors
-        </i>
-      </div>
     </v-card>
     <v-card-text>
       <div v-for="tag in filteredTags" class="mb-3">
@@ -44,7 +26,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import TagCard from './cards/tagCard.vue';
 
 export default {
@@ -71,7 +53,7 @@ export default {
       });
     },
     tags() {
-      return useCompendiumStore().tags;
+      return useDataStore().tags;
     },
     authors() {
       return _.uniqBy(this.tags, 'Author.Name').map((t) => t.Author.Name);

@@ -14,24 +14,7 @@
             hide-details
             clearable />
         </v-col>
-        <v-spacer />
-        <v-col cols="auto">
-          <v-chip-group v-model="ct_selections" multiple column>
-            <v-chip
-              v-for="t in cargoTypes"
-              :color="ct_selections.includes(t) ? 'accent' : ''"
-              label
-              :text="t"
-              size="small" />
-          </v-chip-group>
-        </v-col>
       </v-row>
-      <div class="text-caption text-disabled text-right">
-        <i>
-          Showing {{ filteredCargo.length }} of {{ cargo.length }} cargo from
-          {{ authors.length }} authors
-        </i>
-      </div>
     </v-card>
 
     <v-card-text>
@@ -64,7 +47,7 @@
 
 <script lang="ts">
 import _ from 'lodash';
-import { useCompendiumStore } from '../../stores/compendiumStore';
+import { useDataStore } from '../../stores/dataStore';
 import CargoCard from './cards/cargoCard.vue';
 import { filter } from 'lodash';
 
@@ -83,7 +66,7 @@ export default {
   }),
   computed: {
     cargo() {
-      return useCompendiumStore().cargo;
+      return useDataStore().cargo;
     },
     filteredCargo() {
       if (!this.search) return this.cargo;

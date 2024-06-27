@@ -12,6 +12,7 @@
 import _ from 'lodash';
 import shipFilter from './shipFilter.vue';
 import poiFilter from './poiFilter.vue';
+import crewFilter from './crewFilter.vue';
 
 export default {
   name: 'FilterComponent',
@@ -24,6 +25,7 @@ export default {
     component() {
       if (this.filterType.toLowerCase() === 'ship') return shipFilter;
       if (this.filterType.toLowerCase() === 'poi') return poiFilter;
+      if (this.filterType.toLowerCase() === 'crew') return crewFilter;
     },
   },
   methods: {
