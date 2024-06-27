@@ -51,4 +51,3 @@ await Initialize();
 
 await useUserStore().load();
 await useDataStore().load();
-await useDataStore().load();
