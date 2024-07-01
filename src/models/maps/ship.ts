@@ -159,7 +159,7 @@ class Ship extends MapItem {
 
   public get IsSaveReady(): boolean {
     return (
-      !!this.Hull.ID &&
+      !!this.Hull?.ID &&
       !!this.Location.map &&
       !!this.Faction &&
       !!this.Owner &&

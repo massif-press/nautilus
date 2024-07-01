@@ -8,6 +8,8 @@
       @click="dialog = true">
       edit user info
     </v-btn>
+    <br />
+
     <br v-if="user.is_mod" />
     <v-btn v-if="user.is_mod" size="x-small" color="purple" prepend-icon="mdi-star" to="/main/mod">
       Mod Dashboard
@@ -117,24 +119,54 @@
               me via Patreon.
             </p>
             <div class="text-right">
-              <v-btn color="accent" size="small" @click="requestImage">Request Permissions</v-btn>
+              <v-btn color="accent" size="small" disabled @click="requestImage">
+                Request Permissions
+              </v-btn>
             </div>
           </v-alert>
-
-          <v-alert
-            density="compact"
-            variant="outlined"
-            color="grey"
-            class="text-center text-caption mt-6">
-            <i>User passwords can be reset in COMP/CON</i>
-          </v-alert>
         </v-container>
+        <v-row align="center" justify="end">
+          <v-col cols="auto">
+            <v-btn
+              size="small"
+              variant="tonal"
+              color="accent"
+              prepend-icon="mdi-download"
+              @click="exportAll">
+              export all data
+            </v-btn>
+          </v-col>
+          <v-col cols="auto">
+            <v-file-input
+              v-model="importFile"
+              accept=".json"
+              label="import data"
+              density="compact"
+              width="300px"
+              hide-details
+              prepend-icon="mdi-upload"
+              @change="importAll" />
+          </v-col>
+        </v-row>
+
+        <v-alert
+          density="compact"
+          variant="outlined"
+          color="grey"
+          class="text-center text-caption mt-6">
+          <i>User passwords can be reset in COMP/CON</i>
+        </v-alert>
       </v-card-text>
       <v-divider />
       <v-card-actions>
         <v-btn variant="text" @click="dialog = false">Close</v-btn>
         <v-spacer />
-        <v-btn color="success" variant="tonal" prepend-icon="mdi-content-save" @click="updateUser">
+        <v-btn
+          color="success"
+          variant="tonal"
+          prepend-icon="mdi-content-save"
+          disabled
+          @click="updateUser">
           Update User Info
         </v-btn>
       </v-card-actions>
@@ -143,12 +175,14 @@
 </template>
 
 <script lang="ts">
+import { useDataStore } from '../../../stores/dataStore';
 import { useUserStore } from '../../../stores/userStore';
 
 export default {
   data() {
     return {
       dialog: false,
+      importFile: null,
     };
   },
   computed: {
@@ -165,6 +199,25 @@ export default {
     },
     requestImage() {
       console.log('request image');
+    },
+    async exportAll() {
+      const jsondata = await useDataStore().exportAll();
+      console.log(jsondata);
+      const blob = new Blob([jsondata], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'nautilus_user_export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    },
+    importAll() {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = JSON.parse((e.target as any).result);
+        useDataStore().importAll(data);
+      };
+      reader.readAsText(this.importFile);
     },
   },
 };

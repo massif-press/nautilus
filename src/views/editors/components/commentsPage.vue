@@ -35,7 +35,7 @@
       </v-card>
     </v-expand-transition>
     <div v-if="!newComment" class="text-right mt-2">
-      <v-btn color="primary" prepend-icon="mdi-comment-plus" @click="newComment = true">
+      <v-btn color="primary" prepend-icon="mdi-comment-plus" disabled @click="newComment = true">
         Add Comment
       </v-btn>
     </div>

@@ -236,5 +236,13 @@ export const useDataStore = defineStore('data', {
           break;
       }
     },
+    async exportAll() {
+      const data = await GetAll();
+      return JSON.stringify(data, null, 2);
+    },
+    async importAll(data: any[]) {
+      data.forEach((item) => SetItem(item));
+      this.load();
+    },
   },
 });
