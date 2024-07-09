@@ -106,6 +106,7 @@
     v-model="snackbar.show"
     :color="snackbar.color"
     :timeout="snackbar.timeout"
+    location="top right"
     class="pa-0">
     <v-alert :icon="snackbar.icon" variant="outlined">{{ snackbar.text }}</v-alert>
   </v-snackbar>
@@ -116,6 +117,8 @@ import { useDataStore } from '../../../stores/dataStore';
 import CommentsPage from './commentsPage.vue';
 import { useUserStore } from '../../../stores/userStore';
 import ModItemButtons from '../../mod/modItemButtons.vue';
+import { updateItem } from '../../../api';
+import { GetItem } from '../../../storage';
 
 export default {
   name: 'EditorBase',
@@ -180,18 +183,39 @@ export default {
 
       setTimeout(() => this.$router.push('/main/editor/overview'), 1500);
     },
-    save() {
-      if (this.item.Collection === 'Compendium') {
-        useDataStore().saveItem(this.item);
-      } else useDataStore().saveItem(this.item);
+    async save(skipToast = false) {
+      await useDataStore().saveItem(this.item);
 
+      if (skipToast) return;
       this.snackbar.show = true;
       this.snackbar.text = 'Item saved to local data';
       this.snackbar.color = '#2E7D32';
       this.snackbar.icon = 'mdi-check-circle';
     },
-    publish() {
-      console.log('nyi');
+    async publish() {
+      const cachedStatus = this.item.Status;
+      try {
+        this.item.Status = 'Submitted';
+        console.log(this.item.Status);
+        await this.save(true);
+        const data = await GetItem(this.item.ID);
+        console.log(data);
+        await updateItem(this.item.ID, data);
+
+        this.snackbar.show = true;
+        this.snackbar.text = 'Item submitted for review';
+        this.snackbar.color = '#1976D2';
+        this.snackbar.icon = 'mdi-send';
+      } catch (error) {
+        console.error(error);
+        this.snackbar.show = true;
+        this.snackbar.text = 'Failed to submit item';
+        this.snackbar.color = '#D32F2F';
+        this.snackbar.icon = 'mdi-alert-circle';
+
+        this.item.Status = cachedStatus;
+        this.save(true);
+      }
     },
   },
 };

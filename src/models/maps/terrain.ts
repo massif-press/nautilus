@@ -1,10 +1,10 @@
 import { locationData } from '../dataTypes';
+import { EditableItemData } from '../editableItem';
 import { Submap, SubmapData } from './submap';
 import { SystemMap } from './systemMap';
 
-type TerrainData = {
-  type: string;
-  id: string;
+type TerrainData = EditableItemData & {
+  type: 'terrain';
   name: string;
   terrain_type: string;
   center: number[];

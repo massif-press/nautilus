@@ -1,5 +1,5 @@
 <template>
-  <v-container class="text-center pb-12">
+  <v-container id="container" class="text-center pb-12">
     <v-row align="center" justify="center">
       <v-col cols="auto">
         <div class="main-title">NAUTILUS</div>
@@ -63,18 +63,90 @@
           clearable
           prepend-inner-icon="mdi-lock" />
       </v-card-text>
-      <v-btn to="/main/landing" block class="rounded-0" color="primary">LOG IN</v-btn>
+      <v-btn block class="rounded-0" color="primary" @click="login" :loading="loading">
+        LOG IN
+      </v-btn>
+      <v-fade-transition>
+        <div v-if="loading" class="text-center text-caption my-2">
+          <i>
+            Logging in. This may take a moment if this is your first time logging in, or if you have
+            not logged in recently.
+          </i>
+          <div v-if="progressMessage" class="px-12">
+            <v-progress-linear
+              v-if="loading"
+              v-model="progress"
+              color="accent"
+              class="rounded-xl my-1"
+              height="20" />
+          </div>
+          <i>
+            {{ progressMessage }}
+          </i>
+        </div>
+      </v-fade-transition>
+      <div ref="message" />
     </v-card>
+    <v-snackbar v-model="snackbar" color="error" vertical rounded="md">
+      <div>Unable to log in</div>
+      <p>
+        <i>{{ errorMessage }}</i>
+      </p>
+      <template #actions>
+        <v-btn variant="text" @click="snackbar = false">Close</v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script lang="ts">
+import { getUser } from '../api';
+import { useDataStore } from '../stores/dataStore';
+import { useUserStore } from '../stores/userStore';
+
 export default {
   name: 'Login',
   data: () => ({
     username: '',
     password: '',
+    snackbar: false,
+    errorMessage: '',
+    loading: false,
+    progress: 0,
+    progressMessage: 'Authenticating...',
+    preAuth: false,
   }),
+  async created() {
+    await useUserStore().load();
+    if (useUserStore().loaded) this.$router.push('/main/landing');
+  },
+  methods: {
+    async login() {
+      this.loading = true;
+      try {
+        await useUserStore().login(this.username, this.password);
+        this.progress = 10;
+        this.progressMessage = 'Updating Nautilus user data...';
+        this.$refs.message?.scrollIntoView({ behavior: 'smooth' });
+        await useUserStore().getUserNautilusData();
+
+        this.progress = 40;
+        this.progressMessage = 'Retrieving map data...';
+        await useDataStore().load();
+
+        this.progress = 98;
+        this.progressMessage = 'Resolving local data...';
+
+        this.$router.push('/main/landing');
+      } catch (err) {
+        console.error(err);
+        this.loading = false;
+        this.progressMessage = '';
+        this.errorMessage = err?.message || 'Unknown error';
+        this.snackbar = true;
+      }
+    },
+  },
 };
 </script>
 

@@ -3,45 +3,25 @@ import { Hull, HullData } from '../models/compendium/hull';
 import { Cargo, CargoData } from '../models/compendium/cargo';
 import { Tag, TagData } from '../models/compendium/tag';
 import { Author, AuthorData } from '../models/author';
-import { EditableItem } from '../models/editableItem';
+import { EditableItem, EditableItemData } from '../models/editableItem';
 import { Ship, ShipData } from '../models/maps/ship';
 import { Poi, PoiData } from '../models/maps/poi';
 import { SystemMap, MapData } from '../models/maps/systemMap';
 import { Crew, CrewData } from '../models/maps/crew';
 
-import { GetAll, RemoveItem, SetItem } from '../storage';
-
-import { CompendiumItem } from '../models/compendium/compendiumItem';
-import { MapItem } from '../models/maps/mapitem';
+import { GetAll, MergeItem, RemoveItem, SetItem } from '../storage';
 
 //test import data
-import hulls from '../assets/compendium/hulls.json';
-import submaps from '../assets/compendium/submaps.json';
-import tags from '../assets/compendium/tags.json';
-import deployables from '../assets/compendium/deployables.json';
-import authors from '../assets/test_data/authors.json';
-import cargo from '../assets/test_data/cargo.json';
-import crew from '../assets/test_data/crew.json';
-import pois from '../assets/test_data/pois.json';
-import ships from '../assets/test_data/ships.json';
-import maps from '../assets/test_data/maps.json';
-import { Deployable } from '../models/compendium/deployable';
+import testData from '../assets/test_data/data.json';
 
-const testShim = () => [
-  ...hulls,
-  ...submaps,
-  ...tags,
-  ...deployables,
-  ...authors,
-  ...cargo,
-  ...crew,
-  ...pois,
-  ...ships,
-  ...maps,
-];
+import { Deployable } from '../models/compendium/deployable';
+import { loadS3Data } from '../s3';
 
 export const useDataStore = defineStore('data', {
   state: () => ({
+    last_update: 0,
+    local_update: 0,
+    expires: 0,
     hulls: [] as Array<Hull>,
     tags: [] as Array<Tag>,
     submaps: [] as Array<any>,
@@ -137,11 +117,41 @@ export const useDataStore = defineStore('data', {
   },
   actions: {
     async load() {
-      const localdata = await GetAll();
+      const expires = localStorage.getItem('nautilus_data_expiry') || 0;
+      const localLastUpdate = localStorage.getItem('nautilus_data_last_update') || 0;
 
-      const remoteData = testShim();
+      let remoteLoad = Date.now() > Number(expires);
+      if (remoteLoad) {
+        console.log('Remote data expired', (Date.now() - Number(expires)) / 1000 / 60, 'minutes');
+        if (localLastUpdate) {
+          remoteLoad = (Date.now() - Number(localLastUpdate)) / 1000 / 60 > 5;
+          if (remoteLoad)
+            console.log(
+              'Local refresh limit expired',
+              (Date.now() - Number(localLastUpdate)) / 1000 / 60,
+              'minutes'
+            );
+        }
+      }
 
-      const data = [...localdata, ...remoteData];
+      if (remoteLoad) {
+        console.log('Loading remote data...');
+
+        const remoteData = await loadS3Data();
+        remoteData.data.forEach((item) => {
+          MergeItem(item as any);
+        });
+
+        this.last_update = remoteData.last_update;
+        this.local_update = Date.now();
+        this.expires = remoteData.expires;
+
+        localStorage.setItem('nautilus_data_expiry', this.expires.toString());
+        localStorage.setItem('nautilus_data_last_update', this.local_update.toString());
+      }
+
+      console.log('Building compendium...');
+      const data = await GetAll();
 
       this.tags = data.filter((item) => item.type === 'tag').map((tag) => new Tag(tag as TagData));
       this.hulls = data
@@ -155,8 +165,6 @@ export const useDataStore = defineStore('data', {
         .filter((item) => item.type === 'deployable')
         .map((d) => new Deployable(d)) as Deployable[];
 
-      console.log(this.deployables);
-
       this.maps = data
         .filter((item) => item.type === 'map')
         .map((m) => new SystemMap(m as MapData));
@@ -165,7 +173,9 @@ export const useDataStore = defineStore('data', {
 
       this.crew = data.filter((item) => item.type === 'crew').map((c) => new Crew(c as CrewData));
 
-      this.authors = authors.map((author) => new Author(author as AuthorData));
+      this.authors = data
+        .filter((item) => item.type === 'author')
+        .map((author) => new Author(author as AuthorData));
 
       this.loaded = true;
     },

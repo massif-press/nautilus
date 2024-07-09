@@ -208,9 +208,11 @@ const router = createRouter({
 });
 
 router.beforeEach(async () => {
-  if (!useUserStore().loaded) await useUserStore().load();
-  if (!useDataStore().loaded) await useDataStore().load();
-  if (!useDataStore().loaded) await useDataStore().load();
+  if (router.currentRoute.value.name === 'login') return;
+  await useUserStore().load();
+
+  if (router.currentRoute.value.name === 'login') return;
+  await useDataStore().load();
 });
 
 export default router;

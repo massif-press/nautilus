@@ -1,18 +1,18 @@
 <template>
   <div>
     <v-btn
-      size="x-small"
+      :size="large ? '' : 'x-small'"
+      :block="large"
       variant="tonal"
       color="accent"
       prepend-icon="mdi-pencil"
       @click="dialog = true">
       edit user info
     </v-btn>
-    <br />
 
     <br v-if="user.is_mod" />
     <v-btn v-if="user.is_mod" size="x-small" color="purple" prepend-icon="mdi-star" to="/main/mod">
-      Mod Dashboard
+      Mod Tools
     </v-btn>
   </div>
   <v-dialog v-model="dialog" max-width="75vw">
@@ -40,7 +40,7 @@
             <v-col>
               <v-text-field v-model="user.username" label="Nickname" density="compact">
                 <template #prepend>
-                  <v-tooltip max-width="300px">
+                  <v-tooltip max-width="300px" location="top">
                     <template #activator="{ props }">
                       <v-icon v-bind="props" icon="mdi-information-outline" />
                     </template>
@@ -58,9 +58,10 @@
                 label="Attribution"
                 density="compact"
                 persistent-hint
+                @change="dirty = true"
                 hint="Optional">
                 <template #prepend>
-                  <v-tooltip max-width="300px">
+                  <v-tooltip max-width="300px" location="top">
                     <template #activator="{ props }">
                       <v-icon v-bind="props" icon="mdi-information-outline" />
                     </template>
@@ -81,6 +82,7 @@
                 label="Discord Handle"
                 density="compact"
                 persistent-hint
+                @change="dirty = true"
                 hint="Optional" />
             </v-col>
             <v-col cols="auto" class="ml-3">
@@ -90,6 +92,7 @@
                 color="accent"
                 hide-details
                 :disabled="!user.discord.length"
+                @change="dirty = true"
                 density="compact" />
               <div class="text-caption text-disabled mt-n3 ml-10">
                 <i>
@@ -108,7 +111,11 @@
             </v-col>
           </v-row>
 
-          <v-alert v-if="!user.image_submission" density="compact" color="primary" class="my-2">
+          <v-alert
+            v-if="!user.image_submission"
+            density="compact"
+            color="primary"
+            class="mb-2 mt-8">
             <b>Request Image Submission Permissions</b>
             <br />
             <p>
@@ -127,12 +134,7 @@
         </v-container>
         <v-row align="center" justify="end">
           <v-col cols="auto">
-            <v-btn
-              size="small"
-              variant="tonal"
-              color="accent"
-              prepend-icon="mdi-download"
-              @click="exportAll">
+            <v-btn variant="tonal" color="accent" prepend-icon="mdi-download" @click="exportAll">
               export all data
             </v-btn>
           </v-col>
@@ -140,11 +142,14 @@
             <v-file-input
               v-model="importFile"
               accept=".json"
-              label="import data"
+              color="accent"
+              variant="solo-filled"
+              label="Import Data"
               density="compact"
               width="300px"
               hide-details
-              prepend-icon="mdi-upload"
+              prepend-inner-icon="mdi-upload"
+              prepend-icon=""
               @change="importAll" />
           </v-col>
         </v-row>
@@ -154,6 +159,19 @@
           variant="outlined"
           color="grey"
           class="text-center text-caption mt-6">
+          <div>
+            Your account was created on
+            <i>{{ new Date(user.created_at).toLocaleString() }}</i>
+            and last updated at
+            <i>{{ new Date(user.updated_at).toLocaleString() }}</i>
+          </div>
+          <div>
+            Your registered e-mail is:
+            <span class="text-accent">{{ user.email }}</span>
+            .
+            <b>This is hidden from all other users</b>
+            but is included here for account troubleshooting.
+          </div>
           <i>User passwords can be reset in COMP/CON</i>
         </v-alert>
       </v-card-text>
@@ -165,13 +183,19 @@
           color="success"
           variant="tonal"
           prepend-icon="mdi-content-save"
-          disabled
+          :disabled="!dirty"
           @click="updateUser">
           Update User Info
         </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-snackbar v-model="snackbar" :color="toastColor" rounded="md" location="bottom">
+    <div>{{ toastMessage }}</div>
+    <template #actions>
+      <v-btn variant="text" @click="snackbar = false">Close</v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script lang="ts">
@@ -179,11 +203,16 @@ import { useDataStore } from '../../../stores/dataStore';
 import { useUserStore } from '../../../stores/userStore';
 
 export default {
-  data() {
-    return {
-      dialog: false,
-      importFile: null,
-    };
+  data: () => ({
+    dialog: false,
+    importFile: null,
+    snackbar: false,
+    toastMessage: '',
+    toastColor: 'error',
+    dirty: false,
+  }),
+  props: {
+    large: Boolean,
   },
   computed: {
     user() {
@@ -191,8 +220,19 @@ export default {
     },
   },
   methods: {
-    updateUser() {
-      console.log('update user');
+    async updateUser() {
+      try {
+        await useUserStore().updateUser();
+        this.toastMessage = 'User info updated';
+        this.toastColor = 'success';
+        this.snackbar = true;
+      } catch (e) {
+        this.toastMessage = e.message;
+        this.toastColor = 'error';
+        this.snackbar = true;
+      } finally {
+        this.dirty = false;
+      }
     },
     copyID() {
       navigator.clipboard.writeText(this.user.user_id);

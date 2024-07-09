@@ -75,9 +75,7 @@ export default {
   }),
   computed: {
     items() {
-      return useDataStore()
-        .items.concat(useDataStore().items)
-        .filter((x) => x.Status === 'Submitted');
+      return useDataStore().items.filter((x) => x.Status === 'Submitted');
     },
   },
 };

@@ -46,7 +46,7 @@
         to="/main/mod">
         MOD TOOLS
       </v-btn>
-      <v-btn size="small" variant="tonal" color="secondary" to="/">LOG OUT</v-btn>
+      <v-btn size="small" variant="tonal" color="secondary" @click="logout">LOG OUT</v-btn>
     </v-footer>
   </v-app>
 </template>
@@ -82,6 +82,10 @@ export default {
     setMap(map: string) {
       localStorage.setItem('cc-n-mapid', map);
       useDataStore().setMap(this.maps.find((m) => m.ID === map));
+    },
+    logout() {
+      useUserStore().logout();
+      this.$router.push('/');
     },
   },
 };

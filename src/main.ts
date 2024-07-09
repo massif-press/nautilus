@@ -12,8 +12,6 @@ import ipsn from './assets/theme';
 import router from './router';
 
 import App from './App.vue';
-import { useUserStore } from './stores/userStore';
-import { useDataStore } from './stores/dataStore';
 import { Initialize } from './storage';
 
 const nautilus = createApp(App);
@@ -48,6 +46,3 @@ nautilus.use(createPinia());
 nautilus.mount('#app');
 
 await Initialize();
-
-await useUserStore().load();
-await useDataStore().load();

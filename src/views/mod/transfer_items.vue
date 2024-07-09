@@ -95,7 +95,7 @@ export default {
   }),
   computed: {
     items() {
-      return useDataStore().items.concat(useDataStore().items);
+      return useDataStore().items;
       // .filter((x) => x.Status !== 'Unpublished');
     },
     authors() {

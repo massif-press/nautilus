@@ -126,8 +126,7 @@ abstract class EditableItem {
       created_at: this.CreatedAt.getTime(),
       updated_at: new Date().getTime(),
       deleted_at: undefined as number | undefined,
-      status: (this.Status = 'Unpublished'),
-      // comments: this.Comments.map((c) => c.Save()),
+      status: this.Status,
     };
     if (this.DeletedAt) {
       out.deleted_at = this.DeletedAt.getTime();

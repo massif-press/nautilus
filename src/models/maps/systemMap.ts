@@ -1,8 +1,8 @@
+import { EditableItemData } from '../editableItem';
 import { TerrainData, Terrain } from './terrain';
 
-type MapData = {
+type MapData = EditableItemData & {
   type: 'map';
-  id: string;
   name: string;
   subtitle: string;
   control: string;

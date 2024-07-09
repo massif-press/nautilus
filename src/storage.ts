@@ -1,4 +1,5 @@
 import localforage from 'localforage';
+import { EditableItem, EditableItemData } from './models/editableItem';
 
 const dbName = 'NAUTILUS Persistent';
 
@@ -20,6 +21,19 @@ const SetItem = async function (item: any) {
   const id = item.ID ? item.ID : item.id;
 
   storeRegistry.local_data.setItem(id, JSON.stringify(item));
+};
+
+const MergeItem = async function (item: EditableItemData) {
+  const existing = (await GetItem(item.id)) as EditableItemData;
+
+  if (!existing) {
+    SetItem(item);
+    return;
+  }
+
+  if (existing.updated_at > item.updated_at || 0) return;
+
+  SetItem(item);
 };
 
 const GetItem = async function (id: string) {
@@ -58,4 +72,4 @@ const GetKeys = async function () {
   if (db) return await db.keys();
   return [];
 };
-export { Initialize, SetItem, GetItem, RemoveItem, GetAll, GetLength, GetKeys };
+export { Initialize, SetItem, GetItem, RemoveItem, GetAll, GetLength, GetKeys, MergeItem };

@@ -28,29 +28,42 @@
         If you like the general idea here, but not this specific idea in particular, that's okay
         too, there'll be others coming.
       </p>
-      <!-- <v-divider class="my-1" />
-      <p class="pa-2">
-        If this is your first time here, consider checking out the
-        <a href="/main/about">ABOUT</a>
-        page, which has some more information about the project and its goals, as well as some rules
-        and guidelines about the type of content that will be accepted. If you're ready to jump in,
-        you can pick a map from the menu in the lower right and click
-        <b>OPEN</b>
-        to get started.
-      </p>
-      <p class="pa-2">
-        If you'd like to collaborate in other ways -- such as with art or code -- or if you have
-        bigger ideas about how to expand this project, check out the #cc-nautilus channel in the
-        LANCER Discord (or ping me directly at @beeftime).
-      </p> -->
+      <v-card v-if="isNew" variant="outlined" color="secondary" class="pa-2 ma-2">
+        <p class="pa-2">
+          If this is your first time here, consider checking out the
+          <a href="/main/about">ABOUT</a>
+          page, which has some more information about the project and its goals, as well as some
+          rules and guidelines about the type of content that will be accepted. If you're ready to
+          jump in, you can pick a map from the menu in the lower right and click
+          <b>OPEN</b>
+          to get started.
+        </p>
+        <p class="pa-2">
+          You might also like to change your username from the default. You can do that by clicking
+          the button below to open up the user control panel. This panel can also be found on the
+          <a href="/main/editor/overview">EDITOR</a>
+          page.
+        </p>
+        <br />
+        <user-control-panel large />
+      </v-card>
     </v-card>
   </v-container>
 </template>
 
 <script lang="ts">
+import UserControlPanel from './editors/components/userControlPanel.vue';
+
 // TODO: automatically reroute if we have data in localstorage
 
 export default {
   name: 'landing',
+  components: { UserControlPanel },
+  computed: {
+    isNew() {
+      const nud = localStorage.getItem('nautilus_user_data');
+      return (nud && JSON.parse(nud).username.toLowerCase() === 'new user') || false;
+    },
+  },
 };
 </script>
