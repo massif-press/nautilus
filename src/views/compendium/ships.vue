@@ -33,7 +33,9 @@
             :to="`/main/editor/edit/${item.ItemType}/${item.ID}`" />
         </template>
         <template #item.Hull="{ item }">
+          <span v-if="!item.Hull || !item.Hull.Name">-</span>
           <v-btn
+            v-else
             size="small"
             variant="tonal"
             :text="item.Hull.Name"

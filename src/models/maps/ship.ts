@@ -124,7 +124,7 @@ class Ship extends MapItem {
   }
 
   public get SizeValue(): number {
-    return this.Hull.Size.value || 1;
+    return this.Hull?.Size.value || 1;
   }
 
   public get Tags(): Tag[] {
@@ -149,7 +149,7 @@ class Ship extends MapItem {
   }
 
   public get Show() {
-    return this.Hull.Size.show || 1;
+    return this.Hull?.Size.show || 1;
   }
 
   public get Center(): number[] {
@@ -211,7 +211,7 @@ class Ship extends MapItem {
       ...super.Save(),
       type: this.ItemType,
       prefix: this.Prefix,
-      hull: this.Hull.ID,
+      hull: this.Hull?.ID || '',
       homeport: this.HomePort,
       description: this.Description,
       details: this.Details,
