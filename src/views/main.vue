@@ -95,8 +95,6 @@ export default {
     this.selectedMap = store.map?.ID;
 
     this.timeLeft = Math.ceil((useDataStore().expires - Date.now()) / 1000 / 60);
-    if (this.timeLeft <= 0)
-      this.timeLeft = Math.ceil((useDataStore().local_update - Date.now()) / 1000 / 60);
 
     if (this.timeLeft <= 0) this.timeLeft = 0;
 
