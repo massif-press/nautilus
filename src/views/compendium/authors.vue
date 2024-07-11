@@ -20,6 +20,7 @@
     <v-card-text>
       <v-data-table
         v-model:expanded="expanded"
+        :search="search"
         :headers="headers"
         :items="authors"
         item-value="ID"
