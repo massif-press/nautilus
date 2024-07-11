@@ -61,7 +61,7 @@ export default {
   }),
   computed: {
     pois() {
-      return useDataStore().pois;
+      return useDataStore().pois.filter((x) => x.isPublicVisible);
     },
     filteredPois() {
       if (!this.search) return this.pois;

@@ -28,6 +28,7 @@
         <template #item.map="{ item }">{{ item.MapItems.length }}</template>
         <template #item.compendium="{ item }">{{ item.CompendiumItems.length }}</template>
         <template #item.LastUpdate="{ item }">{{ item.LastUpdate.toLocaleString() }}</template>
+        <template #item.Discord="{ item }"><discord-chip :author="item" /></template>
         <template #expanded-row="{ columns, item }">
           <tr>
             <td :colspan="columns.length" class="px-0">
@@ -60,7 +61,7 @@
                           color="accent"
                           variant="tonal"
                           :to="`/main/map/${item.ID}`">
-                          {{ item.Location.map }}
+                          {{ getMap(item.Location.map) }}
                         </v-btn>
                       </template>
                       <template #item.CreatedAt="{ item }">
@@ -86,9 +87,16 @@
 <script lang="ts">
 import _ from 'lodash';
 import { useDataStore } from '../../stores/dataStore';
+import DiscordChip from '../../_components/discordChip.vue';
 
 export default {
   name: 'Authors',
+  components: {
+    DiscordChip,
+  },
+  props: {
+    preSearch: { type: String, default: '' },
+  },
   data: () => ({
     tab: 0,
     subTables: ['MapItems', 'CompendiumItems'],
@@ -119,6 +127,9 @@ export default {
       ],
     },
   }),
+  mounted() {
+    if (this.preSearch) this.search = this.preSearch;
+  },
   computed: {
     filteredAuthors() {
       return _.filter(this.authors, (author) => {
@@ -127,6 +138,12 @@ export default {
     },
     authors() {
       return useDataStore().authors;
+    },
+  },
+  methods: {
+    getMap(id: string) {
+      const map = useDataStore().maps.find((x) => x.ID === id);
+      return map ? map.Name : 'Unknown';
     },
   },
 };

@@ -4,6 +4,28 @@
       <router-view />
     </div>
     <v-footer app class="border-t-sm" style="position: fixed">
+      <v-menu open-on-hover>
+        <template #activator="{ props }">
+          <v-icon
+            v-bind="props"
+            :icon="timeLeft ? 'mdi-database-outline' : 'mdi-database-refresh'"
+            :color="timeLeft ? 'grey-darken-2' : 'success'"
+            class="ml-n2 mr-2" />
+        </template>
+        <v-card class="pa-4">
+          <div v-if="timeLeft" class="text-center text-caption">
+            Data update available in {{ timeLeft }} {{ timeLeft > 1 ? 'minutes' : 'minute' }}
+            <br />
+            <span class="text-disabled">
+              Last update
+              {{ new Date(lastLocalUpdate).toLocaleString() }}
+            </span>
+          </div>
+          <div v-else="timeLeft" class="text-center text-caption text-disabled">
+            New data available. Please refresh.
+          </div>
+        </v-card>
+      </v-menu>
       <v-select
         v-model="selectedMap"
         :items="maps"
@@ -59,6 +81,8 @@ export default {
   name: 'main-view',
   data: () => ({
     selectedMap: null as any,
+    timer: 0,
+    timeLeft: 0,
   }),
   mounted() {
     const store = useDataStore();
@@ -69,6 +93,25 @@ export default {
       else store.setMap(store.maps[0]);
     }
     this.selectedMap = store.map?.ID;
+
+    this.timeLeft = Math.ceil((useDataStore().expires - Date.now()) / 1000 / 60);
+    if (this.timeLeft <= 0)
+      this.timeLeft = Math.ceil((useDataStore().local_update - Date.now()) / 1000 / 60);
+
+    if (this.timeLeft <= 0) this.timeLeft = 0;
+
+    if (!this.timeLeft) return;
+
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        clearInterval(this.timer);
+      }
+    }, 1000 * 60);
   },
   computed: {
     maps() {
@@ -76,6 +119,12 @@ export default {
     },
     isMod() {
       return useUserStore().is_mod;
+    },
+    expiration() {
+      return useDataStore().expires;
+    },
+    lastLocalUpdate() {
+      return Number(useDataStore().local_update);
     },
   },
   methods: {

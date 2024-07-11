@@ -38,7 +38,7 @@
       <v-row>
         <v-col v-for="item in items" cols="6" sm="4" xl="2">
           <v-sheet border>
-            <v-img :src="(item.raw as any).src" height="250" cover></v-img>
+            <v-img :src="getSrc(item.raw)" height="250" cover></v-img>
             <v-table class="text-caption" density="compact">
               <tbody>
                 <tr align="right">
@@ -46,15 +46,46 @@
                   <td>{{ (item.raw as any).link }}</td>
                 </tr>
                 <tr align="right">
-                  <th>Type:</th>
-                  <td>{{ (item.raw as any).type }}</td>
+                  <th />
+                  <td><v-chip v-for="tag in item.raw.tags" :text="tag" size="x-small" /></td>
                 </tr>
                 <tr align="right">
-                  <th>Uploader:</th>
-                  <td>{{ (item.raw as any).uploader }}</td>
+                  <th />
+                  <td>
+                    {{ getUser(item.raw).Name }}
+                    {{ new Date(item.raw.created_at).toLocaleString() }}
+                    <div v-if="item.raw.deleted_at" class="text-error">
+                      Deleted at
+                      {{ new Date(item.raw.deleted_at).toLocaleString() }}
+                    </div>
+                  </td>
                 </tr>
                 <tr align="right">
-                  <th><v-btn size="x-small" block variant="tonal" color="error">Delete</v-btn></th>
+                  <th>
+                    <v-dialog width="50vw">
+                      <template #activator="{ props }">
+                        <v-btn v-bind="props" size="x-small" block variant="tonal" color="error">
+                          Delete
+                        </v-btn>
+                      </template>
+                      <template #default="{ isActive }">
+                        <v-card>
+                          <v-card-text>Confirm Delete</v-card-text>
+                          <v-divider />
+                          <v-card-actions>
+                            <v-btn @click="isActive.value = false">Cancel</v-btn>
+                            <v-spacer />
+                            <v-btn
+                              color="error"
+                              :loading="loading"
+                              @click="deleteImage(item.raw, isActive)">
+                              Delete
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </template>
+                    </v-dialog>
+                  </th>
                   <td>
                     <v-dialog width="50vw">
                       <template #activator="{ props }">
@@ -73,10 +104,6 @@
                           </v-toolbar>
                           <v-card-text>
                             <v-text-field
-                              v-model="(item.raw as any).src"
-                              label="Image"
-                              density="compact" />
-                            <v-text-field
                               v-model="(item.raw as any).title"
                               label="Nautilus-only Image Title"
                               density="compact" />
@@ -88,8 +115,10 @@
                               v-model="(item.raw as any).link"
                               label="Artist site or link"
                               density="compact" />
-                            <v-select
-                              v-model="(item.raw as any).type"
+                            <v-combobox
+                              v-model="(item.raw as any).tags"
+                              multiple
+                              chips
                               label="Type"
                               :items="['Ship', 'POI', 'Hull', 'Crew']"
                               density="compact" />
@@ -99,7 +128,8 @@
                               variant="tonal"
                               block
                               class="mt-4"
-                              @click="updateImage(item.raw)">
+                              :loading="loading"
+                              @click="updateImage(item.raw, isActive)">
                               Submit
                             </v-btn>
                           </v-card-text>
@@ -125,6 +155,9 @@
 </template>
 
 <script lang="ts">
+import { getImages, postImageMetadata } from '../../api';
+import { useDataStore } from '../../stores/dataStore';
+
 export default {
   name: 'ImageManger',
   data: () => ({
@@ -132,105 +165,12 @@ export default {
     pageCount: 0,
     itemsPerPage: 24,
     search: '',
-    images: [
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-        title: 'Desert',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
-        title: 'Docks',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-        title: 'Desert',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
-        title: 'Docks',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-        title: 'Desert',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
-        title: 'Docks',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-        title: 'Desert',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
-        title: 'Docks',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-        title: 'Desert',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
-        title: 'Docks',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/desert.jpg',
-        title: 'Desert',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
-        title: 'Docks',
-        artist: 'Erich Behrens',
-        uploader: 'John Doe',
-        type: 'desert',
-        link: 'https://www.vuetifyjs.com',
-      },
-    ],
+    loading: false,
+    images: [],
   }),
+  async mounted() {
+    await this.getImages();
+  },
   computed: {
     filteredImages() {
       if (!this.search) return this.images;
@@ -244,16 +184,40 @@ export default {
     },
   },
   methods: {
+    async getImages() {
+      this.loading = true;
+      try {
+        this.images = await getImages();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.loading = false;
+      }
+    },
+    getSrc(item) {
+      if (!item.key) return `/img/nodata.png`;
+      return `${(import.meta as any).env.VITE_APP_DISTRIBUTION}images/${item.key}`;
+    },
+    getUser(item) {
+      return useDataStore().author(item.uploader);
+    },
     onClickSeeAll() {
       this.itemsPerPage = this.itemsPerPage === 4 ? this.images.length : 4;
     },
-    deleteImage() {
-      console.log('delete image');
-      console.log('nyi');
+    async deleteImage(image, isActive) {
+      this.loading = true;
+      image.key = '';
+      image.deleted_at = Date.now();
+
+      await postImageMetadata(image);
+      isActive.value = false;
+      this.loading = false;
     },
-    updateImage(image) {
-      console.log('update image');
-      console.log('nyi');
+    async updateImage(image, isActive) {
+      this.loading = true;
+      await postImageMetadata(image);
+      isActive.value = false;
+      this.loading = false;
     },
   },
 };

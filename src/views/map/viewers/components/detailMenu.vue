@@ -57,6 +57,7 @@
         <v-icon icon="cc:gms" class="mt-n1" />
         {{ item.Title }}
       </div>
+
       <v-card-text class="pt-0">
         <v-window v-model="tab">
           <v-window-item>
@@ -153,6 +154,7 @@
           </v-window-item>
         </v-window>
       </v-card-text>
+
       <v-card-actions>
         <v-spacer />
         <v-btn color="accent" variant="text" @click="dialog = false">Close</v-btn>

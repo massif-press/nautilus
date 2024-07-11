@@ -21,17 +21,16 @@
       @click="setClickLocation($event)"
       @moveend="redraw">
       <l-marker v-if="pickMode && lat && lng" :lat-lng="[lat, lng]">
-        <l-icon :icon-size="iconSize">
+        <l-icon :icon-size="<any>iconSize">
           <v-icon :size="iconSize[0]" color="deep-orange" icon="mdi-crosshairs" />
         </l-icon>
       </l-marker>
 
       <l-image-overlay
         v-for="t in terrain"
-        :url="getImgPath(t.Submap.Img)"
+        :url="getImgPath(t.Svg)"
         :crossOrigin="true"
-        :visible="t.Submap.Show <= zoom"
-        :bounds="t.Submap.Bounds" />
+        :bounds="t.Bounds" />
 
       <template v-for="item in items">
         <template v-for="submap in item.Submaps">
@@ -221,16 +220,18 @@ export default {
       return useDataStore().map.Terrain;
     },
     ships() {
-      return useDataStore().ships.filter((s) => s.Location.map === this.map.ID);
+      return useDataStore().ships.filter(
+        (s) => s.Location.map === this.map.ID && s.isPublicVisible
+      );
     },
     pois() {
-      return useDataStore().pois.filter((p) => p.Location.map === this.map.ID);
+      return useDataStore().pois.filter((p) => p.Location.map === this.map.ID && p.isPublicVisible);
     },
     crew() {
-      return useDataStore().crew.filter((c) => c.location.map === this.map.ID);
+      return useDataStore().crew.filter((c) => c.location.map === this.map.ID && c.isPublicVisible);
     },
     items() {
-      return [...this.ships, ...this.pois];
+      return [...this.ships, ...this.pois].filter((i) => i.isPublicVisible);
     },
   },
   methods: {

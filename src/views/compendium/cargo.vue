@@ -66,7 +66,7 @@ export default {
   }),
   computed: {
     cargo() {
-      return useDataStore().cargo;
+      return useDataStore().cargo.filter((x) => x.isPublicVisible);
     },
     filteredCargo() {
       if (!this.search) return this.cargo;

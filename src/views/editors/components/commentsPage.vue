@@ -1,50 +1,56 @@
 <template>
-  <v-container class="px-12">
-    <div class="text-center">
-      <div class="text-h3">{{ item.Title || item.Name }}</div>
-      <div class="text-caption mb-n2">
-        Review Status:
-        <b class="text-success">{{ item.Status }}</b>
-      </div>
-    </div>
-    <v-divider class="my-4" />
-    <comment-item
-      v-for="c in test_comments"
-      :comment="c"
-      :depth="0"
-      @submit="addNestedComment($event)" />
-    <v-expand-transition>
-      <v-card v-if="newComment" class="mt-4 mx-auto">
-        <v-textarea
-          v-model="newCommentContent"
-          density="compact"
-          placeholder="Enter new comment..."
-          hide-details />
-        <v-card-actions class="py-0">
-          <v-btn color="error" size="small" variant="tonal" @click="newCommentContent = ''">
-            Clear
-          </v-btn>
-          <v-spacer />
-          <v-btn color="error" size="small" variant="tonal" @click="newComment = false">
-            Cancel
-          </v-btn>
-          <v-btn color="accent" size="small" variant="tonal" class="ml-6" @click="addComment()">
-            Submit
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-expand-transition>
-    <div v-if="!newComment" class="text-right mt-2">
-      <v-btn color="primary" prepend-icon="mdi-comment-plus" disabled @click="newComment = true">
-        Add Comment
-      </v-btn>
-    </div>
-  </v-container>
+  <comment-item
+    v-for="c in nestedComments"
+    :comment="<any>c"
+    :depth="0"
+    @submit="addNestedComment($event)"
+    @erase="modDeleteComment($event)" />
+  <v-expand-transition>
+    <v-card v-if="newComment" class="mt-4 mx-auto">
+      <v-textarea
+        v-model="newCommentContent"
+        density="compact"
+        placeholder="Enter new comment..."
+        hide-details />
+      <v-card-actions class="py-0">
+        <v-btn color="error" size="small" variant="tonal" @click="newCommentContent = ''">
+          Clear
+        </v-btn>
+        <v-spacer />
+        <v-btn color="error" size="small" variant="tonal" @click="newComment = false">Cancel</v-btn>
+        <v-btn
+          color="accent"
+          size="small"
+          variant="tonal"
+          class="ml-6"
+          :loading="loading"
+          @click="addComment()">
+          Submit
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-expand-transition>
+  <div v-if="!newComment" class="text-right mt-2">
+    <v-btn color="primary" prepend-icon="mdi-comment-plus" @click="newComment = true">
+      Add Comment
+    </v-btn>
+  </div>
+  <v-snackbar
+    v-model="snackbar.show"
+    :color="snackbar.color"
+    :timeout="snackbar.timeout"
+    location="top right"
+    class="pa-0">
+    <v-alert :icon="snackbar.icon" variant="outlined">{{ snackbar.text }}</v-alert>
+  </v-snackbar>
 </template>
 
 <script lang="ts">
 import _ from 'lodash';
+import { v4 as uid } from 'uuid';
 import CommentItem from './commentItem.vue';
+import { useUserStore } from '../../../stores/userStore';
+import { postComment } from '../../../api';
 
 export default {
   name: 'CommentsPage',
@@ -53,82 +59,113 @@ export default {
   },
   props: {
     item: { type: Object, required: true },
+    comments: { type: Array, required: true },
   },
   data: () => ({
     newComment: false,
     newCommentContent: '',
-    test_comments: [
-      {
-        id: 'testcomment-1',
-        content: 'This is a test comment.',
-        commenter: 'Test User',
-        createdAt: '2021-10-01T00:00:00Z',
-        children: [
-          {
-            id: 'testcomment-2',
-            content: 'This is a test reply.',
-            commenter: 'Test User 2',
-            createdAt: '2021-10-01T00:01:00Z',
-            children: [],
-          },
-        ],
-      },
-      {
-        id: 'testcomment-3',
-        content: 'This is another test comment.',
-        commenter: 'Test User',
-        createdAt: '2021-10-01T00:02:00Z',
-        children: [],
-      },
-      {
-        id: 'testcomment-4',
-        content: 'This is a third test comment.',
-        commenter: 'Test User',
-        createdAt: '2021-10-01T00:03:00Z',
-        children: [
-          {
-            id: 'testcomment-5',
-            content: 'This is a test reply to the third comment.',
-            commenter: 'Test User 2',
-            createdAt: '2021-10-01T00:04:00Z',
-            children: [],
-          },
-          {
-            id: 'testcomment-6',
-            content: 'This is another test reply to the third comment.',
-            commenter: 'Test User 3',
-            createdAt: '2021-10-01T00:05:00Z',
-            children: [],
-          },
-        ],
-      },
-    ],
+    snackbar: {
+      show: false,
+      text: '',
+      color: '',
+      icon: '',
+      timeout: 3000,
+    },
+    loading: false,
   }),
+  emits: ['refresh'],
+  computed: {
+    nestedComments() {
+      const commentMap = new Map();
+
+      // Create a map of comments by their ID
+      this.comments.forEach((comment) => commentMap.set(comment.id, { ...comment, children: [] }));
+
+      // Iterate through the comments and nest them
+      const nestedComments = [] as any[];
+      commentMap.forEach((comment) => {
+        if (comment.parent_id) {
+          commentMap.get(comment.parent_id).children.push(comment);
+        } else {
+          nestedComments.push(comment);
+        }
+      });
+
+      return nestedComments;
+    },
+  },
   methods: {
-    addComment() {
-      if (this.newCommentContent) {
-        this.test_comments.push({
-          id: _.uniqueId(),
-          content: this.newCommentContent,
-          commenter: 'Test User',
-          createdAt: new Date().toISOString(),
-          children: [],
-        });
-        this.newCommentContent = '';
-        this.newComment = false;
+    async addComment(parentId = '', content?: string) {
+      this.loading = true;
+      if (content || this.newCommentContent) {
+        const comment = {
+          item_id: this.item.ID,
+          id: uid(),
+          parent_id: parentId,
+          author_id: useUserStore().user_id,
+          content: content ? content : this.newCommentContent,
+          createdAt: Date.now(),
+        };
+
+        try {
+          await postComment(comment);
+
+          this.newCommentContent = '';
+          this.newComment = false;
+
+          this.snackbar.show = true;
+          this.snackbar.text = 'Comment added successfully.';
+          this.snackbar.color = 'success';
+          this.snackbar.icon = 'mdi-check';
+          this.refresh();
+        } catch (error) {
+          console.error('Error adding comment:', error);
+
+          this.snackbar.show = true;
+          this.snackbar.text = 'Error adding comment.';
+          this.snackbar.color = 'error';
+          this.snackbar.icon = 'mdi-alert-circle';
+        } finally {
+          this.loading = false;
+        }
       }
     },
-    addNestedComment(payload) {
-      const parent = this.findById(this.test_comments, payload.parentId);
-      if (parent) {
-        parent.children.push({
-          id: _.uniqueId(),
-          content: payload.content,
-          commenter: 'Test User',
-          createdAt: new Date().toISOString(),
-          children: [],
-        });
+    async modDeleteComment(comment: any) {
+      const editedComment = {
+        item_id: this.item.ID,
+        id: comment.id,
+        parent_id: comment.parent_id,
+        author_id: comment.author_id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        mod_id: useUserStore().user_id,
+        updatedAt: Date.now(),
+      };
+
+      try {
+        await postComment(editedComment);
+
+        comment = editedComment;
+
+        this.snackbar.show = true;
+        this.snackbar.text = 'Comment cleared successfully.';
+        this.snackbar.color = 'success';
+        this.snackbar.icon = 'mdi-check';
+        this.refresh();
+      } catch (error) {
+        console.error('Error adding comment:', error);
+
+        this.snackbar.show = true;
+        this.snackbar.text = 'Error removing comment content.';
+        this.snackbar.color = 'error';
+        this.snackbar.icon = 'mdi-alert-circle';
       }
+    },
+    refresh() {
+      this.$emit('refresh');
+    },
+    addNestedComment(payload: { parentId: string; content: string }) {
+      this.addComment(payload.parentId, payload.content);
     },
     findById(items, id) {
       let result = null;

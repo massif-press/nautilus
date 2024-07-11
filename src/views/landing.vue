@@ -28,6 +28,12 @@
         If you like the general idea here, but not this specific idea in particular, that's okay
         too, there'll be others coming.
       </p>
+      <v-alert variant="outlined" color="accent" density="compact">
+        Data updates occur every 15 minutes. When new data is available the database icon (
+        <v-icon size="x-small" icon="mdi-database-outline" />
+        ) on the bottom left of your screen will turn
+        <b class="text-success">green</b>
+      </v-alert>
       <v-card v-if="isNew" variant="outlined" color="secondary" class="pa-2 ma-2">
         <p class="pa-2">
           If this is your first time here, consider checking out the

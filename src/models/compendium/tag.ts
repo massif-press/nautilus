@@ -14,7 +14,6 @@ type TagData = CompendiumItemData & {
 class Tag extends CompendiumItem {
   public readonly ItemType = 'tag';
 
-  public readonly ID: string;
   public Name: string;
   public Description: string;
   public AppliesTo: string[];
@@ -36,7 +35,7 @@ class Tag extends CompendiumItem {
   }
 
   public get IsSaveReady(): boolean {
-    return !!this.Name && !!this.Description && !!this.AppliesTo && !!this.ImplementationDetails;
+    return !!this.Name && !!this.Description && !!this.AppliesTo;
   }
 
   public Save(): TagData {
@@ -47,6 +46,7 @@ class Tag extends CompendiumItem {
       description: this.Description,
       appliesTo: this.AppliesTo.join(', '),
       implemented: this.Implemented,
+      enables: this.Enables,
       implementation_detail: this.ImplementationDetails,
     };
   }

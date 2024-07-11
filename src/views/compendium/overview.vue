@@ -12,22 +12,22 @@
   </v-row>
   <div class="px-12">
     <v-row align="center">
-      <v-col cols="3">
+      <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/hulls" class="ma-2">
           HULLS
         </v-btn>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/cargo" class="ma-2">
           CARGO
         </v-btn>
       </v-col>
-      <v-col cols="3">
+      <!-- <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/submaps" class="ma-2">
           SUBMAPS
         </v-btn>
-      </v-col>
-      <v-col cols="3">
+      </v-col> -->
+      <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/tags" class="ma-2">
           TAGS
         </v-btn>
@@ -44,22 +44,22 @@
   </v-row>
   <div class="px-12">
     <v-row align="center">
-      <v-col cols="3">
+      <!-- <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/terrain" class="ma-2">
           TERRAIN
         </v-btn>
-      </v-col>
-      <v-col cols="3">
+      </v-col> -->
+      <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/ships" class="ma-2">
           SHIPS
         </v-btn>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/poi" class="ma-2">
           POI
         </v-btn>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/crew" class="ma-2">
           CREW
         </v-btn>
@@ -77,7 +77,7 @@
 
   <div class="px-12">
     <v-row align="center">
-      <v-col cols="3">
+      <v-col cols="4">
         <v-btn size="x-large" variant="tonal" block to="/main/compendium/authors" class="ma-2">
           AUTHORS
         </v-btn>

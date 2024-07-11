@@ -25,7 +25,7 @@
           </v-list-item>
           <v-divider />
           <div class="text-center">
-            <v-chip size="small" color="#991E2A" class="ma-2" variant="elevated">
+            <v-chip size="small" :color="map.Color" class="ma-2" variant="elevated">
               <b>{{ map.Control }}</b>
               <span class="text-disabled pl-1">Controlled Space</span>
             </v-chip>
@@ -103,6 +103,7 @@
 </template>
 
 <script lang="ts">
+import { MapItem } from '../../models/maps/mapitem';
 import { useDataStore } from '../../stores/dataStore';
 import MapRenderer from './renderer.vue';
 import Viewer from './viewer.vue';
@@ -133,7 +134,7 @@ export default {
   }),
   async mounted() {
     if (this.itemId) {
-      const item = useDataStore().items.find((i) => i.ID === this.itemId);
+      const item = useDataStore().items.find((i) => i.ID === this.itemId) as MapItem;
       if (item) {
         if (!item.Location.map !== this.map.ID) {
           useDataStore().setMapFromId(item.Location.map);
@@ -145,7 +146,6 @@ export default {
   },
   computed: {
     map() {
-      if (!useDataStore().map) console.log(useDataStore());
       return useDataStore().map;
     },
     ships() {

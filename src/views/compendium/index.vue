@@ -13,10 +13,10 @@
         <div>Cargo</div>
         <div class="pl-3 mt-n1 text-caption text-disabled">{{ cargo.length }} Items</div>
       </v-list-item>
-      <v-list-item to="/main/compendium/submaps">
+      <!-- <v-list-item to="/main/compendium/submaps">
         <div>Submaps</div>
         <div class="pl-3 mt-n1 text-caption text-disabled">{{ submaps.length }} Items</div>
-      </v-list-item>
+      </v-list-item> -->
       <v-list-item to="/main/compendium/tags">
         <div>Tags</div>
         <div class="pl-3 mt-n1 text-caption text-disabled">{{ tags.length }} Items</div>
@@ -27,10 +27,10 @@
       </v-list-item>
       <v-divider />
       <div class="text-caption text-disabled pl-1">Map Items</div>
-      <v-list-item to="/main/compendium/terrain">
+      <!-- <v-list-item to="/main/compendium/terrain">
         <div>Terrain</div>
         <div class="pl-3 mt-n1 text-caption text-disabled">{{ terrain.length }} Items</div>
-      </v-list-item>
+      </v-list-item> -->
       <v-list-item to="/main/compendium/ships">
         <div>Ships</div>
         <div class="pl-3 mt-n1 text-caption text-disabled">{{ ships.length }} Items</div>
@@ -64,34 +64,34 @@ export default {
   name: 'Compendium',
   computed: {
     hulls() {
-      return useDataStore().hulls;
+      return useDataStore().hulls.filter((x) => x.isPublicVisible);
     },
     cargo() {
-      return useDataStore().cargo;
+      return useDataStore().cargo.filter((x) => x.isPublicVisible);
     },
     submaps() {
-      return useDataStore().submaps;
+      return useDataStore().submaps.filter((x) => x.isPublicVisible);
     },
     tags() {
-      return useDataStore().tags;
+      return useDataStore().tags.filter((x) => x.isPublicVisible);
     },
     terrain() {
-      return useDataStore().terrain;
+      return useDataStore().terrain.filter((x) => x.isPublicVisible);
     },
     ships() {
-      return useDataStore().ships;
+      return useDataStore().ships.filter((x) => x.isPublicVisible);
     },
     poi() {
-      return useDataStore().pois;
+      return useDataStore().pois.filter((x) => x.isPublicVisible);
     },
     crew() {
-      return useDataStore().crew;
+      return useDataStore().crew.filter((x) => x.isPublicVisible);
     },
     authors() {
       return useDataStore().authors;
     },
     deployables() {
-      return useDataStore().deployables;
+      return useDataStore().deployables.filter((x) => x.isPublicVisible);
     },
   },
 };

@@ -2,10 +2,10 @@
   <v-container>
     <v-footer border>
       <div>
-        <span>{{ user.username }}</span>
-        <i v-if="user.discord && user.show_discord" class="text-caption text-accent pl-2">
-          {{ user.discord }}
-        </i>
+        <span class="pr-2">{{ user.username }}</span>
+        <discord-chip
+          v-if="user.discord && user.show_discord"
+          :author="{ Discord: user.discord }" />
         <br />
         <span class="text-caption">
           {{ user.user_id }}
@@ -152,13 +152,14 @@
 </template>
 
 <script lang="ts">
+import DiscordChip from '../../_components/discordChip.vue';
 import { useDataStore } from '../../stores/dataStore';
 import { useUserStore } from '../../stores/userStore';
 import UserControlPanel from './components/userControlPanel.vue';
 
 export default {
   name: 'Overview',
-  components: { UserControlPanel },
+  components: { UserControlPanel, DiscordChip },
   data: () => ({
     tab: 0,
     search: '',
@@ -269,7 +270,8 @@ export default {
     statusColor(item: any) {
       if (item.Status === 'Submitted') return 'accent';
       if (item.Status === 'Approved') return 'success';
-      if (item.Status === 'Rejected') return 'error';
+      if (item.Status === 'Rejected') return 'pink';
+      if (item.Status === 'Flagged for Deletion') return 'error';
       if (item.Status === 'Changes Requested') return 'warning';
       return 'grey';
     },

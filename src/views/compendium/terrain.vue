@@ -59,7 +59,7 @@ export default {
   }),
   computed: {
     terrain(): Terrain[] {
-      return useDataStore().terrain;
+      return useDataStore().terrain.filter((x) => x.isPublicVisible);
     },
     filteredTerrain(): Terrain[] {
       if (!this.search) return this.terrain;

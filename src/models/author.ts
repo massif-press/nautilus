@@ -2,8 +2,10 @@ import { MapItem } from './maps/mapitem';
 import { useDataStore } from '../stores/dataStore';
 
 type AuthorData = {
+  type: 'user';
   id: string;
-  name: string;
+  username: string;
+  show_discord?: boolean;
   discord?: string;
   created_at: number;
   last_update: number;
@@ -18,18 +20,22 @@ class Author {
 
   constructor(data: AuthorData) {
     this.ID = data.id;
-    this.Name = data.name;
-    this.Discord = data.discord || '';
+    this.Name = data.username;
+    if (data.show_discord) this.Discord = data.discord || '';
     this.CreatedAt = data.created_at ? new Date(data.created_at) : new Date();
     this.LastUpdate = data.last_update ? new Date(data.last_update) : new Date();
   }
 
   public get MapItems(): MapItem[] {
-    return useDataStore().getMapItemsByAuthor(this.ID);
+    return useDataStore()
+      .getMapItemsByAuthor(this.ID)
+      .filter((x) => x.isPublicVisible);
   }
 
   public get CompendiumItems(): any[] {
-    return useDataStore().getItemsByAuthor(this.ID);
+    return useDataStore()
+      .getItemsByAuthor(this.ID)
+      .filter((x) => x.isPublicVisible);
   }
 }
 

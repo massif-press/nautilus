@@ -9,13 +9,11 @@ import { Poi, PoiData } from '../models/maps/poi';
 import { SystemMap, MapData } from '../models/maps/systemMap';
 import { Crew, CrewData } from '../models/maps/crew';
 
-import { GetAll, MergeItem, RemoveItem, SetItem } from '../storage';
-
-//test import data
-import testData from '../assets/test_data/data.json';
+import { GetAll, GetItem, MergeItem, RemoveItem, SetItem } from '../storage';
 
 import { Deployable } from '../models/compendium/deployable';
 import { loadS3Data } from '../s3';
+import { useUserStore } from './userStore';
 
 export const useDataStore = defineStore('data', {
   state: () => ({
@@ -59,7 +57,8 @@ export const useDataStore = defineStore('data', {
         if (a) return a as Author;
         return new Author({
           id: 'unknown',
-          name: 'Unknown User',
+          type: 'user',
+          username: 'Unknown User',
           discord: '',
           created_at: Date.now(),
           last_update: Date.now(),
@@ -117,30 +116,35 @@ export const useDataStore = defineStore('data', {
   },
   actions: {
     async load() {
-      const expires = localStorage.getItem('nautilus_data_expiry') || 0;
-      const localLastUpdate = localStorage.getItem('nautilus_data_last_update') || 0;
+      this.expires = localStorage.getItem('nautilus_data_expiry') || 0;
+      this.local_update = localStorage.getItem('nautilus_data_last_update') || 0;
 
-      let remoteLoad = Date.now() > Number(expires);
+      // console.log('Local data expiry:', this.expires, 'Local last update:', this.local_update);
+
+      let remoteLoad = Date.now() > Number(this.expires);
       if (remoteLoad) {
-        console.log('Remote data expired', (Date.now() - Number(expires)) / 1000 / 60, 'minutes');
-        if (localLastUpdate) {
-          remoteLoad = (Date.now() - Number(localLastUpdate)) / 1000 / 60 > 5;
-          if (remoteLoad)
-            console.log(
-              'Local refresh limit expired',
-              (Date.now() - Number(localLastUpdate)) / 1000 / 60,
-              'minutes'
-            );
-        }
+        console.info(
+          'Remote data expired',
+          ((Date.now() - Number(this.expires)) / 1000 / 60).toFixed(2),
+          'minutes'
+        );
       }
 
+      if (this.loaded && !remoteLoad) return;
+
+      // remoteLoad = true;
+
+      const seenItems = new Set<string>();
       if (remoteLoad) {
-        console.log('Loading remote data...');
+        console.info('Loading remote data...');
 
         const remoteData = await loadS3Data();
-        remoteData.data.forEach((item) => {
-          MergeItem(item as any);
-        });
+
+        for (const item of remoteData.data) {
+          item.type = item.itemtype;
+          seenItems.add(item.id);
+          await MergeItem(item as any);
+        }
 
         this.last_update = remoteData.last_update;
         this.local_update = Date.now();
@@ -150,8 +154,15 @@ export const useDataStore = defineStore('data', {
         localStorage.setItem('nautilus_data_last_update', this.local_update.toString());
       }
 
-      console.log('Building compendium...');
+      console.info('Building compendium...');
       const data = await GetAll();
+
+      for (const item of data) {
+        if (item.deleted_at && !seenItems.has(item.id)) {
+          console.info('Removing abandoned item:', item.id);
+          await RemoveItem(item.id);
+        }
+      }
 
       this.tags = data.filter((item) => item.type === 'tag').map((tag) => new Tag(tag as TagData));
       this.hulls = data
@@ -174,7 +185,7 @@ export const useDataStore = defineStore('data', {
       this.crew = data.filter((item) => item.type === 'crew').map((c) => new Crew(c as CrewData));
 
       this.authors = data
-        .filter((item) => item.type === 'author')
+        .filter((item) => item.type === 'user')
         .map((author) => new Author(author as AuthorData));
 
       this.loaded = true;
@@ -192,7 +203,7 @@ export const useDataStore = defineStore('data', {
       if (!this.items.find((i) => i.ID === item.ID)) {
         switch (item.ItemType) {
           case 'hull':
-            this.hull.push(item);
+            this.hulls.push(item);
             break;
           case 'cargo':
             this.cargo.push(item);
@@ -247,7 +258,8 @@ export const useDataStore = defineStore('data', {
       }
     },
     async exportAll() {
-      const data = await GetAll();
+      let data = await GetAll();
+      data = data.filter((x: EditableItemData) => x.author === useUserStore().user_id);
       return JSON.stringify(data, null, 2);
     },
     async importAll(data: any[]) {

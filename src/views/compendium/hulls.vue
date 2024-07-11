@@ -90,7 +90,7 @@ export default {
       );
     },
     hulls() {
-      return useDataStore().hulls;
+      return useDataStore().hulls.filter((x) => x.isPublicVisible);
     },
     shipwrights() {
       return _.uniqBy(this.hulls.map((h) => h.Shipwright));

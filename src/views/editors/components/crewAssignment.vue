@@ -138,9 +138,7 @@ export default {
   }),
   computed: {
     allCrew() {
-      console.log(this.crewedItem);
       let c = useDataStore().crew;
-      console.log(c);
       if (this.crewedItem.IsSolidState) c = c.filter((c) => c.IsNhp);
       return c.filter((cr) => cr.isUserOwned);
     },

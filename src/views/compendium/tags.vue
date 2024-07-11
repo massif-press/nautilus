@@ -53,7 +53,7 @@ export default {
       });
     },
     tags() {
-      return useDataStore().tags;
+      return useDataStore().tags.filter((x) => x.isPublicVisible);
     },
     authors() {
       return _.uniqBy(this.tags, 'Author.Name').map((t) => t.Author.Name);

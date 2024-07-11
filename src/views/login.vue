@@ -6,6 +6,15 @@
         <v-icon icon="cc:logo" size="260" class="mt-n10 ml-1" />
       </v-col>
     </v-row>
+    <v-alert color="pink" variant="outlined" border max-width="850px" class="mx-auto my-3">
+      <div class="text-h6">STRESS TEST MODE</div>
+      <p>
+        The Nautilus app is currently in STRESS TEST MODE.
+        <br />
+        <b class="text-error">All data will be erased at the end of the test</b>
+        .
+      </p>
+    </v-alert>
     <v-card variant="tonal" max-width="850px" class="mx-auto">
       <v-card-text class="text-h6 font-weight-light">
         <p>

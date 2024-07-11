@@ -13,7 +13,6 @@ import CargoEditor from './views/editors/cargo.vue';
 import CrewEditor from './views/editors/crew.vue';
 import HullEditor from './views/editors/hull.vue';
 import TagEditor from './views/editors/tag.vue';
-import TerrainEditor from './views/editors/terrain.vue';
 
 import Compendium from './views/compendium/index.vue';
 import CompendiumOverview from './views/compendium/overview.vue';
@@ -28,10 +27,11 @@ import Authors from './views/compendium/authors.vue';
 import Cargo from './views/compendium/cargo.vue';
 import { useUserStore } from './stores/userStore';
 import { useDataStore } from './stores/dataStore';
-import AddImage from './views/editors/add-image.vue';
+import AddImage from './views/editors/components/add-image.vue';
 import Mod from './views/mod/index.vue';
 import Deployable from './views/compendium/deployable.vue';
 import DeployableEditor from './views/editors/deployable.vue';
+import MapEditor from './views/editors/dev/map.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -121,9 +121,9 @@ const router = createRouter({
               props: true,
             },
             {
-              path: 'edit/terrain/:id/',
-              name: 'edit-terrain',
-              component: TerrainEditor,
+              path: 'edit/map/:id/',
+              name: 'edit-map',
+              component: MapEditor,
               props: true,
             },
           ],
@@ -186,9 +186,10 @@ const router = createRouter({
               component: Crew,
             },
             {
-              path: 'authors',
+              path: 'authors/:preSearch?',
               name: 'authors',
               component: Authors,
+              props: true,
             },
           ],
         },
@@ -211,8 +212,21 @@ router.beforeEach(async () => {
   if (router.currentRoute.value.name === 'login') return;
   await useUserStore().load();
 
-  if (router.currentRoute.value.name === 'login') return;
   await useDataStore().load();
+});
+
+router.afterEach(async () => {
+  if (router.currentRoute.value.name === 'login') return;
+  if (router.currentRoute.value.name === 'mod') {
+    if (!useUserStore().is_mod) {
+      router.push({ name: 'main' });
+    }
+  }
+  if (router.currentRoute.value.name === 'dev') {
+    if (!useUserStore().dev_access) {
+      router.push({ name: 'main' });
+    }
+  }
 });
 
 export default router;

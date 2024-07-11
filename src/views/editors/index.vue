@@ -175,6 +175,32 @@
     </v-list>
     <v-divider />
 
+    <div v-if="isDev">
+      <div class="text-cyan px-2 mt-4">Developer Tools</div>
+      <v-list density="compact">
+        <v-list-group value="Ships">
+          <template v-slot:activator="{ props }">
+            <v-list-item v-bind="props" title="Maps" />
+          </template>
+          <v-list-item
+            v-for="m in maps"
+            :title="m.Name"
+            link
+            :to="`/main/editor/edit/map/${m.ID}`" />
+          <v-btn
+            prepend-icon="mdi-plus"
+            size="x-small"
+            block
+            variant="tonal"
+            color="accent"
+            text="Add new Map"
+            to="/main/editor/edit/map/new" />
+        </v-list-group>
+      </v-list>
+    </div>
+
+    <v-divider />
+
     <v-menu>
       <template #activator="{ props }">
         <v-btn
@@ -206,6 +232,7 @@
 
 <script lang="ts">
 import { useDataStore } from '../../stores/dataStore';
+import { useUserStore } from '../../stores/userStore';
 
 export default {
   name: 'Editor',
@@ -214,6 +241,9 @@ export default {
     open: [],
   }),
   computed: {
+    isDev() {
+      return useUserStore().dev_access;
+    },
     ships() {
       return useDataStore().ships.filter((x) => x.isUserOwned);
     },
@@ -234,6 +264,9 @@ export default {
     },
     deployables() {
       return useDataStore().deployables.filter((x) => x.isUserOwned);
+    },
+    maps() {
+      return useDataStore().maps;
     },
   },
 };

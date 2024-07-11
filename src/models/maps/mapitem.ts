@@ -5,7 +5,6 @@ import { Submap, SubmapData } from './submap';
 import { Tag } from '../compendium/tag';
 import { EditableItem, EditableItemData } from '../editableItem';
 import { Crew } from './crew';
-import { Cargo } from '../compendium/cargo';
 
 type MapItemData = EditableItemData & {
   id: string;
@@ -31,8 +30,6 @@ abstract class MapItem extends EditableItem {
   public Icon: iconData;
   public Location: locationData;
   protected _tags: Tag[];
-
-  private _cargoIds: string[];
 
   public Submaps: Submap[];
 

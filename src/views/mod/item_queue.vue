@@ -1,4 +1,10 @@
 <template>
+  <v-btn-toggle v-model="statusType" density="compact" color="primary">
+    <v-btn value="pending">Pending Approval</v-btn>
+    <v-btn value="changes">Changes Requested</v-btn>
+    <v-btn value="rejected">Rejected</v-btn>
+  </v-btn-toggle>
+
   <v-data-table :headers="headers" :items="items" :search="search" :items-per-page="-1">
     <template #item.Name="{ item }">
       <v-menu open-on-hover>
@@ -41,41 +47,65 @@
     </template>
     <template #item.Author="{ item }">
       {{ item.Author.Name }}
-      <v-chip
-        v-if="item.Author.Discord"
-        color="purple"
-        prepend-icon="cc:discord"
-        size="small"
-        variant="elevated">
-        {{ item.Author.Discord }}
-      </v-chip>
+      <discord-chip :author="item.Author" />
     </template>
     <template #item.btn="{ item }">
       <mod-item-buttons :item="item" />
+    </template>
+    <template #item.note="{ item }">
+      <v-menu open-on-hover>
+        <template #activator="{ props }">
+          <v-icon v-bind="props">mdi-comment</v-icon>
+        </template>
+        <v-card variant="outlined">
+          <v-card-text>
+            {{ item.ModComment }}
+          </v-card-text>
+        </v-card>
+      </v-menu>
+    </template>
+    <template #item.review="{ item }">
+      {{ item.Reviewer }} @ {{ item.LastModTouch.toLocaleString() }}
     </template>
   </v-data-table>
 </template>
 
 <script lang="ts">
+import DiscordChip from '../../_components/discordChip.vue';
 import { useDataStore } from '../../stores/dataStore';
 import ModItemButtons from './modItemButtons.vue';
 
 export default {
   name: 'ItemQueue',
-  components: { ModItemButtons },
+  components: { ModItemButtons, DiscordChip },
   data: () => ({
     search: '',
-    headers: [
+    statusType: 'pending',
+    base_headers: [
       { title: 'Item', value: 'Name', sortable: true },
       { title: 'Type', value: 'ItemType', sortable: true },
       { title: 'Author', value: 'Author', sortable: true },
-      { title: 'Status', value: 'Status', sortable: true },
       { title: '', value: 'btn' },
     ],
   }),
   computed: {
+    headers() {
+      let h = [...this.base_headers];
+      if (this.statusType !== 'pending') {
+        h.push({ title: 'Note', value: 'note', sortable: true });
+        h.push({ title: 'Review', value: 'review', sortable: true });
+      }
+      return h;
+    },
     items() {
-      return useDataStore().items.filter((x) => x.Status === 'Submitted');
+      switch (this.statusType) {
+        case 'pending':
+          return useDataStore().items.filter((x) => x.Status === 'Submitted');
+        case 'changes':
+          return useDataStore().items.filter((x) => x.Status === 'Changes Requested');
+        case 'rejected':
+          return useDataStore().items.filter((x) => x.Status === 'Rejected');
+      }
     },
   },
 };

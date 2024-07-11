@@ -8,7 +8,8 @@
     <v-window v-model="tab">
       <v-window-item>
         <div class="text-h6 text-center">Submit Image</div>
-        <p v-if="!hasImageAccess" class="pa-6">
+        <!-- <p v-if="!hasImageAccess" class="pa-6"> -->
+        <p v-if="false" class="pa-6">
           In the interests of security and maintaining a positive and safe experience, we ask that
           you request image upload access from the developers. For the time being, this can be done
           by contacting me (beeftime) on the LANCER Discord server. With access, you will be able to
@@ -34,13 +35,15 @@
 
           <v-row class="my-3">
             <v-col>
-              <v-file-input v-model="image" label="Image" />
+              <v-file-input v-model="image" label="Image" accept="image/*" @change="processImage" />
               <v-text-field v-model="title" label="Nautilus-only Image Title" density="compact" />
               <v-text-field v-model="artist" label="Artist name or Attribution" density="compact" />
-              <v-select
+              <v-combobox
                 :items="['Ship', 'POI', 'Hull', 'Crew']"
-                v-model="type"
-                label="Image Tag"
+                v-model="tags"
+                label="Image Tags"
+                chips
+                multiple
                 density="compact" />
               <v-text-field v-model="link" label="Artist site or link" density="compact" />
               <v-checkbox v-model="canSubmit" hide-details>
@@ -60,10 +63,19 @@
                 @click="submitImage">
                 Submit
               </v-btn>
+              <v-fade-transition>
+                <v-progress-linear
+                  v-if="loading"
+                  v-model="loadingProgress"
+                  color="accent"
+                  height="30"
+                  rounded="xl"
+                  class="mt-4" />
+              </v-fade-transition>
             </v-col>
             <v-col>
               <v-card variant="outlined" class="pa-1" style="height: 100%">
-                <v-img v-if="image" />
+                <v-img v-if="imageData" :src="imageData" />
                 <div v-else class="text-center text-disabled" style="padding-top: 52%">
                   No image
                 </div>
@@ -83,6 +95,14 @@
       </v-window-item>
     </v-window>
   </v-card>
+  <v-snackbar
+    v-model="snackbar.show"
+    :color="snackbar.color"
+    :timeout="snackbar.timeout"
+    location="top right"
+    class="pa-0">
+    <v-alert :icon="snackbar.icon" variant="outlined">{{ snackbar.text }}</v-alert>
+  </v-snackbar>
   <v-footer app fixed>
     <v-btn
       to="/main/editor/overview"
@@ -97,7 +117,27 @@
 </template>
 
 <script lang="ts">
-import { useUserStore } from '../../stores/userStore';
+import { v4 as uuid } from 'uuid';
+import { getImagePresign, postImageMetadata } from '../../../api';
+import { useUserStore } from '../../../stores/userStore';
+
+async function uploadImageToS3(presignedUrl, file) {
+  try {
+    const response = await fetch(presignedUrl, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': file.type,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload image to S3');
+    }
+  } catch (error) {
+    console.error('Error uploading image:', error);
+  }
+}
 
 export default {
   name: 'AddImage',
@@ -115,11 +155,21 @@ export default {
   data: () => ({
     tab: 0,
     image: null,
+    imageData: null,
     artist: '',
     title: '',
-    type: '',
+    tags: [],
     link: '',
     canSubmit: false,
+    loading: false,
+    loadingProgress: 0,
+    snackbar: {
+      show: false,
+      text: '',
+      color: '',
+      icon: '',
+      timeout: 3000,
+    },
   }),
   computed: {
     hasImageAccess() {
@@ -127,8 +177,70 @@ export default {
     },
   },
   methods: {
-    submitImage() {
-      console.log('nyi');
+    async submitImage() {
+      this.loading = true;
+      try {
+        const filename = this.image.name;
+        const key = `${uuid().substring(0, 8)}_${filename}`;
+        const res = await getImagePresign(key);
+
+        this.loadingProgress = 25;
+
+        await uploadImageToS3(res, this.image);
+
+        this.loadingProgress = 75;
+
+        await postImageMetadata({
+          id: uuid(),
+          key,
+          title: this.title,
+          artist: this.artist,
+          tags: this.tags,
+          link: this.link,
+          uploader: useUserStore().user_id,
+          created_at: Date.now(),
+        });
+
+        this.loadingProgress = 100;
+
+        this.snackbar = {
+          show: true,
+          text: 'Image submitted successfully!',
+          color: 'success',
+          icon: 'mdi-check',
+        };
+        this.reset();
+      } catch (error) {
+        console.error('Error submitting image:', error);
+        this.snackbar = {
+          show: true,
+          text: 'Failed to submit image.',
+          color: 'error',
+          icon: 'mdi-alert',
+        };
+      } finally {
+        this.loading = false;
+        this.loadingProgress = 0;
+      }
+    },
+    processImage() {
+      if (this.image) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imageData = e.target.result;
+        };
+        reader.readAsDataURL(this.image);
+      }
+    },
+
+    reset() {
+      this.image = null;
+      this.imageData = null;
+      this.artist = '';
+      this.title = '';
+      this.tags = [];
+      this.link = '';
+      this.canSubmit = false;
     },
   },
 };

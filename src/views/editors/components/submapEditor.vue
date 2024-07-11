@@ -324,7 +324,7 @@ export default {
   methods: {
     addLOD() {
       this.item.Submaps.push(
-        new Submap({ name: 'LOD ' + (this.item.Submaps.length + 1) }, this.item)
+        new Submap({ name: 'LOD ' + (this.item.Submaps.length + 1), type: 'submap' }, this.item)
       );
     },
     setSubmapImg(submap) {

@@ -73,7 +73,7 @@ export default {
   }),
   computed: {
     ships() {
-      return useDataStore().ships;
+      return useDataStore().ships.filter((x) => x.isPublicVisible);
     },
     filteredShips() {
       if (!this.search) return this.ships;

@@ -67,7 +67,7 @@ export default {
   }),
   computed: {
     deployables() {
-      return useDataStore().deployables;
+      return useDataStore().deployables.filter((x) => x.isPublicVisible);
     },
     filteredDeployables() {
       if (!this.search) return this.deployable;

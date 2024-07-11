@@ -10,7 +10,7 @@
       style="position: absolute; top: -6px; right: -6px; z-index: 1">
       <v-icon size="x-large">mdi-close</v-icon>
     </v-btn>
-    <v-img v-if="item.ImageSrc" :src="item.ImageSrc" height="250" cover></v-img>
+    <v-img v-if="item.ImageSrc" :src="item.ImageSrc" height="250" cover />
     <div v-else class="d-flex justify-center align-center" style="height: 250px">
       <v-icon x-large>mdi-image-off</v-icon>
     </div>
@@ -56,7 +56,7 @@
                   multiple
                   hide-details
                   width="300"
-                  label="Image Tag"
+                  label="Image Tags"
                   density="compact" />
               </v-col>
               <v-col cols="auto">
@@ -91,23 +91,21 @@
                       :border="isHovering ? 'md' : ''"
                       style="cursor: pointer"
                       @click="selectImage(item.raw)">
-                      <v-img :src="(item.raw as any).src" height="250" cover></v-img>
+                      <v-img :src="getSrc(item.raw)" height="250" cover></v-img>
                       <v-table class="text-caption" density="compact">
                         <tbody>
                           <tr align="right">
                             <th>
                               <v-btn
                                 v-if="(item.raw as any).link"
-                                variant="plain"
+                                variant="tonal"
                                 color="accent"
-                                icon
                                 size="x-small"
-                                class="mr-n1 ml-n4 mt-n1"
                                 :href.stop="(item.raw as any).link"
                                 target="_blank">
                                 <v-icon icon="mdi-link" />
+                                {{ (item.raw as any).artist }}
                               </v-btn>
-                              {{ (item.raw as any).artist }}
                             </th>
 
                             <td>{{ (item.raw as any).title }}</td>
@@ -134,6 +132,8 @@
 </template>
 
 <script lang="ts">
+import { getImages } from '../../../api';
+
 export default {
   name: 'ImageManger',
   props: {
@@ -149,8 +149,9 @@ export default {
     imageType: [],
     images: [],
   }),
-  mounted() {
+  async mounted() {
     this.imageType = this.tag ? [this.tag] : [];
+    await this.getImages();
   },
   computed: {
     filteredImages() {
@@ -171,8 +172,23 @@ export default {
     },
   },
   methods: {
+    async getImages() {
+      this.loading = true;
+      try {
+        this.images = await getImages();
+        this.images = this.images.filter((x) => !x.deleted_at);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.loading = false;
+      }
+    },
+    getSrc(item) {
+      if (!item.key) return `/img/nodata.png`;
+      return `${(import.meta as any).env.VITE_APP_DISTRIBUTION}images/${item.key}`;
+    },
     selectImage(img) {
-      this.item.ImageSrc = img.src;
+      this.item.ImageSrc = this.getSrc(img);
       this.dialog = false;
     },
     removeImage() {

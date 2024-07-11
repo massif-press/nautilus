@@ -69,10 +69,21 @@
       <v-btn size="small" variant="tonal" color="accent" @click="transfer(item)">Transfer</v-btn>
     </template>
   </v-data-table>
+  <v-snackbar
+    v-model="snackbar.show"
+    :color="snackbar.color"
+    :timeout="snackbar.timeout"
+    location="top right"
+    class="pa-0">
+    <v-alert :icon="snackbar.icon" variant="outlined">{{ snackbar.text }}</v-alert>
+  </v-snackbar>
 </template>
 
 <script lang="ts">
+import { updateItem } from '../../api';
+import { GetItem } from '../../storage';
 import { useDataStore } from '../../stores/dataStore';
+import { useUserStore } from '../../stores/userStore';
 
 export default {
   name: 'TransferItems',
@@ -92,6 +103,13 @@ export default {
       { value: 200, title: '200' },
       { value: -1, title: '$vuetify.dataFooter.itemsPerPageAll' },
     ],
+    snackbar: {
+      show: false,
+      text: '',
+      color: '',
+      icon: '',
+      timeout: 3000,
+    },
   }),
   computed: {
     items() {
@@ -103,9 +121,37 @@ export default {
     },
   },
   methods: {
-    transfer(item) {
-      console.log('Transfer', item);
-      console.log('nyi');
+    async update(item) {
+      this.loading = true;
+      try {
+        await useDataStore().saveItem(item);
+        const data = await GetItem(item.ID);
+        await updateItem(item.ID, data);
+        this.popSnackbarGood();
+      } catch (e) {
+        console.error(e);
+        this.popSnackbarBad();
+      } finally {
+        this.loading = false;
+      }
+    },
+    async transfer(item) {
+      item.LastModId = useUserStore().user_id;
+      item.LastModTouch = new Date();
+
+      await this.update(item);
+    },
+    popSnackbarGood() {
+      this.snackbar.show = true;
+      this.snackbar.text = 'Item ownership transfer submitted successfully.';
+      this.snackbar.color = '#1976D2';
+      this.snackbar.icon = 'mdi-check-circle';
+    },
+    popSnackbarBad() {
+      this.snackbar.show = true;
+      this.snackbar.text = 'Item ownership transfer failed.';
+      this.snackbar.color = '#D32F2F';
+      this.snackbar.icon = 'mdi-alert-circle';
     },
   },
 };

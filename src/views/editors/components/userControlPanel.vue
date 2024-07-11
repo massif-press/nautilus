@@ -38,7 +38,11 @@
         <v-container>
           <v-row>
             <v-col>
-              <v-text-field v-model="user.username" label="Nickname" density="compact">
+              <v-text-field
+                v-model="user.username"
+                label="Nickname"
+                density="compact"
+                @update:modelValue="dirty = true">
                 <template #prepend>
                   <v-tooltip max-width="300px" location="top">
                     <template #activator="{ props }">
@@ -58,7 +62,7 @@
                 label="Attribution"
                 density="compact"
                 persistent-hint
-                @change="dirty = true"
+                @update:modelValue="dirty = true"
                 hint="Optional">
                 <template #prepend>
                   <v-tooltip max-width="300px" location="top">
@@ -82,19 +86,19 @@
                 label="Discord Handle"
                 density="compact"
                 persistent-hint
-                @change="dirty = true"
+                @update:modelValue="dirty = true"
                 hint="Optional" />
             </v-col>
             <v-col cols="auto" class="ml-3">
               <v-switch
                 v-model="user.show_discord"
-                label="Show Discord Handle"
+                label="&nbsp;Show Discord Handle"
                 color="accent"
                 hide-details
                 :disabled="!user.discord.length"
-                @change="dirty = true"
+                @update:modelValue="dirty = true"
                 density="compact" />
-              <div class="text-caption text-disabled mt-n3 ml-10">
+              <div class="text-caption text-disabled pl-1 mt-n3 ml-10">
                 <i>
                   Your Discord handle is
                   <span v-if="user.show_discord">
@@ -126,7 +130,10 @@
               me via Patreon.
             </p>
             <div class="text-right">
-              <v-btn color="accent" size="small" disabled @click="requestImage">
+              <v-chip v-if="pendingPermission" variant="elevated" color="secondary">
+                Request Pending
+              </v-chip>
+              <v-btn v-else color="accent" size="small" :loading="loading" @click="requestImage">
                 Request Permissions
               </v-btn>
             </div>
@@ -184,13 +191,14 @@
           variant="tonal"
           prepend-icon="mdi-content-save"
           :disabled="!dirty"
+          :loading="loading"
           @click="updateUser">
           Update User Info
         </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <v-snackbar v-model="snackbar" :color="toastColor" rounded="md" location="bottom">
+  <v-snackbar v-model="snackbar" :color="toastColor" rounded="md" location="bottom right">
     <div>{{ toastMessage }}</div>
     <template #actions>
       <v-btn variant="text" @click="snackbar = false">Close</v-btn>
@@ -199,6 +207,7 @@
 </template>
 
 <script lang="ts">
+import { postRequest } from '../../../api';
 import { useDataStore } from '../../../stores/dataStore';
 import { useUserStore } from '../../../stores/userStore';
 
@@ -210,6 +219,8 @@ export default {
     toastMessage: '',
     toastColor: 'error',
     dirty: false,
+    loading: false,
+    pendingPermission: false,
   }),
   props: {
     large: Boolean,
@@ -219,8 +230,12 @@ export default {
       return useUserStore();
     },
   },
+  mounted() {
+    this.pendingPermission = localStorage.getItem('nautilus_pendingPermission');
+  },
   methods: {
     async updateUser() {
+      this.loading = true;
       try {
         await useUserStore().updateUser();
         this.toastMessage = 'User info updated';
@@ -232,17 +247,32 @@ export default {
         this.snackbar = true;
       } finally {
         this.dirty = false;
+        this.loading = false;
       }
     },
     copyID() {
       navigator.clipboard.writeText(this.user.user_id);
     },
-    requestImage() {
-      console.log('request image');
+    async requestImage() {
+      this.loading = true;
+      try {
+        await postRequest(this.user.user_id);
+
+        this.toastMessage = 'Permission request sent';
+        this.toastColor = 'success';
+        this.snackbar = true;
+        localStorage.setItem('nautilus_pendingPermission', 'true');
+        this.pendingPermission = true;
+      } catch (e) {
+        this.toastMessage = e.message;
+        this.toastColor = 'error';
+        this.snackbar = true;
+      } finally {
+        this.loading = false;
+      }
     },
     async exportAll() {
       const jsondata = await useDataStore().exportAll();
-      console.log(jsondata);
       const blob = new Blob([jsondata], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');

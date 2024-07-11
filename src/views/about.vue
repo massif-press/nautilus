@@ -1,5 +1,11 @@
 <template>
   <v-container>
+          <v-alert variant="outlined" color="accent" density="compact">
+        Data updates occur every 15 minutes. When new data is available the database icon (
+        <v-icon size="x-small" icon="mdi-database-outline" />
+        ) on the bottom left of your screen will turn
+        <b class="text-success">green</b>
+      </v-alert>
     <v-card variant="text" max-width="800px" class="mx-auto pt-4">
       <v-toolbar color="primary" density="compact">
         <v-toolbar-title>About Nautilus</v-toolbar-title>
@@ -90,7 +96,9 @@
       </v-toolbar>
       <v-card-text>
         <p class="py-2">
-          todo
+          You can reach me at <code>beeftime</code> on Discord, or <code>@beeftime99</code> on Twitter. I'll be in (as much as I am able) the #cc-nautilus channel on the LANCER Discord. If you have questions, comments, or concerns, please don't hesitate to reach out.
+          <br>
+          If you can't get to either for any reason, you can create a new issue on the <a href="https://github.com/massif-press/nautilus" target="_blank">Github repo</a>. I'll be checking those periodically.
         </p>
       </v-card-text>
     </v-card>       

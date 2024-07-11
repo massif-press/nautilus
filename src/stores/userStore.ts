@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia';
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import { getUser, updateUser } from '../api';
+import { getItem, setItem } from 'localforage';
 
 const reloadSession = async (cognito, username) => {
-  console.log(cognito, username);
-
   return new Promise((resolve, reject) => {
     const rt = new AmazonCognitoIdentity.CognitoRefreshToken({
       RefreshToken: cognito.refreshToken.token,
@@ -39,21 +38,18 @@ export const useUserStore = defineStore('user', {
     dev_access: false,
     image_submission: false,
     show_discord: false,
-    loaded: false,
     is_mod: false,
     created_at: 0,
     updated_at: 0,
+    loaded: false,
   }),
   actions: {
     async load() {
-      console.log('Loading user data...');
-
-      this.loaded = false;
+      if (this.loaded) return;
       const credentials = JSON.parse(localStorage.getItem('nautilus_credentials')!);
-      console.log(credentials);
       if (credentials && credentials.cognito) {
         const exp = credentials.cognito.idToken.payload.exp * 1000;
-        console.log('Token expires at:', new Date(exp).toISOString());
+        // console.log('Token expires at:', new Date(exp).toISOString());
 
         if (exp < Date.now()) {
           console.info('Token expired, refreshing...');
@@ -61,19 +57,23 @@ export const useUserStore = defineStore('user', {
         }
 
         this.setCognitoData(credentials.cognito, credentials.username);
-
-        if (localStorage.getItem('nautilus_user_data')) {
-          const userData = JSON.parse(localStorage.getItem('nautilus_user_data')!);
-          this.setUserData(userData);
-        } else {
-          await this.getUserNautilusData();
-        }
-
-        this.loaded = true;
       }
+
+      if (!this.email) return;
+      console.info('Loading user data...');
+
+      if (localStorage.getItem('nautilus_user_data')) {
+        const userData = JSON.parse(localStorage.getItem('nautilus_user_data')!);
+        this.setUserData(userData);
+      } else {
+        await this.getUserNautilusData();
+      }
+
+      this.loaded = true;
     },
     logout() {
       localStorage.removeItem('nautilus_credentials');
+
       this.user_id = '';
       this.email = '';
       this.username = '';
@@ -132,16 +132,38 @@ export const useUserStore = defineStore('user', {
       this.email = username;
       this.user_id = cognito.idToken.payload.sub;
     },
-    setUserData(userData: any) {
+    async setUserData(userData: any) {
       for (const key in userData) {
         if (Object.prototype.hasOwnProperty.call(userData, key)) {
           this[key] = userData[key];
         }
       }
+
+      this.is_mod = await getItem('mod_flag');
+      this.dev_access = await getItem('dev_flag');
+      this.image_submission = await getItem('img_flag');
     },
     async getUserNautilusData(): Promise<void> {
       const userData = await getUser(this.user_id);
+
+      const dKey = userData.dev_key;
+      const mKey = userData.mod_key;
+      const iKey = userData.img_key;
+      delete userData.dev_key;
+      delete userData.mod_key;
+      delete userData.img_key;
+
       localStorage.setItem('nautilus_user_data', JSON.stringify(userData));
+
+      if (mKey) setItem('mod_flag', mKey === (import.meta as any).env.VITE_APP_MOD_KEY);
+      if (dKey)
+        setItem('dev_flag', (this.dev_access = dKey === (import.meta as any).env.VITE_APP_DEV_KEY));
+      if (iKey)
+        setItem(
+          'img_flag',
+          (this.image_submission = iKey === (import.meta as any).env.VITE_APP_IMG_KEY)
+        );
+
       this.setUserData(userData);
     },
     async updateUser(): Promise<void> {
@@ -150,6 +172,7 @@ export const useUserStore = defineStore('user', {
       for (const key in this) {
         if (inc.includes(key)) userData[key] = this[key];
       }
+
       try {
         await updateUser(this.user_id, userData);
         localStorage.setItem('nautilus_user_data', JSON.stringify(userData));

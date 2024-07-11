@@ -4,59 +4,6 @@ import { useDataStore } from '../stores/dataStore';
 import { Author } from './author';
 import { useUserStore } from '../stores/userStore';
 
-type CommentData = {
-  type: 'comment';
-  id: string;
-  itemId: string;
-  commenterId: string;
-  content: string;
-  parentId?: string;
-  createdAt: number;
-};
-
-class Comment {
-  public readonly ID: string;
-  public Content: string;
-  public CreatedAt: Date;
-
-  private _commenterId: string;
-  private _itemId: string;
-  private _parentId: string;
-
-  constructor(data: CommentData) {
-    this.ID = data.id;
-    this.Content = data.content;
-    this.CreatedAt = new Date(data.createdAt);
-    this._itemId = data.itemId;
-    this._commenterId = data.commenterId;
-    this._parentId = data.parentId || '';
-  }
-
-  public get Commenter(): Author {
-    return useDataStore().author(this._commenterId);
-  }
-
-  public get Item(): EditableItem {
-    return useDataStore().itemById(this._itemId);
-  }
-
-  public getParent(arr: Comment[]): Comment | undefined {
-    return arr.find((c) => c.ID === this._parentId);
-  }
-
-  public Save(): CommentData {
-    return {
-      type: 'comment',
-      id: this.ID,
-      itemId: this.Item.ID,
-      commenterId: this.Commenter.ID,
-      content: this.Content,
-      parentId: this._parentId,
-      createdAt: this.CreatedAt.getTime(),
-    };
-  }
-}
-
 type EditableItemData = {
   id: string;
   imgsrc?: string;
@@ -64,27 +11,37 @@ type EditableItemData = {
   created_at: number;
   updated_at: number;
   deleted_at?: number;
-  // comments: CommentData[];
-  status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested' | 'Unpublished';
+  status:
+    | 'Submitted'
+    | 'Approved'
+    | 'Rejected'
+    | 'Changes Requested'
+    | 'Unpublished'
+    | 'Flagged for Deletion';
   modComment?: string;
   modId?: string;
   modTouch?: number;
 };
 
 abstract class EditableItem {
-  public readonly ID: string;
+  public ID: string;
   public ItemType: string;
   public ImageSrc: string;
 
   public CreatedAt: Date;
   public UpdatedAt: Date;
-  public DeletedAt?: Date;
-  public Status: 'Submitted' | 'Approved' | 'Rejected' | 'Changes Requested' | 'Unpublished';
+  public DeletedAt?: Date | null;
+  public Status:
+    | 'Submitted'
+    | 'Approved'
+    | 'Rejected'
+    | 'Changes Requested'
+    | 'Unpublished'
+    | 'Flagged for Deletion';
   public LastModId: string;
-  public LastModTouch?: Date;
+  public LastModTouch: Date | null;
   public ModComment: string;
   public IsUserOwned: boolean;
-  // public Comments: Comment[];
 
   private _authorId = '';
 
@@ -99,16 +56,22 @@ abstract class EditableItem {
 
     this.CreatedAt = new Date(data?.created_at || Date.now());
     this.UpdatedAt = new Date(data?.updated_at || Date.now());
-    this.DeletedAt = data && data.deleted_at ? new Date(data?.deleted_at) : undefined;
+    this.DeletedAt = data && data.deleted_at ? new Date(data?.deleted_at) : null;
 
     this.Status = data?.status || 'Unpublished';
     this.ModComment = data?.modComment || '';
     this.LastModId = data?.modId || '';
-    this.LastModTouch = data?.modTouch ? new Date(data?.modTouch) : undefined;
+    this.LastModTouch = data?.modTouch ? new Date(data?.modTouch) : null;
   }
 
   public get Author(): Author {
     return useDataStore().author(this._authorId);
+  }
+
+  public get Reviewer(): string {
+    const rev = useDataStore().author(this.LastModId);
+    if (rev) return rev.Name;
+    return '';
   }
 
   public set Author(author: Author) {
@@ -119,21 +82,47 @@ abstract class EditableItem {
     return this._authorId === useUserStore().user_id;
   }
 
+  public get isPublicVisible(): boolean {
+    return (
+      this.Status === 'Approved' ||
+      this.Status === 'Submitted' ||
+      this.Status === 'Unpublished' ||
+      this.Status === 'Flagged for Deletion'
+    );
+  }
+
+  public Delete(): void {
+    this.DeletedAt = new Date();
+    this.Status = 'Flagged for Deletion';
+  }
+
+  public get DeleteTime(): Date | null {
+    if (!this.DeletedAt) return null;
+
+    return new Date(this.DeletedAt.valueOf() + 1000 * 60 * 60 * 24);
+  }
+
   public Save(): EditableItemData {
     const out = {
       id: this.ID,
       author: useUserStore().user_id,
       created_at: this.CreatedAt.getTime(),
       updated_at: new Date().getTime(),
-      deleted_at: undefined as number | undefined,
+      deleted_at: 0,
       status: this.Status,
+      modComment: this.ModComment,
+      modId: this.LastModId,
+      imgsrc: this.ImageSrc,
     };
+    if (this.LastModTouch) {
+      (out as any).modTouch = this.LastModTouch.getTime();
+    }
     if (this.DeletedAt) {
-      out.deleted_at = this.DeletedAt.getTime();
+      (out as any).deleted_at = this.DeletedAt.getTime();
     }
 
     return out as EditableItemData;
   }
 }
 
-export { EditableItem, EditableItemData, Comment, CommentData };
+export { EditableItem, EditableItemData };

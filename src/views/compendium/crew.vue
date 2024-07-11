@@ -82,7 +82,7 @@ export default {
   }),
   computed: {
     crew() {
-      return useDataStore().crew;
+      return useDataStore().crew.filter((x) => x.isPublicVisible);
     },
     filteredCrew() {
       if (!this.search) return this.crew;
