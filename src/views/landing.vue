@@ -68,7 +68,7 @@ export default {
   computed: {
     isNew() {
       const nud = localStorage.getItem('nautilus_user_data');
-      return (nud && JSON.parse(nud).username.toLowerCase() === 'new user') || false;
+      return (nud && JSON.parse(nud).username.toLowerCase().includes('new user')) || false;
     },
   },
 };
