@@ -63,7 +63,7 @@ class Ship extends MapItem {
         console.error(`Hull ${data.hull} not found in compendium`);
       } else this.Hull = hull as Hull;
 
-      if (this.Hull.Submaps) {
+      if (this.Hull?.Submaps) {
         this.Submaps = [...this.Hull.Submaps];
         this.Submaps.forEach((s) => s.SetCenter(this.Location.coords));
       }
