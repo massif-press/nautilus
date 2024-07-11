@@ -108,7 +108,7 @@ class Hull extends CompendiumItem {
   }
 
   public get PreventDelete(): boolean {
-    return useDataStore().ships.some((s) => s.Hull.ID === this.ID);
+    return useDataStore().ships.some((s) => s.Hull && s.Hull.ID === this.ID);
   }
 
   public Save(): HullData {
