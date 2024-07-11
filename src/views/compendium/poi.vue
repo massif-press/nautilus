@@ -34,7 +34,7 @@
         </template>
         <template #item.Location="{ item }">
           <v-btn size="small" color="accent" variant="tonal" :to="`/main/map/${item.ID}`">
-            {{ item.Location.map }}
+            {{ getMap(item.Location.map) }}
           </v-btn>
         </template>
       </v-data-table>
@@ -71,6 +71,12 @@ export default {
     },
     authors() {
       return _.uniqBy(this.pois, 'Author.Name').map((poi) => poi.Author.Name);
+    },
+  },
+  methods: {
+    getMap(id: string) {
+      const map = useDataStore().maps.find((x) => x.ID === id);
+      return map ? map.Name : 'Unknown';
     },
   },
 };
