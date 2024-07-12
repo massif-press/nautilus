@@ -9,7 +9,12 @@
       </v-col>
       <v-col cols="5">
         <div v-if="parent.isUserOwned">
-          <v-text-field v-model="d.name" density="compact" hide-details class="small-textfield" />
+          <v-text-field
+            v-model="d.name"
+            density="compact"
+            maxlength="100"
+            counter
+            class="small-textfield" />
         </div>
         <div v-else>{{ d.name }}</div>
         <div class="text-caption text-disabled">

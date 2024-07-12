@@ -39,7 +39,7 @@
   <v-dialog v-model="dialog" width="75vw">
     <v-card>
       <v-toolbar density="compact" color="primary" extended>
-        <v-toolbar-title>Object Details</v-toolbar-title>
+        <v-toolbar-title>Item Details</v-toolbar-title>
         <v-spacer />
         <v-btn icon @click="dialog = false">
           <v-icon>mdi-close</v-icon>
@@ -63,10 +63,14 @@
           <v-window-item>
             <slot name="details" />
 
-            <div v-if="item.Details && item.Details.length" v-for="d in item.Details">
-              <div class="text-caption text-center">{{ d.title }}</div>
-              <p text="d.body" />
-            </div>
+            <v-card
+              elevation="0"
+              v-if="item.Details && item.Details.length"
+              v-for="d in item.Details"
+              class="mb-3 mx-auto px-6">
+              <div class="font-weight-bold">{{ d.title }}</div>
+              <p v-text:="d.body" class="pl-3" style="font-size: 14px" />
+            </v-card>
           </v-window-item>
           <v-window-item v-if="item.Crew && item.Crew.length">
             <div class="text-h6">Crew List</div>

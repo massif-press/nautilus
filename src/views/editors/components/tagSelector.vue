@@ -5,6 +5,7 @@
     </v-col>
     <v-col cols="auto" class="align-self-center">
       <v-btn
+        v-if="!readonly"
         icon
         variant="text"
         size="small"
@@ -75,7 +76,9 @@ export default {
       return useDataStore().tags as Tag[];
     },
     filteredTags(): Tag[] {
-      const t = this.tags.filter((h) => h.AppliesTo.includes(this.type));
+      let t = this.tags.filter((h) => h.AppliesTo.includes(this.type));
+      console.log(this.selected);
+      t = t.filter((h) => !this.selected.some((s) => s.ID === h.ID));
       return t.filter((h) => h.Name.toLowerCase().includes(this.search.toLowerCase()));
     },
   },

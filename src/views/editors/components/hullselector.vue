@@ -29,7 +29,7 @@
               </v-btn>
             </template>
             <template #item.Tags="{ item }">
-              <v-tooltip v-for="tag in item.Tags" location="top">
+              <v-tooltip v-for="tag in item.Tags" location="top" max-width="400px">
                 <template #activator="{ props }">
                   <v-chip v-bind="props" prepend-icon="mdi-tag">
                     {{ tag.Name }}

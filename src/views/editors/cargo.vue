@@ -3,7 +3,8 @@
     <v-row>
       <v-col cols="8">
         <v-text-field
-          hide-details
+          maxlength="150"
+          counter
           v-model="cargo.Name"
           :readonly="!cargo.isUserOwned"
           label="Name" />
@@ -20,7 +21,12 @@
 
     <div class="mx-2 mt-3">
       <div class="text-caption text-disabled ml-n2">Description</div>
-      <v-textarea hide-details :readonly="!cargo.isUserOwned" v-model="cargo.Description" />
+      <v-textarea
+        :readonly="!cargo.isUserOwned"
+        auto-grow
+        maxlength="5500"
+        counter
+        v-model="cargo.Description" />
     </div>
   </compendium-item-editor>
 </template>

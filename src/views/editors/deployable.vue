@@ -3,7 +3,8 @@
     <v-row align="center">
       <v-col cols="8">
         <v-text-field
-          hide-details
+          maxlength="150"
+          counter
           v-model="deployable.Name"
           :readonly="!deployable.isUserOwned"
           label="Name" />
@@ -61,7 +62,9 @@
     <div class="mx-2 mt-3">
       <div class="text-caption text-disabled ml-n2">Description</div>
       <v-textarea
-        hide-details
+        maxlength="5500"
+        auto-grow
+        counter
         :readonly="!deployable.isUserOwned"
         v-model="deployable.Description" />
     </div>
@@ -91,6 +94,8 @@
       </v-chip>
       <v-text-field
         v-if="deployable.isUserOwned"
+        maxlength="150"
+        counter
         density="compact"
         width="300px"
         class="mt-1"
@@ -128,6 +133,8 @@
       </v-chip>
       <v-text-field
         v-if="deployable.isUserOwned"
+        maxlength="150"
+        counter
         density="compact"
         width="300px"
         class="mt-1"

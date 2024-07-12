@@ -120,7 +120,7 @@ class Ship extends MapItem {
   }
 
   public get Subtitle(): string {
-    return `${this.Owner} ${this.Hull.Class}`;
+    return `${this.Owner} ${this.Hull?.Class || ''}`;
   }
 
   public get SizeValue(): number {

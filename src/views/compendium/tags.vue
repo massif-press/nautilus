@@ -18,7 +18,9 @@
     </v-card>
     <v-card-text>
       <div v-for="tag in filteredTags" class="mb-3">
-        <tag-card :tag="tag" />
+        <v-card color="transparent" flat @click="$router.push(`/main/editor/edit/tag/${tag.ID}`)">
+          <tag-card :tag="tag" />
+        </v-card>
       </div>
     </v-card-text>
   </v-container>

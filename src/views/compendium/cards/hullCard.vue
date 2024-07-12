@@ -14,11 +14,7 @@
       <blockquote class="my-1 border-s-lg rounded pl-2">
         {{ hull.Description }}
       </blockquote>
-      <v-row dense>
-        <v-col v-for="tag in hull.Tags" style="min-width: 300px">
-          <tag-card :tag="tag" small hide-applies />
-        </v-col>
-      </v-row>
+      <tag-card v-for="tag in hull.Tags" :tag="tag" small hide-applies class="my-1" />
     </v-card-text>
   </v-card>
 </template>

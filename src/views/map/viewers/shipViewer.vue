@@ -1,7 +1,7 @@
 <template>
   <base-sidebar-view :item="item" @deselect="$emit('deselect')" @select="$emit('select', $event)">
     <template #subtitle>
-      <div class="text-caption text-disabled">{{ `${item.Owner} ${item.Hull.Class}` }}</div>
+      <div class="text-caption text-disabled">{{ `${item.Owner} ${item.Hull?.Class || ''}` }}</div>
     </template>
 
     <div class="px-2 text-caption">
@@ -25,7 +25,10 @@
       @deselect="$emit('deselect')"
       @select="$emit('select', $event)">
       <template #details>
-        <div class="text-h6">{{ item.Owner }} {{ item.Hull.Name }}-class {{ item.Hull.Class }}</div>
+        <div class="text-h6">
+          {{ item.Owner }} {{ item.Hull?.Name || 'Unknown' }}-class
+          {{ item.Hull?.Class || 'vessel' }}
+        </div>
         <v-row>
           <v-col cols="auto">
             <div class="text-caption text-disabled">Shipwright</div>
@@ -40,6 +43,15 @@
             <div>{{ map.Title }} ({{ map.Subtitle }})</div>
           </v-col>
         </v-row>
+
+        <fieldset style="border-color: rgba(155, 155, 155, 0.2); border-radius: 4px">
+          <v-img v-if="item.ImageSrc" :src="item.ImageSrc" height="250px" />
+          <v-img
+            v-else-if="item.Submap && item.Submap.Img"
+            :src="getImgPath(item.Submap.Img)"
+            max-height="250px" />
+        </fieldset>
+
         <v-card flat border class="pa-1 my-2">
           <v-row justify="space-around">
             <v-col cols="auto">

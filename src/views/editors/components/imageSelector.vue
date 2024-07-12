@@ -91,7 +91,7 @@
                       :border="isHovering ? 'md' : ''"
                       style="cursor: pointer"
                       @click="selectImage(item.raw)">
-                      <v-img :src="getSrc(item.raw)" height="250" cover></v-img>
+                      <v-img :src="getSrc(item.raw)" height="250"></v-img>
                       <v-table class="text-caption" density="compact">
                         <tbody>
                           <tr align="right">

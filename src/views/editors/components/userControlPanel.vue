@@ -41,6 +41,8 @@
               <v-text-field
                 v-model="user.username"
                 label="Nickname"
+                maxlength="80"
+                counter
                 density="compact"
                 @update:modelValue="dirty = true">
                 <template #prepend>
@@ -60,6 +62,8 @@
               <v-text-field
                 v-model="user.attribution"
                 label="Attribution"
+                maxlength="80"
+                counter
                 density="compact"
                 persistent-hint
                 @update:modelValue="dirty = true"
@@ -85,6 +89,7 @@
                 v-model="user.discord"
                 label="Discord Handle"
                 density="compact"
+                maxlength="80"
                 persistent-hint
                 @update:modelValue="dirty = true"
                 hint="Optional" />

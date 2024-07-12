@@ -105,7 +105,7 @@ abstract class EditableItem {
   public Save(): EditableItemData {
     const out = {
       id: this.ID,
-      author: useUserStore().user_id,
+      author: this._authorId,
       created_at: this.CreatedAt.getTime(),
       updated_at: new Date().getTime(),
       deleted_at: 0,

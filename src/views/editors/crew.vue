@@ -2,11 +2,16 @@
   <compendium-item-editor :item="crew">
     <v-row>
       <v-col cols="7">
-        <v-text-field hide-details v-model="crew.Name" :readonly="!crew.isUserOwned" label="Name" />
+        <v-text-field
+          maxlength="150"
+          counter
+          v-model="crew.Name"
+          :readonly="!crew.isUserOwned"
+          label="Name" />
       </v-col>
       <v-col>
         <v-combobox
-          hide-details
+          maxlength="40"
           v-model="crew.Pronouns"
           :readonly="!crew.isUserOwned"
           :items="Pronouns"
@@ -24,7 +29,8 @@
     <v-row>
       <v-col>
         <v-combobox
-          hide-details
+          maxlength="80"
+          counter
           v-model="crew.Role"
           :readonly="!crew.isUserOwned"
           :items="Roles"
@@ -32,7 +38,8 @@
       </v-col>
       <v-col>
         <v-combobox
-          hide-details
+          maxlength="80"
+          counter
           v-model="crew.Background"
           :items="Backgrounds"
           :readonly="!crew.isUserOwned"
@@ -61,7 +68,12 @@
       <v-col>
         <div class="mx-2 mt-3">
           <div class="text-caption text-disabled ml-n2">Description</div>
-          <v-textarea hide-details :readonly="!crew.isUserOwned" v-model="crew.Description" />
+          <v-textarea
+            maxlength="5500"
+            auto-grow
+            counter
+            :readonly="!crew.isUserOwned"
+            v-model="crew.Description" />
         </div>
       </v-col>
     </v-row>

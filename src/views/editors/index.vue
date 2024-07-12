@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer>
+  <v-navigation-drawer permanent>
     <v-list density="compact">
       <v-list-item link title="Overview" to="/main/editor/overview" />
       <v-divider />

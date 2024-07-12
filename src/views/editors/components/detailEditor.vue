@@ -8,6 +8,8 @@
       <v-row dense>
         <v-col>
           <v-text-field
+            maxlength="150"
+            counter
             placeholder="Title (Optional)"
             hide-details
             density="compact"
@@ -24,7 +26,7 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-textarea hide-details density="compact" auto-grow v-model="detail.body" />
+      <v-textarea maxlength="5500" auto-grow counter density="compact" v-model="detail.body" />
     </div>
     <div v-if="item.isUserOwned" class="text-right">
       <v-menu offset-y>

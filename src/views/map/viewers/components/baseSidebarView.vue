@@ -28,8 +28,9 @@
       @click="$emit('select', item)">
       <v-icon size="large" icon="mdi-loupe" />
     </v-btn>
+    <v-img v-if="item.ImageSrc" :src="item.ImageSrc" height="150px" />
     <v-img
-      v-if="item.Submap && item.Submap.Img"
+      v-else-if="item.Submap && item.Submap.Img"
       :src="getImgPath(item.Submap.Img)"
       height="150px" />
     <div

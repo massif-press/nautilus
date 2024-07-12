@@ -18,9 +18,9 @@
             <v-col>
               <v-text-field
                 density="compact"
-                hide-details
                 v-model="item.Location.coords[0]"
                 :readonly="!item.isUserOwned"
+                @update:modelValue="handleYCheck()"
                 label="Y Position"
                 type="number" />
             </v-col>
@@ -30,6 +30,7 @@
                 hide-details
                 v-model="item.Location.coords[1]"
                 :readonly="!item.isUserOwned"
+                @update:modelValue="handleXCheck()"
                 label="X Position"
                 type="number" />
             </v-col>
@@ -174,6 +175,16 @@ export default {
           'mdi-arrow-left-bold',
           'mdi-arrow-right-bold',
         ];
+    },
+  },
+  methods: {
+    handleXCheck() {
+      const cache = Number(this.item.Location.coords[1]);
+      if (Math.abs(cache) > 800) this.item.Location.coords[1] = cache > 0 ? 800 : -800;
+    },
+    handleYCheck() {
+      const cache = Number(this.item.Location.coords[0]);
+      if (Math.abs(cache) > 800) this.item.Location.coords[0] = cache > 0 ? 800 : -800;
     },
   },
 };

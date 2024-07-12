@@ -26,7 +26,7 @@
         <template #default="{ isActive }">
           <v-card>
             <v-toolbar density="compact" color="primary" class="rounded-0">
-              <v-toolbar-title>Object Details</v-toolbar-title>
+              <v-toolbar-title>Item Details</v-toolbar-title>
               <v-spacer />
               <v-btn icon @click="isActive.value = false">
                 <v-icon>mdi-close</v-icon>

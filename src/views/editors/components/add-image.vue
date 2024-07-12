@@ -36,16 +36,29 @@
           <v-row class="my-3">
             <v-col>
               <v-file-input v-model="image" label="Image" accept="image/*" @change="processImage" />
-              <v-text-field v-model="title" label="Nautilus-only Image Title" density="compact" />
-              <v-text-field v-model="artist" label="Artist name or Attribution" density="compact" />
+              <v-text-field
+                v-model="title"
+                maxlength="100"
+                label="Nautilus-only Image Title"
+                density="compact" />
+              <v-text-field
+                v-model="artist"
+                maxlength="100"
+                label="Artist name or Attribution"
+                density="compact" />
               <v-combobox
                 :items="['Ship', 'POI', 'Hull', 'Crew']"
                 v-model="tags"
+                maxlength="200"
                 label="Image Tags"
                 chips
                 multiple
                 density="compact" />
-              <v-text-field v-model="link" label="Artist site or link" density="compact" />
+              <v-text-field
+                v-model="link"
+                maxlength="150"
+                label="Artist site or link"
+                density="compact" />
               <v-checkbox v-model="canSubmit" hide-details>
                 <template #label>
                   <div class="text-caption pl-2">

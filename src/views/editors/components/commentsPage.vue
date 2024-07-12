@@ -1,17 +1,21 @@
 <template>
-  <comment-item
-    v-for="c in nestedComments"
-    :comment="<any>c"
-    :depth="0"
-    @submit="addNestedComment($event)"
-    @erase="modDeleteComment($event)" />
+  <div class="pr-6">
+    <comment-item
+      v-for="c in nestedComments"
+      :comment="<any>c"
+      :depth="0"
+      @submit="addNestedComment($event)"
+      @erase="modDeleteComment($event)" />
+  </div>
   <v-expand-transition>
     <v-card v-if="newComment" class="mt-4 mx-auto">
       <v-textarea
         v-model="newCommentContent"
         density="compact"
         placeholder="Enter new comment..."
-        hide-details />
+        maxlength="5500"
+        auto-grow
+        counter />
       <v-card-actions class="py-0">
         <v-btn color="error" size="small" variant="tonal" @click="newCommentContent = ''">
           Clear

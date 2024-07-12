@@ -14,6 +14,8 @@
             <v-text-field
               v-model="s.Name"
               :readonly="!item.isUserOwned"
+              maxlength="150"
+              counter
               density="compact"
               hide-details
               label="Name" />
@@ -22,6 +24,7 @@
             <v-text-field
               v-model="s.Show"
               :readonly="!item.isUserOwned"
+              maxlength="3"
               density="compact"
               hide-details
               label="Show at zoom"
@@ -67,6 +70,8 @@
                 <td>
                   <v-text-field
                     v-model="item.Name"
+                    maxlength="150"
+                    counter
                     density="compact"
                     hide-details
                     variant="outlined"
@@ -150,7 +155,9 @@
                           <v-textarea
                             v-model="item.Description"
                             outlined
-                            hide-details
+                            maxlength="5500"
+                            auto-grow
+                            counter
                             dense
                             rows="5" />
                         </v-card-text>
@@ -203,6 +210,8 @@
                 <td>
                   <v-text-field
                     v-model="item.Name"
+                    maxlength="150"
+                    counter
                     density="compact"
                     hide-details
                     variant="outlined"
@@ -222,6 +231,8 @@
                   <v-text-field
                     v-model="item.Size"
                     density="compact"
+                    maxlength="5"
+                    counter
                     hide-details
                     variant="outlined"
                     type="number"

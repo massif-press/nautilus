@@ -2,8 +2,8 @@
   <v-card
     :class="depth > 0 ? 'border-s-md rounded-0' : 'border-sm mt-2'"
     flat
-    class="px-2 pb-1"
-    :style="`margin-left: ${4 * depth}px`">
+    class="pl-1 pb-1"
+    :style="depth > 30 ? 'margin-left: -6px' : `margin-left: 4px`">
     <div class="text-caption ml-n3">
       <v-btn
         variant="text"
@@ -65,7 +65,9 @@
           v-model="replyContent"
           density="compact"
           placeholder="Enter new comment..."
-          hide-details />
+          maxlength="5500"
+          auto-grow
+          counter />
         <v-card-actions class="py-0">
           <v-btn color="error" size="small" variant="tonal" @click="replyContent = ''">Clear</v-btn>
           <v-spacer />
@@ -104,9 +106,6 @@ export default {
     showModContent: false,
   }),
   computed: {
-    activeDepth(): number {
-      return Math.min(this.depth, 6);
-    },
     commenter(): Author {
       return useDataStore().author(this.comment.author_id);
     },

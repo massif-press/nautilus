@@ -18,6 +18,10 @@
       <div class="text-center">
         <div class="text-h3">{{ item.Title || item.Name }}</div>
         <div class="text-caption mb-n2">
+          By
+          <b>{{ item.Author.Name }}</b>
+          <discord-chip :author="item.Author" class="ml-2" />
+          <span class="px-3">//</span>
           Review Status:
           <b :class="`text-${statusColor}`">{{ item.Status }}</b>
         </div>
@@ -174,6 +178,7 @@ import { useUserStore } from '../../../stores/userStore';
 import ModItemButtons from '../../mod/modItemButtons.vue';
 import { getComments, updateItem } from '../../../api';
 import { GetItem } from '../../../storage';
+import DiscordChip from '../../../_components/discordChip.vue';
 
 export default {
   name: 'EditorBase',
@@ -183,6 +188,7 @@ export default {
   components: {
     CommentsPage,
     ModItemButtons,
+    DiscordChip,
   },
   data: () => ({
     tab: 0,

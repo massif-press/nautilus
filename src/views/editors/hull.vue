@@ -2,18 +2,29 @@
   <compendium-item-editor :item="hull">
     <v-row>
       <v-col cols="6">
-        <v-text-field hide-details v-model="hull.Name" :readonly="!hull.isUserOwned" label="Name" />
+        <v-text-field
+          maxlength="150"
+          counter
+          v-model="hull.Name"
+          :readonly="!hull.isUserOwned"
+          label="Name" />
       </v-col>
       <v-col>
         <v-combobox
-          hide-details
+          maxlength="80"
+          counter
           v-model="hull.Class"
           :readonly="!hull.isUserOwned"
           :items="Classes"
           label="Class" />
       </v-col>
       <v-col cols="2">
-        <v-text-field hide-details v-model="hull.Code" :readonly="!hull.isUserOwned" label="Code" />
+        <v-text-field
+          maxlength="6"
+          counter
+          v-model="hull.Code"
+          :readonly="!hull.isUserOwned"
+          label="Code" />
       </v-col>
     </v-row>
 
@@ -31,7 +42,8 @@
       </v-col>
       <v-col>
         <v-combobox
-          hide-details
+          maxlength="150"
+          counter
           v-model="hull.Shipwright"
           :readonly="!hull.isUserOwned"
           :items="Shipwrights"
@@ -44,7 +56,12 @@
       <v-col>
         <div class="mx-2 mt-3">
           <div class="text-caption text-disabled ml-n2">Description</div>
-          <v-textarea hide-details :readonly="!hull.isUserOwned" v-model="hull.Description" />
+          <v-textarea
+            maxlength="5500"
+            auto-grow
+            counter
+            :readonly="!hull.isUserOwned"
+            v-model="hull.Description" />
         </div>
       </v-col>
     </v-row>

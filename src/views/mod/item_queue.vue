@@ -7,9 +7,13 @@
 
   <v-data-table :headers="headers" :items="items" :search="search" :items-per-page="-1">
     <template #item.Name="{ item }">
-      <v-menu open-on-hover>
+      <v-menu open-on-hover location="right">
         <template #activator="{ props }">
-          <v-btn color="secondary" size="small" v-bind="props">
+          <v-btn
+            color="secondary"
+            size="small"
+            v-bind="props"
+            :to="`/main/editor/edit/${item.ItemType}/${item.ID}`">
             {{ (item as any).Title || (item as any).Name }}
           </v-btn>
         </template>

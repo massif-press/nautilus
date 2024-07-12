@@ -34,7 +34,7 @@
             :to="`/main/editor/edit/${item.ItemType}/${item.ID}`" />
         </template>
         <template #item.Tags="{ item }">
-          <v-tooltip v-for="t in item.Tags" location="top">
+          <v-tooltip v-for="t in item.Tags" location="top" max-width="400px">
             <template #activator="{ props }">
               <v-chip
                 size="x-small"

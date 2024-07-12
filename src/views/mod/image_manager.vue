@@ -38,7 +38,7 @@
       <v-row>
         <v-col v-for="item in items" cols="6" sm="4" xl="2">
           <v-sheet border>
-            <v-img :src="getSrc(item.raw)" height="250" cover></v-img>
+            <v-img :src="getSrc(item.raw)" height="250"></v-img>
             <v-table class="text-caption" density="compact">
               <tbody>
                 <tr align="right">
