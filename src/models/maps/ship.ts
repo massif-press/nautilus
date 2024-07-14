@@ -97,7 +97,7 @@ class Ship extends MapItem {
       this.Deployables = data.deployables.map((d) => {
         const item = useDataStore().getDeployableById(d.item);
         if (!item) {
-          throw new Error(`Deployable ${d.item} not found in compendium`);
+          console.error(`Deployable ${d.item} not found in compendium`);
         }
         return {
           item: item as Deployable,
@@ -177,7 +177,7 @@ class Ship extends MapItem {
 
   private deployUnits() {
     this.Deployables.forEach((d) => {
-      if (d.item.CanDeploy(this)) {
+      if (d.item && d.item.CanDeploy(this)) {
         d.status = 'Deployed';
         Ship.GenerateSubitem(this, {
           id: `${this.ID}_${d.item.ID}`,
