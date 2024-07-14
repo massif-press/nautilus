@@ -10,7 +10,7 @@
       <v-menu open-on-hover>
         <template #activator="{ props }">
           <v-btn color="secondary" size="small" v-bind="props">
-            {{ (item as any).Title || (item as any).Name }}
+            {{ item.TruncatedName }}
           </v-btn>
         </template>
         <v-card width="60vw" border>
