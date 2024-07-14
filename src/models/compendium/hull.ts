@@ -111,6 +111,10 @@ class Hull extends CompendiumItem {
     return useDataStore().ships.some((s) => s.Hull && s.Hull.ID === this.ID);
   }
 
+  public get CanAdd(): boolean {
+    return this.Status === 'Approved' || this.Status === 'Submitted';
+  }
+
   public Save(): HullData {
     return {
       ...super.Save(),

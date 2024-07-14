@@ -118,8 +118,27 @@
             </tr>
           </template>
           <template #item.Assignment="{ item }">
-            <v-btn size="small" color="accent" variant="tonal" @click="assignDeployable(item)">
-              Add Unit
+            <v-tooltip v-if="!item.CanAdd" location="top" max-width="400px">
+              <template #activator="{ props }">
+                <v-icon
+                  v-bind="props"
+                  color="accent"
+                  size="small"
+                  icon="mdi-lock-alert"
+                  class="mx-1" />
+              </template>
+              <b v-if="item.Status !== 'Submitted'">
+                This item cannot be selected until it has been published.
+              </b>
+              <b v-else>This item cannot be selected.</b>
+            </v-tooltip>
+            <v-btn
+              color="accent"
+              variant="tonal"
+              size="small"
+              :disabled="!item.CanAdd"
+              @click="assignDeployable(item)">
+              Assign Unit
             </v-btn>
           </template>
           <template #expanded-row="{ columns, item }">

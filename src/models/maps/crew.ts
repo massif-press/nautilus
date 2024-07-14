@@ -64,6 +64,10 @@ class Crew extends MapItem {
     return !!this.Name && !!this.Role && !!this.Pronouns && !!this.Background;
   }
 
+  public get CanAdd(): boolean {
+    return this.Status === 'Approved' || this.Status === 'Submitted';
+  }
+
   public Save(): CrewData {
     return {
       ...super.Save(),

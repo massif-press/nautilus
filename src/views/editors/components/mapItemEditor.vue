@@ -60,19 +60,7 @@
               </v-menu>
             </v-col>
             <v-col cols="auto">
-              <v-menu :close-on-content-click="false">
-                <template #activator="{ props }">
-                  <v-btn
-                    v-bind="props"
-                    icon
-                    variant="text"
-                    size="small"
-                    :disabled="!item.IsUserOwned">
-                    <v-icon size="large" :color="item.Icon.color" icon="mdi-square" />
-                  </v-btn>
-                </template>
-                <v-color-picker v-model="item.Icon.color" hide-details />
-              </v-menu>
+              <color-picker :item="item.Icon" :readonly="!item.isUserOwned" />
             </v-col>
           </v-row>
         </v-card>
@@ -121,10 +109,11 @@ import SubmapEditor from './submapEditor.vue';
 import EditorBase from './editorBase.vue';
 import DetailEditor from './detailEditor.vue';
 import ImageSelector from './imageSelector.vue';
+import ColorPicker from './colorPicker.vue';
 
 export default {
   name: 'MapItemEditor',
-  components: { EditorBase, TagSelector, SubmapEditor, DetailEditor, ImageSelector },
+  components: { EditorBase, TagSelector, SubmapEditor, DetailEditor, ImageSelector, ColorPicker },
   props: {
     item: { type: Object, required: true },
   },

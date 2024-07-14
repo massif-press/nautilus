@@ -7,10 +7,19 @@
 
   <v-data-table :headers="headers" :items="items" :search="search" :items-per-page="-1">
     <template #item.Name="{ item }">
+      <v-tooltip v-if="item.ModComment" location="top" max-width="400px">
+        <template #activator="{ props }">
+          <v-icon v-bind="props" color="pink" size="small" icon="mdi-alert" class="mr-3" />
+        </template>
+        <b>
+          This item has a mod change request and has been re-submitted. Please validate mod comment
+          and changes before approval.
+        </b>
+      </v-tooltip>
       <v-menu open-on-hover location="right">
         <template #activator="{ props }">
           <v-btn
-            color="secondary"
+            :color="item.ModComment ? 'pink' : 'secondary'"
             size="small"
             v-bind="props"
             :to="`/main/editor/edit/${item.ItemType}/${item.ID}`">
@@ -40,6 +49,9 @@
                 <v-col v-else-if="key === 'Hull'">
                   {{ item[key].Name }}
                 </v-col>
+                <v-col v-else-if="key === 'Tags'">
+                  {{ item[key].map((x) => x.Name) }}
+                </v-col>
                 <v-col v-else>
                   {{ item[key] }}
                 </v-col>
@@ -57,7 +69,7 @@
       <mod-item-buttons :item="item" />
     </template>
     <template #item.note="{ item }">
-      <v-menu open-on-hover>
+      <v-menu v-if="item.ModComment" open-on-hover>
         <template #activator="{ props }">
           <v-icon v-bind="props">mdi-comment</v-icon>
         </template>
@@ -69,7 +81,9 @@
       </v-menu>
     </template>
     <template #item.review="{ item }">
-      {{ item.Reviewer }} @ {{ item.LastModTouch.toLocaleString() }}
+      <span v-if="item.Reviewer && item.LastModTouch">
+        {{ item.Reviewer }} @ {{ item.LastModTouch.toLocaleString() }}
+      </span>
     </template>
   </v-data-table>
 </template>
@@ -85,22 +99,16 @@ export default {
   data: () => ({
     search: '',
     statusType: 'pending',
-    base_headers: [
+    headers: [
       { title: 'Item', value: 'Name', sortable: true },
       { title: 'Type', value: 'ItemType', sortable: true },
       { title: 'Author', value: 'Author', sortable: true },
+      { title: 'Note', value: 'note', sortable: true },
+      { title: 'Review', value: 'review', sortable: true },
       { title: '', value: 'btn' },
     ],
   }),
   computed: {
-    headers() {
-      let h = [...this.base_headers];
-      if (this.statusType !== 'pending') {
-        h.push({ title: 'Note', value: 'note', sortable: true });
-        h.push({ title: 'Review', value: 'review', sortable: true });
-      }
-      return h;
-    },
     items() {
       switch (this.statusType) {
         case 'pending':

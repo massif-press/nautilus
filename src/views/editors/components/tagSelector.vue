@@ -39,8 +39,22 @@
           :items="filteredTags"
           :items-per-page="-1">
           <template #item.Name="{ item }">
-            <v-btn color="secondary" size="small" @click="select(item)">
-              {{ item.Name }}
+            <v-tooltip v-if="!item.CanAdd" location="top" max-width="400px">
+              <template #activator="{ props }">
+                <v-icon
+                  v-bind="props"
+                  color="accent"
+                  size="small"
+                  icon="mdi-lock-alert"
+                  class="mx-1" />
+              </template>
+              <b v-if="item.Status !== 'Submitted'">
+                This item cannot be selected until it has been published.
+              </b>
+              <b v-else>This item cannot be selected.</b>
+            </v-tooltip>
+            <v-btn color="secondary" size="small" :disabled="!item.CanAdd" @click="select(item)">
+              {{ item.TruncatedName }}
             </v-btn>
           </template>
         </v-data-table>

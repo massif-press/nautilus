@@ -38,6 +38,10 @@ class Tag extends CompendiumItem {
     return !!this.Name && !!this.Description && !!this.AppliesTo;
   }
 
+  public get CanAdd(): boolean {
+    return this.Status === 'Approved' || this.Status === 'Submitted';
+  }
+
   public Save(): TagData {
     return {
       ...super.Save(),

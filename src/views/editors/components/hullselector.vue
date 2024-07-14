@@ -18,28 +18,58 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <template #extension>
-            <v-text-field v-model="search" label="Search" />
+            <v-text-field v-model="search" prepend-inner-icon="mdi-magnify" label="Search" />
           </template>
         </v-toolbar>
-        <v-card-text>
-          <v-data-table :headers="headers" :items="hulls" :items-per-page="-1">
-            <template #item.Name="{ item }">
-              <v-btn color="secondary" size="small" @click="select(item)">
-                {{ item.Name }}
-              </v-btn>
-            </template>
-            <template #item.Tags="{ item }">
-              <v-tooltip v-for="tag in item.Tags" location="top" max-width="400px">
-                <template #activator="{ props }">
-                  <v-chip v-bind="props" prepend-icon="mdi-tag">
-                    {{ tag.Name }}
-                  </v-chip>
-                </template>
-                <b>{{ tag.Description }}</b>
-              </v-tooltip>
-            </template>
-          </v-data-table>
-        </v-card-text>
+        <v-data-table
+          :headers="headers"
+          :items="hulls"
+          :items-per-page="-1"
+          class="rounded-0"
+          item-value="ID"
+          show-expand
+          v-model:expanded="expanded">
+          <template #item.Name="{ item }">
+            <v-tooltip v-if="!item.CanAdd" location="top" max-width="400px">
+              <template #activator="{ props }">
+                <v-icon
+                  v-bind="props"
+                  color="accent"
+                  size="small"
+                  icon="mdi-lock-alert"
+                  class="mx-1" />
+              </template>
+              <b v-if="item.Status !== 'Submitted'">
+                This item cannot be selected until it has been published.
+              </b>
+              <b v-else>This item cannot be selected.</b>
+            </v-tooltip>
+            <v-btn color="secondary" size="small" :disabled="!item.CanAdd" @click="select(item)">
+              {{ item.TruncatedName }}
+            </v-btn>
+          </template>
+          <template #item.Tags="{ item }">
+            <v-tooltip v-for="tag in item.Tags" location="top" max-width="400px">
+              <template #activator="{ props }">
+                <v-chip
+                  v-bind="props"
+                  prepend-icon="mdi-tag"
+                  size="small"
+                  style="margin: 2px 2px 2px 2px">
+                  {{ tag.TruncatedName }}
+                </v-chip>
+              </template>
+              <b>{{ tag.Description }}</b>
+            </v-tooltip>
+          </template>
+          <template #expanded-row="{ columns, item }">
+            <tr>
+              <td :colspan="columns.length" class="px-0">
+                <hull-card :hull="item" />
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
       </v-card>
     </v-dialog>
   </div>
@@ -67,6 +97,7 @@ export default {
       { title: 'Tags', value: 'Tags', sortable: true },
     ],
     dialog: false,
+    expanded: [],
   }),
   computed: {
     hulls() {

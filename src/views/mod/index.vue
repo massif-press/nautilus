@@ -6,14 +6,14 @@
     <v-tab>Transfer Items</v-tab>
   </v-tabs>
   <v-divider />
-  <v-container>
+  <div class="px-6 py-3">
     <v-window v-model="tab">
       <v-window-item><item-queue /></v-window-item>
       <v-window-item><permission-manager /></v-window-item>
       <v-window-item><image-manager /></v-window-item>
       <v-window-item><transfer-items /></v-window-item>
     </v-window>
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts">

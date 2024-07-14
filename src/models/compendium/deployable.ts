@@ -68,6 +68,10 @@ class Deployable extends CompendiumItem {
     );
   }
 
+  public get CanAdd(): boolean {
+    return this.Status === 'Approved' || this.Status === 'Submitted';
+  }
+
   public Save(): DeployableData {
     return {
       ...super.Save(),
