@@ -131,6 +131,7 @@ export default {
       { icon: 'mdi-account' },
     ],
     selected: null as any,
+    componentMounted: false,
   }),
   async mounted() {
     if (this.itemId) {
@@ -140,7 +141,7 @@ export default {
           useDataStore().setMapFromId(item.Location.map);
         }
         await this.$nextTick();
-        this.select(item);
+        this.setDelayedSelect(item);
       }
     }
   },
@@ -172,6 +173,11 @@ export default {
     },
   },
   methods: {
+    setDelayedSelect(item) {
+      setTimeout(() => {
+        if (item) this.select(item);
+      }, 200);
+    },
     setRail(i) {
       if (this.railValue === i) {
         this.drawer = !this.drawer;

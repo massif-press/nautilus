@@ -1,4 +1,7 @@
 <template>
+  <v-alert density="compact" border="left" color="warning" variant="outlined" icon="mdi-alert">
+    Please only approve user permission requests after verifying their Discord account.
+  </v-alert>
   <div class="text-right">
     <v-btn size="x-small" color="primary" @click="getRequests()">Reload</v-btn>
   </div>

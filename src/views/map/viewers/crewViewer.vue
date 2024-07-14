@@ -11,7 +11,7 @@
       color="accent"
       variant="tonal"
       class="ml-2"
-      @select="select(item.Assignment)">
+      @click="select(item.Assignment)">
       {{ item.Assignment.Title || item.Assignment.Name }}
     </v-btn>
 
@@ -59,8 +59,9 @@ export default {
   },
   emits: ['select', 'deselect'],
   methods: {
-    select(item) {
-      if (item.Assignment) this.$emit('select', item.Assignment);
+    select(assignment) {
+      console.log('select', assignment);
+      if (assignment) this.$emit('select', assignment);
     },
   },
 };

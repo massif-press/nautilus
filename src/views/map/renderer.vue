@@ -2,7 +2,7 @@
   <div style="position: absolute; top: 0; left: 56px; right: 0; bottom: 56px; z-index: 0">
     <l-map
       ref="lmap"
-      v-model:zoom="zoom"
+      :zoom="zoom"
       :center="[0, 0]"
       :maxBounds="[
         [900, 800],
@@ -187,6 +187,7 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useDataStore } from '../../stores/dataStore';
+import { fa } from 'vuetify/locale';
 
 export default {
   name: 'MapRenderer',
@@ -280,6 +281,7 @@ export default {
       this.$refs.lmap.leafletObject.flyTo(item.Location.coords, 8, {
         animate: true,
         duration: 0.8,
+        easeLinearity: 0.5,
         noMoveStart: true,
       });
     },

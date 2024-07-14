@@ -36,8 +36,7 @@
         <template #expanded-row="{ columns, item }">
           <tr>
             <td :colspan="columns.length" class="px-0">
-              {{ item }}
-              <!-- <deployable-card :deployable="item" /> -->
+              <deployable-card :deployable="item" />
             </td>
           </tr>
         </template>
@@ -51,10 +50,11 @@ import _ from 'lodash';
 import { useDataStore } from '../../stores/dataStore';
 // import deployableCard from './cards/deployableCard.vue';
 import { filter } from 'lodash';
+import DeployableCard from './cards/deployableCard.vue';
 
 export default {
   name: 'deployable',
-  // components: { deployableCard },
+  components: { DeployableCard },
   data: () => ({
     expanded: [],
     ct_selections: [] as string[],

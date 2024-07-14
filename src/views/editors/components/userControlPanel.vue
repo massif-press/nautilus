@@ -239,13 +239,15 @@ export default {
     this.pendingPermission = localStorage.getItem('nautilus_pendingPermission');
   },
   methods: {
-    async updateUser() {
+    async updateUser(skipToast = false) {
       this.loading = true;
       try {
         await useUserStore().updateUser();
-        this.toastMessage = 'User info updated';
-        this.toastColor = 'success';
-        this.snackbar = true;
+        if (!skipToast) {
+          this.toastMessage = 'User info updated';
+          this.toastColor = 'success';
+          this.snackbar = true;
+        }
       } catch (e) {
         this.toastMessage = e.message;
         this.toastColor = 'error';
@@ -261,6 +263,7 @@ export default {
     async requestImage() {
       this.loading = true;
       try {
+        await this.updateUser(true);
         await postRequest(this.user.user_id);
 
         this.toastMessage = 'Permission request sent';

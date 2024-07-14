@@ -78,13 +78,13 @@
         @select="hull.Tags.push($event)" />
     </fieldset>
 
-    <fieldset
+    <!-- <fieldset
       v-if="hull.Submaps.length > 0 || hull.isUserOwned"
       class="pa-1 mt-2"
       style="border: solid rgba(150, 150, 150, 0.3) 1px; border-radius: 3px">
       <legend class="text-caption text-disabled ml-2 px-1 mb-n3">Submaps</legend>
       <submap-editor :item="hull" />
-    </fieldset>
+    </fieldset> -->
   </compendium-item-editor>
 </template>
 

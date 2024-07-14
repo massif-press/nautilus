@@ -21,7 +21,7 @@
       </blockquote>
       <div v-for="item in crew.Details">
         <div class="text-caption">{{ item.title }}</div>
-        <p>{{ item.body }}</p>
+        <p style="font-size: 14px; white-space: pre-wrap">{{ item.body }}</p>
       </div>
     </v-card-text>
   </v-card>

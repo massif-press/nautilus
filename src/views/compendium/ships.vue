@@ -38,16 +38,23 @@
             v-else
             size="small"
             variant="tonal"
-            :text="item.Hull.Name"
+            :text="item.Hull.TruncatedName"
             :to="`/main/editor/edit/${item.ItemType}/${item.ID}`" />
         </template>
         <template #item.Location="{ item }">
           <v-btn size="small" color="accent" variant="tonal" :to="`/main/map/${item.ID}`">
-            {{ getMap(item.Location.map) }}
+            {{ getMap(item.Location.map)?.Name || 'Unknown' }}
           </v-btn>
         </template>
         <template #item.UpdatedAt="{ item }">
           {{ item.UpdatedAt.toLocaleString() }}
+        </template>
+        <template #expanded-row="{ columns, item }">
+          <tr>
+            <td :colspan="columns.length" class="px-0">
+              <detail-menu-content :item="item" :map="getMap(item.Location.map)" no-header />
+            </td>
+          </tr>
         </template>
       </v-data-table>
     </v-card-text>
@@ -57,20 +64,22 @@
 <script lang="ts">
 import _ from 'lodash';
 import { useDataStore } from '../../stores/dataStore';
+import DetailMenuContent from '../map/viewers/components/detailMenuContent.vue';
 
 export default {
   name: 'Ships',
+  components: { DetailMenuContent },
   data: () => ({
     tab: 0,
     search: '',
     expanded: [],
     headers: [
-      { title: 'Name', key: 'Name', width: '1px' },
+      { title: 'Name', key: 'Name' },
       { title: 'Hull', key: 'Hull' },
       { title: 'Class', key: 'Hull.Class' },
       { title: 'Location', key: 'Location' },
-      { title: 'Owner', key: 'Owner' },
-      { title: 'Author', key: 'Author.Name' },
+      { title: 'Owner', key: 'Owner', width: '8vw' },
+      { title: 'Author', key: 'Author.Name', width: '8vw' },
     ],
   }),
   computed: {
@@ -90,7 +99,7 @@ export default {
   methods: {
     getMap(id: string) {
       const map = useDataStore().maps.find((x) => x.ID === id);
-      return map ? map.Name : 'Unknown';
+      return map;
     },
   },
 };

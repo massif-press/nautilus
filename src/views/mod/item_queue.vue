@@ -69,7 +69,7 @@
       <mod-item-buttons :item="item" />
     </template>
     <template #item.note="{ item }">
-      <v-menu v-if="item.ModComment" open-on-hover>
+      <v-menu v-if="item.ModComment" open-on-hover max-width="400px">
         <template #activator="{ props }">
           <v-icon v-bind="props">mdi-comment</v-icon>
         </template>

@@ -34,8 +34,15 @@
         </template>
         <template #item.Location="{ item }">
           <v-btn size="small" color="accent" variant="tonal" :to="`/main/map/${item.ID}`">
-            {{ getMap(item.Location.map) }}
+            {{ getMap(item.Location.map)?.Name || 'Unknown' }}
           </v-btn>
+        </template>
+        <template #expanded-row="{ columns, item }">
+          <tr>
+            <td :colspan="columns.length" class="px-0">
+              <detail-menu-content :item="item" :map="getMap(item.Location.map)" no-header />
+            </td>
+          </tr>
         </template>
       </v-data-table>
     </v-card-text>
@@ -45,9 +52,11 @@
 <script lang="ts">
 import _ from 'lodash';
 import { useDataStore } from '../../stores/dataStore';
+import DetailMenuContent from '../map/viewers/components/detailMenuContent.vue';
 
 export default {
   name: 'POIs',
+  components: { DetailMenuContent },
   data: () => ({
     search: '',
     expanded: [],
@@ -76,7 +85,7 @@ export default {
   methods: {
     getMap(id: string) {
       const map = useDataStore().maps.find((x) => x.ID === id);
-      return map ? map.Name : 'Unknown';
+      return map;
     },
   },
 };

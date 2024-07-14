@@ -49,16 +49,12 @@
         <div class="text-caption text-disabled ml-n2">Assignment</div>
         <div>
           <span v-if="!crew.Assignment">
-            <i class="text-caption text-disabled">Unassigned</i>
+            <i class="text-caption text-disabled">None</i>
           </span>
-          <v-btn
-            v-else
-            size="small"
-            color="accent"
-            variant="tonal"
-            :to="`/main/map/${crew.Assignment.ID}`">
+          <v-btn v-else size="small" :to="`/main/map/${crew.Assignment.ID}`">
             {{ (crew.Assignment as any).Title || crew.Assignment.Name }}
           </v-btn>
+          <ship-assignment v-if="crew.isUserOwned" :crew="crew" />
         </div>
       </v-col>
     </v-row>
@@ -89,6 +85,7 @@ import CompendiumItemEditor from './components/compendiumItemEditor.vue';
 import { useDataStore } from '../../stores/dataStore';
 import DetailEditor from './components/detailEditor.vue';
 import ImageSelector from './components/imageSelector.vue';
+import ShipAssignment from './components/shipAssignment.vue';
 
 export default {
   name: 'CrewEditor',
@@ -96,6 +93,7 @@ export default {
     CompendiumItemEditor,
     DetailEditor,
     ImageSelector,
+    ShipAssignment,
   },
   props: {
     id: { type: String, required: true },
