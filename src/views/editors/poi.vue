@@ -4,7 +4,7 @@
       <v-col>
         <v-combobox
           density="compact"
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="poi.Faction"
           :readonly="!poi.isUserOwned"
@@ -13,7 +13,7 @@
       <v-col>
         <v-text-field
           density="compact"
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="poi.Owner"
           :readonly="!poi.isUserOwned"
@@ -23,7 +23,7 @@
     <v-row>
       <v-col>
         <v-text-field
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="poi.Name"
           :readonly="!poi.isUserOwned"
@@ -31,7 +31,7 @@
       </v-col>
       <v-col>
         <v-combobox
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="poi.PoiType"
           :readonly="!poi.isUserOwned"

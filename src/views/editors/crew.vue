@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="7">
         <v-text-field
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="crew.Name"
           :readonly="!crew.isUserOwned"

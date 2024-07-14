@@ -8,7 +8,7 @@
       <v-row dense>
         <v-col>
           <v-text-field
-            maxlength="150"
+            maxlength="80"
             counter
             placeholder="Title (Optional)"
             hide-details

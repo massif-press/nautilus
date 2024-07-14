@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="6">
         <v-text-field
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="hull.Name"
           :readonly="!hull.isUserOwned"
@@ -42,7 +42,7 @@
       </v-col>
       <v-col>
         <v-combobox
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="hull.Shipwright"
           :readonly="!hull.isUserOwned"

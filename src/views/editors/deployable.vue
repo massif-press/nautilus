@@ -3,7 +3,7 @@
     <v-row align="center">
       <v-col cols="8">
         <v-text-field
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="deployable.Name"
           :readonly="!deployable.isUserOwned"
@@ -94,7 +94,7 @@
       </v-chip>
       <v-text-field
         v-if="deployable.isUserOwned"
-        maxlength="150"
+        maxlength="80"
         counter
         density="compact"
         width="300px"
@@ -133,7 +133,7 @@
       </v-chip>
       <v-text-field
         v-if="deployable.isUserOwned"
-        maxlength="150"
+        maxlength="80"
         counter
         density="compact"
         width="300px"

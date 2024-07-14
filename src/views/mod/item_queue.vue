@@ -14,7 +14,7 @@
             size="small"
             v-bind="props"
             :to="`/main/editor/edit/${item.ItemType}/${item.ID}`">
-            {{ (item as any).Title || (item as any).Name }}
+            {{ item.TruncatedName }}
           </v-btn>
         </template>
         <v-card width="60vw" border>

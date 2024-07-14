@@ -29,7 +29,7 @@
           <v-btn
             size="small"
             color="secondary"
-            :text="item.Name"
+            :text="item.TruncatedName"
             :to="`/main/editor/edit/terrain/${item.ID}`" />
         </template>
         <template #item.Location="{ item }">

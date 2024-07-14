@@ -29,7 +29,7 @@
           <v-btn
             size="small"
             color="secondary"
-            :text="item.Title"
+            :text="item.TruncatedName"
             :to="`/main/editor/edit/${item.ItemType}/${item.ID}`" />
         </template>
         <template #item.Hull="{ item }">

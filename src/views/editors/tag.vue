@@ -7,7 +7,7 @@
     <v-row>
       <v-col cols="8">
         <v-text-field
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="tag.Name"
           :readonly="!tag.isUserOwned"

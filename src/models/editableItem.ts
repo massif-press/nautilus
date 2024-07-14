@@ -64,6 +64,10 @@ abstract class EditableItem {
     this.LastModTouch = data?.modTouch ? new Date(data?.modTouch) : null;
   }
 
+  public get TruncatedName(): string {
+    return _.truncate((this as any).Title || (this as any).Name, { length: 30 });
+  }
+
   public get Author(): Author {
     return useDataStore().author(this._authorId);
   }

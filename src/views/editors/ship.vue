@@ -14,7 +14,7 @@
       <v-col>
         <v-combobox
           density="compact"
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="ship.Owner"
           :readonly="!ship.isUserOwned"
@@ -24,7 +24,7 @@
       <v-col>
         <v-combobox
           density="compact"
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="ship.HomePort"
           :readonly="!ship.isUserOwned"
@@ -36,7 +36,7 @@
     <v-row>
       <v-col cols="2">
         <v-text-field
-          maxlength="150"
+          maxlength="8"
           counter
           v-model="ship.Prefix"
           :readonly="!ship.isUserOwned"
@@ -44,7 +44,7 @@
       </v-col>
       <v-col>
         <v-text-field
-          maxlength="150"
+          maxlength="80"
           counter
           v-model="ship.Name"
           :readonly="!ship.isUserOwned"
@@ -58,14 +58,14 @@
           <div class="text-caption text-disabled">Mission</div>
           <v-text-field
             density="compact"
-            maxlength="150"
+            maxlength="80"
             counter
             :readonly="!ship.isUserOwned"
             v-model="ship.Mission.Mission" />
           <div class="text-caption text-disabled">Mission Status</div>
           <v-text-field
             density="compact"
-            maxlength="150"
+            maxlength="80"
             counter
             :readonly="!ship.isUserOwned"
             v-model="ship.Mission.Status" />

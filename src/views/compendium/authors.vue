@@ -50,7 +50,7 @@
                         <v-btn
                           size="small"
                           color="secondary"
-                          :text="item.Name"
+                          :text="item.TruncatedName"
                           :to="`/main/editor/edit/${item.ItemType}/${item.ID}`" />
                       </template>
                       <template #item.ItemType="{ item }">

@@ -14,7 +14,7 @@
             <v-text-field
               v-model="s.Name"
               :readonly="!item.isUserOwned"
-              maxlength="150"
+              maxlength="80"
               counter
               density="compact"
               hide-details
@@ -70,7 +70,7 @@
                 <td>
                   <v-text-field
                     v-model="item.Name"
-                    maxlength="150"
+                    maxlength="80"
                     counter
                     density="compact"
                     hide-details
@@ -210,7 +210,7 @@
                 <td>
                   <v-text-field
                     v-model="item.Name"
-                    maxlength="150"
+                    maxlength="80"
                     counter
                     density="compact"
                     hide-details

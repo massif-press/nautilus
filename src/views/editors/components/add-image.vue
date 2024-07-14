@@ -56,7 +56,7 @@
                 density="compact" />
               <v-text-field
                 v-model="link"
-                maxlength="150"
+                maxlength="80"
                 label="Artist site or link"
                 density="compact" />
               <v-checkbox v-model="canSubmit" hide-details>
