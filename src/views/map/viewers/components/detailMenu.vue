@@ -37,7 +37,12 @@
   </div>
 
   <v-dialog v-model="dialog" width="75vw">
-    <detail-menu-content v-if="dialog" :item="item" :map="map" />
+    <detail-menu-content
+      v-if="dialog"
+      v-model="tab"
+      :item="item"
+      :map="map"
+      @close="dialog = false" />
   </v-dialog>
 </template>
 

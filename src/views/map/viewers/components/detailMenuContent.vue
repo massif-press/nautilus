@@ -1,6 +1,11 @@
 <template>
-  <v-card :variant="noHeader ? 'tonal' : ''" :rounded="noHeader ? '0' : ''">
-    <v-tabs v-if="noHeader" v-model="tab" density="compact" bg-color="primary">
+  <v-card :variant="noHeader ? 'tonal' : 'flat'" :rounded="noHeader ? '0' : 'sm'">
+    <v-tabs
+      v-if="noHeader"
+      :value="modelValue"
+      @update:modelValue="$emit('update:modelValue', $event)"
+      density="compact"
+      bg-color="primary">
       <v-tab>Details</v-tab>
       <v-tab v-if="item.Crew && item.Crew.length">Crew</v-tab>
       <v-tab v-if="item.CargoManifest && item.CargoManifest.length">Cargo</v-tab>
@@ -10,11 +15,11 @@
     <v-toolbar v-else density="compact" color="primary" extended>
       <v-toolbar-title>Item Details</v-toolbar-title>
       <v-spacer />
-      <v-btn icon @click="dialog = false">
+      <v-btn icon @click="$emit('close')">
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <template #extension>
-        <v-tabs v-model="tab">
+        <v-tabs :value="modelValue" @update:modelValue="$emit('update:modelValue', $event)">
           <v-tab>Details</v-tab>
           <v-tab v-if="item.Crew && item.Crew.length">Crew</v-tab>
           <v-tab v-if="item.CargoManifest && item.CargoManifest.length">Cargo</v-tab>
@@ -22,13 +27,14 @@
         </v-tabs>
       </template>
     </v-toolbar>
+
     <div class="px-2 pt-4 mb-n2 text-h4 text-uppercase">
       <v-icon icon="cc:gms" class="mt-n1" />
-      {{ item.Title }}
+      {{ item.Title || item.Name }}
     </div>
 
     <v-card-text class="pt-0">
-      <v-window v-model="tab">
+      <v-window :model-value="modelValue">
         <v-window-item>
           <slot name="details" />
 
@@ -130,7 +136,7 @@
 
     <v-card-actions>
       <v-spacer />
-      <v-btn color="accent" variant="text" @click="dialog = false">Close</v-btn>
+      <v-btn color="accent" variant="text" @click="$emit('close')">Close</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -148,21 +154,15 @@ export default {
     CargoCard,
   },
   props: {
+    modelValue: { type: Number, required: true },
     item: { type: Object, required: true },
     map: { type: Object, required: true },
     noHeader: { type: Boolean, default: false },
   },
-  data() {
-    return {
-      dialog: false,
-      tab: 0,
-    };
-  },
-  emits: ['select', 'deselect'],
+  emits: ['close', 'update:modelValue'],
   methods: {
-    openDetailTab(tab: number) {
+    setTab(tab: number) {
       this.tab = tab;
-      this.dialog = true;
     },
   },
 };
