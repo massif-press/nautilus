@@ -258,7 +258,8 @@ export const useDataStore = defineStore('data', {
       }
     },
     async exportAll() {
-      let data = await GetAll();
+      let data = (await GetAll()) as EditableItemData[];
+      data.forEach((item) => (item.status = 'Unpublished'));
       data = data.filter((x: EditableItemData) => x.author === useUserStore().user_id);
       return JSON.stringify(data, null, 2);
     },
