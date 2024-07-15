@@ -4,7 +4,7 @@
       <span>Item not found</span>
     </v-alert>
   </div>
-  <div v-else>
+  <div v-else style="position: relative">
     <v-footer border="b">
       <v-spacer />
       <v-tabs v-model="tab" height="32px">
@@ -57,7 +57,7 @@
             </v-alert>
           </div>
 
-          <v-card v-if="isDev" color="pink-lighten-2" variant="outlined" class="py-1 px-3">
+          <v-card v-if="isDev" color="pink-lighten-2" variant="outlined" class="py-1 px-3 mb-3">
             <div class="text-caption">Dev Tools</div>
             <v-row>
               <v-col>

@@ -2,12 +2,13 @@
   <editor-base :item="item">
     <v-row justify="center">
       <v-col xl="8" cols="12">
-        <v-card border variant="tonal" class="pa-1 mb-4">
+        <v-card border variant="tonal" class="pa-2 mb-4">
           <v-row>
             <v-col cols="6">
               <v-select
                 density="compact"
                 hide-details
+                variant="outlined"
                 v-model="item.Location.map"
                 item-title="Name"
                 item-value="ID"
@@ -18,15 +19,18 @@
             <v-col>
               <v-text-field
                 density="compact"
+                variant="outlined"
                 v-model="item.Location.coords[0]"
                 :readonly="!item.isUserOwned"
                 @update:modelValue="handleYCheck()"
+                hide-details
                 label="Y Position"
                 type="number" />
             </v-col>
             <v-col>
               <v-text-field
                 density="compact"
+                variant="outlined"
                 hide-details
                 v-model="item.Location.coords[1]"
                 :readonly="!item.isUserOwned"
@@ -90,12 +94,7 @@
             @select="item.ItemTags.push($event)" />
         </fieldset>
 
-        <fieldset
-          class="pa-1 mt-2"
-          style="border: solid rgba(150, 150, 150, 0.3) 1px; border-radius: 3px">
-          <legend class="text-caption text-disabled ml-2 px-1 mb-n3">Submaps</legend>
-          <submap-editor :item="item" :no-add="item.ItemType === 'ship'" />
-        </fieldset>
+        <slot name="bottom" />
       </v-col>
     </v-row>
   </editor-base>

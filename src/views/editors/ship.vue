@@ -3,7 +3,6 @@
     <v-row>
       <v-col>
         <v-combobox
-          density="compact"
           maxlength="80"
           counter
           v-model="ship.Faction"
@@ -13,7 +12,6 @@
       </v-col>
       <v-col>
         <v-combobox
-          density="compact"
           maxlength="80"
           counter
           v-model="ship.Owner"
@@ -23,7 +21,6 @@
       </v-col>
       <v-col>
         <v-combobox
-          density="compact"
           maxlength="80"
           counter
           v-model="ship.HomePort"
@@ -33,7 +30,7 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row density="compact">
       <v-col cols="2">
         <v-text-field
           maxlength="8"

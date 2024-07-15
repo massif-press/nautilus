@@ -46,6 +46,15 @@
         <crew-selector :crewed-item="poi" />
       </div>
     </template>
+
+    <template #bottom>
+      <fieldset
+        class="pa-1 mt-2"
+        style="border: solid rgba(150, 150, 150, 0.3) 1px; border-radius: 3px">
+        <legend class="text-caption text-disabled ml-2 px-1 mb-n3">Submaps</legend>
+        <submap-editor :item="poi" />
+      </fieldset>
+    </template>
   </map-item-editor>
 </template>
 
@@ -55,12 +64,14 @@ import { useDataStore } from '../../stores/dataStore';
 import MapItemEditor from './components/mapItemEditor.vue';
 import CrewSelector from './components/crewAssignment.vue';
 import { Poi } from '../../models/maps/poi';
+import SubmapEditor from './components/submapEditor.vue';
 
 export default {
   name: 'PoiEditor',
   components: {
     MapItemEditor,
     CrewSelector,
+    SubmapEditor,
   },
   props: {
     id: { type: String, required: true },
