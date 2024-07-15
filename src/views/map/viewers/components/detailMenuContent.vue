@@ -1,11 +1,6 @@
 <template>
   <v-card :variant="noHeader ? 'tonal' : 'flat'" :rounded="noHeader ? '0' : 'sm'">
-    <v-tabs
-      v-if="noHeader"
-      :value="modelValue"
-      @update:modelValue="$emit('update:modelValue', $event)"
-      density="compact"
-      bg-color="primary">
+    <v-tabs v-if="noHeader" v-model="internalTab" density="compact" bg-color="primary">
       <v-tab>Details</v-tab>
       <v-tab v-if="item.Crew && item.Crew.length">Crew</v-tab>
       <v-tab v-if="item.CargoManifest && item.CargoManifest.length">Cargo</v-tab>
@@ -34,7 +29,7 @@
     </div>
 
     <v-card-text class="pt-0">
-      <v-window :model-value="modelValue">
+      <v-window :model-value="modelValue || internalTab">
         <v-window-item>
           <slot name="details" />
 
@@ -154,11 +149,14 @@ export default {
     CargoCard,
   },
   props: {
-    modelValue: { type: Number, required: true },
+    modelValue: { type: Number },
     item: { type: Object, required: true },
     map: { type: Object, required: true },
     noHeader: { type: Boolean, default: false },
   },
+  data: () => ({
+    internalTab: 0,
+  }),
   emits: ['close', 'update:modelValue'],
   methods: {
     setTab(tab: number) {

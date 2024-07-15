@@ -78,8 +78,8 @@ export default {
       { title: 'Hull', key: 'Hull' },
       { title: 'Class', key: 'Hull.Class' },
       { title: 'Location', key: 'Location' },
-      { title: 'Owner', key: 'Owner', width: '8vw' },
-      { title: 'Author', key: 'Author.Name', width: '8vw' },
+      { title: 'Owner', key: 'Owner' },
+      { title: 'Author', key: 'Author.Name' },
     ],
   }),
   computed: {
