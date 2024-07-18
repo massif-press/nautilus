@@ -12,7 +12,6 @@ import ipsn from './assets/theme';
 import router from './router';
 
 import App from './App.vue';
-import { Initialize } from './storage';
 
 const nautilus = createApp(App);
 
@@ -44,5 +43,3 @@ nautilus.use(router);
 nautilus.use(createPinia());
 
 nautilus.mount('#app');
-
-await Initialize();
