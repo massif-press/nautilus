@@ -231,6 +231,7 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash';
 import { useDataStore } from '../../stores/dataStore';
 import { useUserStore } from '../../stores/userStore';
 
@@ -245,25 +246,46 @@ export default {
       return useUserStore().dev_access;
     },
     ships() {
-      return useDataStore().ships.filter((x) => x.isUserOwned);
+      return _.uniq(
+        useDataStore().ships.filter((x) => x.isUserOwned),
+        'ID'
+      );
     },
     crew() {
-      return useDataStore().crew.filter((x) => x.isUserOwned);
+      return _.uniq(
+        useDataStore().crew.filter((x) => x.isUserOwned),
+        'ID'
+      );
     },
     pois() {
-      return useDataStore().pois.filter((x) => x.isUserOwned);
+      return _.uniq(
+        useDataStore().pois.filter((x) => x.isUserOwned),
+        'ID'
+      );
     },
     cargo() {
-      return useDataStore().cargo.filter((x) => x.isUserOwned);
+      return _.uniq(
+        useDataStore().cargo.filter((x) => x.isUserOwned),
+        'ID'
+      );
     },
     hulls() {
-      return useDataStore().hulls.filter((x) => x.isUserOwned);
+      return _.uniq(
+        useDataStore().hulls.filter((x) => x.isUserOwned),
+        'ID'
+      );
     },
     tags() {
-      return useDataStore().tags.filter((x) => x.isUserOwned);
+      return _.uniq(
+        useDataStore().tags.filter((x) => x.isUserOwned),
+        'ID'
+      );
     },
     deployables() {
-      return useDataStore().deployables.filter((x) => x.isUserOwned);
+      return _.uniq(
+        useDataStore().deployables.filter((x) => x.isUserOwned),
+        'ID'
+      );
     },
     maps() {
       return useDataStore().maps;
