@@ -88,10 +88,7 @@ abstract class EditableItem {
 
   public get isPublicVisible(): boolean {
     return (
-      this.Status === 'Approved' ||
-      this.Status === 'Submitted' ||
-      this.Status === 'Unpublished' ||
-      this.Status === 'Flagged for Deletion'
+      this.Status === 'Approved' || this.Status === 'Submitted' || this.Status === 'Unpublished'
     );
   }
 
