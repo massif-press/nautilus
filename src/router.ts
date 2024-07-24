@@ -78,13 +78,13 @@ const router = createRouter({
               props: true,
             },
             {
-              path: 'edit/ship/:id/:lat?/:lon?',
+              path: 'edit/ship/:id/:mapId?/:lat?/:lon?',
               name: 'edit-ship',
               component: ShipEditor,
               props: true,
             },
             {
-              path: 'edit/poi/:id/:lat?/:lon?',
+              path: 'edit/poi/:id/:mapId?/:lat?/:lon?',
               name: 'edit-poi',
               component: PoiEditor,
               props: true,

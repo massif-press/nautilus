@@ -160,7 +160,7 @@
                   variant="tonal"
                   color="accent"
                   prepend-icon="mdi-delta"
-                  :to="`/main/editor/edit/ship/new/${lat}/${lng}`">
+                  :to="`/main/editor/edit/ship/new/${map.ID}/${lat}/${lng}`">
                   Add Ship Here
                 </v-btn>
                 <v-btn
@@ -170,7 +170,7 @@
                   color="accent"
                   class="mt-1"
                   prepend-icon="mdi-space-station"
-                  :to="`/main/editor/edit/poi/new/${lat}/${lng}`">
+                  :to="`/main/editor/edit/poi/new/${map.ID}/${lat}/${lng}`">
                   Add POI Here
                 </v-btn>
               </div>

@@ -185,6 +185,7 @@ export default {
   },
   props: {
     id: { type: String, required: true },
+    mapId: { type: String, required: false },
     lat: { type: String, required: false },
     lon: { type: String, required: false },
   },
@@ -217,6 +218,9 @@ export default {
 
       if (this.lat && this.lon) {
         this.ship.Location.coords = [Number(this.lat), Number(this.lon)];
+      }
+      if (this.mapId) {
+        this.ship.Location.map = this.mapId;
       }
     } else {
       this.ship = useDataStore().getShipById(this.id);

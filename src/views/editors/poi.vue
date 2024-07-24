@@ -84,6 +84,7 @@ export default {
   },
   props: {
     id: { type: String, required: true },
+    mapId: { type: String, required: false },
     lat: { type: String, required: false },
     lon: { type: String, required: false },
   },
@@ -97,6 +98,9 @@ export default {
           this.poi = new Poi();
         } else {
           this.poi = useDataStore().getPoiById(this.id);
+        }
+        if (this.mapId) {
+          this.ship.Location.map = this.mapId;
         }
       },
       immediate: true,
