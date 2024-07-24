@@ -88,7 +88,9 @@ export default {
       return useDataStore().crew.filter((x) => x.isPublicVisible);
     },
     authors() {
-      return useDataStore().authors;
+      return useDataStore().authors.filter((x) => {
+        return x.MapItems.length > 0 || x.CompendiumItems.length > 0;
+      });
     },
     deployables() {
       return useDataStore().deployables.filter((x) => x.isPublicVisible);

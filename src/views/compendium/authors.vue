@@ -138,7 +138,9 @@ export default {
       });
     },
     authors() {
-      return useDataStore().authors;
+      return useDataStore().authors.filter((x) => {
+        return x.MapItems.length > 0 || x.CompendiumItems.length > 0;
+      });
     },
   },
   methods: {
