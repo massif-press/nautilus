@@ -15,6 +15,16 @@ const Initialize = async function () {
   localforage.config({
     name: dbName,
   });
+
+  const init = await storeRegistry.local_data.getItem('initialized');
+  if (!init) {
+    await storeRegistry.local_data.clear();
+    await storeRegistry.local_data.setItem('initialized', true);
+    if (!localStorage.getItem('nautilus_init')) {
+      localStorage.removeItem('nautilus_user_data');
+      localStorage.setItem('nautilus_init', 'true');
+    }
+  }
 };
 
 const SetItem = async function (item: any) {

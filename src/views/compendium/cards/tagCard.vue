@@ -23,7 +23,7 @@
             </div>
           </v-col>
         </v-row>
-        <div>
+        <div style="white-space: pre-wrap">
           {{ tag.Description }}
         </div>
       </v-col>

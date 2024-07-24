@@ -16,6 +16,7 @@ class Terrain extends EditableItem {
   public readonly Collection = 'terrain';
   public readonly ID: string;
   public Name: string;
+  public ItemType: string = 'terrain';
   public TerrainType: string;
   public Svg: string;
   public Center: number[];

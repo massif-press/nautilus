@@ -60,7 +60,6 @@ export default {
   emits: ['select', 'deselect'],
   methods: {
     select(assignment) {
-      console.log('select', assignment);
       if (assignment) this.$emit('select', assignment);
     },
   },

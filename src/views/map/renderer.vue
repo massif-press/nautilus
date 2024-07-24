@@ -12,14 +12,15 @@
       :options="{
         attributionControl: false,
         zoomControl: false,
-        minZoom: 1,
+        minZoom: 2,
         maxZoom: 12,
         preferCanvas: true,
         trackResize: true,
       }"
       style="background-color: rgb(var(--v-background))"
       @click="setClickLocation($event)"
-      @moveend="redraw">
+      @moveend="redraw"
+      @update:zoom="zoomUpdated">
       <l-marker v-if="pickMode && lat && lng" :lat-lng="[lat, lng]">
         <l-icon :icon-size="<any>iconSize">
           <v-icon :size="iconSize[0]" color="deep-orange" icon="mdi-crosshairs" />
@@ -31,6 +32,21 @@
         :url="getImgPath(t.Svg)"
         :crossOrigin="true"
         :bounds="t.Bounds" />
+
+      <template v-for="label in labels">
+        <l-marker
+          :lat-lng="[label.Offset[0], label.Offset[1]]"
+          :visible="isLabelVisible(label)"
+          @click="selectLabel(label)">
+          <l-icon :icon-size="[100 + Number(label.Size * 2), 10]">
+            <div
+              class="text-center font-italic"
+              :style="`color: ${label.Color}; font-size: ${label.Size}px`">
+              {{ label.Name }}
+            </div>
+          </l-icon>
+        </l-marker>
+      </template>
 
       <template v-for="item in items">
         <template v-for="submap in item.Submaps">
@@ -187,7 +203,6 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useDataStore } from '../../stores/dataStore';
-import { fa } from 'vuetify/locale';
 
 export default {
   name: 'MapRenderer',
@@ -234,6 +249,9 @@ export default {
     items() {
       return [...this.ships, ...this.pois].filter((i) => i.isPublicVisible);
     },
+    labels() {
+      return this.map.Labels;
+    },
   },
   methods: {
     getImgPath(img) {
@@ -244,6 +262,12 @@ export default {
       this.$refs.lmap.leafletObject.invalidateSize();
 
       // this.$refs.lmap[0].rerender();
+    },
+    zoomUpdated(zoom) {
+      this.zoom = zoom;
+    },
+    isLabelVisible(label) {
+      return label.Show <= this.zoom;
     },
     submapVisible(item) {
       if (item.Show > this.zoom) return;
@@ -278,12 +302,27 @@ export default {
       this.selected = item;
       this.loc = `${item.Location.coords[0]}, ${item.Location.coords[1]}`;
 
-      this.$refs.lmap.leafletObject.flyTo(item.Location.coords, 8, {
-        animate: true,
-        duration: 0.8,
-        easeLinearity: 0.5,
-        noMoveStart: true,
-      });
+      if (item.Bounds)
+        this.$refs.lmap.leafletObject.flyToBounds(item.Bounds, {
+          animate: true,
+          duration: 0.8,
+          easeLinearity: 0.5,
+          noMoveStart: true,
+        });
+      else
+        this.$refs.lmap.leafletObject.flyTo(item.Location.coords, 7, {
+          animate: true,
+          duration: 0.8,
+          easeLinearity: 0.5,
+          noMoveStart: true,
+        });
+    },
+    selectLabel(label) {
+      const item = this.terrain.find((x) => x.Name.toLowerCase() === label.Name.toLowerCase());
+      if (item) {
+        this.setSelected(item);
+        this.$emit('select', item);
+      }
     },
     select(item) {
       this.selected = item;

@@ -91,7 +91,6 @@ export default {
     },
     filteredTags(): Tag[] {
       let t = this.tags.filter((h) => h.AppliesTo.includes(this.type));
-      console.log(this.selected);
       t = t.filter((h) => !this.selected.some((s) => s.ID === h.ID));
       return t.filter((h) => h.Name.toLowerCase().includes(this.search.toLowerCase()));
     },

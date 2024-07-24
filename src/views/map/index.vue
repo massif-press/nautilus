@@ -11,7 +11,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-navigation-drawer v-model="drawer">
+    <v-navigation-drawer v-model="drawer" :width="350">
       <v-window v-model="railValue">
         <v-window-item transition="fade">
           <v-list-item>
@@ -27,7 +27,9 @@
           <div class="text-center">
             <v-chip size="small" :color="map.Color" class="ma-2" variant="elevated">
               <b>{{ map.Control }}</b>
-              <span class="text-disabled pl-1">Controlled Space</span>
+              <span v-if="map.Control !== 'Independent'" class="text-disabled pl-1">
+                Controlled Space
+              </span>
             </v-chip>
           </div>
           <div class="px-2">
@@ -46,7 +48,7 @@
             <v-divider class="my-2" />
             <div class="text-caption text-disabled">INFORMATION</div>
 
-            <p class="text-caption" v-html="map.Description" />
+            <p class="text-caption pb-6" v-html="map.Description" style="white-space: pre-wrap" />
           </div>
         </v-window-item>
         <v-window-item transition="fade">
@@ -210,6 +212,9 @@ export default {
         this.railValue = 3;
       } else if (item.ItemType === 'poi') {
         this.railValue = 2;
+      }
+      if (item.ItemType === 'terrain') {
+        this.railValue = 1;
       }
     },
   },

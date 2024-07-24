@@ -3,6 +3,9 @@
     <template #subtitle>
       <div class="text-caption text-disabled">{{ `${item.Owner} ${item.PoiType}` }}</div>
     </template>
+    <div class="px-3 text-caption" style="white-space: pre-wrap">
+      {{ item.Description }}
+    </div>
     <detail-menu
       :item="item"
       :map="map"

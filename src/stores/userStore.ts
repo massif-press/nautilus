@@ -49,7 +49,6 @@ export const useUserStore = defineStore('user', {
       const credentials = JSON.parse(localStorage.getItem('nautilus_credentials')!);
       if (credentials && credentials.cognito) {
         const exp = credentials.cognito.idToken.payload.exp * 1000;
-        // console.log('Token expires at:', new Date(exp).toISOString());
 
         if (exp < Date.now()) {
           console.info('Token expired, refreshing...');

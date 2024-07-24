@@ -1,12 +1,14 @@
 <template>
   <base-sidebar-view :item="item" @deselect="$emit('deselect')" @select="$emit('select', $event)">
-    <template #subtitle>
+    <!-- <template #subtitle>
       <div class="text-caption">
         {{ map.Control }}
-        <span class="text-disabled pl-1">Controlled Space</span>
+        <span v-if="map.Control !== 'Independent'" class="text-disabled pl-1">
+          Controlled Space
+        </span>
       </div>
-    </template>
-    <div class="px-2 text-caption">
+    </template> -->
+    <div class="px-3 text-caption" style="white-space: pre-wrap">
       {{ item.Description }}
     </div>
   </base-sidebar-view>

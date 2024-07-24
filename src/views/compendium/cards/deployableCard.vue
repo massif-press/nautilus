@@ -13,7 +13,7 @@
           <v-chip size="x-small">{{ deployable.DeployableType }}</v-chip>
         </v-col>
       </v-row>
-      <blockquote class="my-1 border-s-lg rounded pl-2">
+      <blockquote class="my-1 border-s-lg rounded pl-2" style="white-space: pre-wrap">
         {{ deployable.Description }}
       </blockquote>
     </v-card-text>

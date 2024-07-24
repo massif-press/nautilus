@@ -38,6 +38,7 @@ export const useDataStore = defineStore('data', {
       return (state.hulls as any[])
         .concat(state.tags as any[])
         .concat(state.cargo as any[])
+        .concat(state.deployables as any[])
         .concat(state.ships)
         .concat(state.pois) as EditableItem[];
     },
@@ -119,8 +120,6 @@ export const useDataStore = defineStore('data', {
       this.expires = localStorage.getItem('nautilus_data_expiry') || 0;
       this.local_update = localStorage.getItem('nautilus_data_last_update') || 0;
 
-      // console.log('Local data expiry:', this.expires, 'Local last update:', this.local_update);
-
       let remoteLoad = Date.now() > Number(this.expires);
       if (remoteLoad) {
         console.info(
@@ -131,8 +130,6 @@ export const useDataStore = defineStore('data', {
       }
 
       if (this.loaded && !remoteLoad) return;
-
-      // remoteLoad = true;
 
       const seenItems = new Set<string>();
       if (remoteLoad) {

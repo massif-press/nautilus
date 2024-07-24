@@ -3,6 +3,7 @@ import { TerrainData, Terrain } from './terrain';
 import { Author } from '../author';
 import { useDataStore } from '../../stores/dataStore';
 import { useUserStore } from '../../stores/userStore';
+import { LabelData, Label } from './submap';
 
 type MapData = EditableItemData & {
   type: 'map';
@@ -12,6 +13,8 @@ type MapData = EditableItemData & {
   color: string;
   description: string;
   terrain: TerrainData[];
+  labels?: LabelData[];
+
   updated_by?: string;
 };
 
@@ -24,6 +27,7 @@ class SystemMap extends EditableItem {
   public Description: string;
   public Color: string;
   public Terrain: Terrain[];
+  public Labels: Label[] = [];
 
   private _updatedBy: string;
 
@@ -35,6 +39,7 @@ class SystemMap extends EditableItem {
     this.Description = data?.description || '';
     this.Color = data?.color || '#991E2A';
     this.Terrain = data?.terrain.map((t) => new Terrain(this, t)) || [];
+    this.Labels = data?.labels?.map((l) => new Label(this, l)) || [];
 
     this._updatedBy = data?.updated_by || '';
   }
@@ -54,6 +59,7 @@ class SystemMap extends EditableItem {
       description: this.Description,
       updated_by: useUserStore().user_id,
       terrain: this.Terrain.map((t) => t.Save()),
+      labels: this.Labels.map((l) => l.Save()),
     };
   }
 }

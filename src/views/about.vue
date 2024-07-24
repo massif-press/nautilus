@@ -23,6 +23,9 @@
           In the real world it's an exercise in collaborative worldbuilding for fans of the LANCER
           RPG. Anyone with a COMP/CON login can can register and elaborate on vessels, ports, stations,
           interplanetary infrastructure, and so on.
+
+          <br><br>
+          Nautilus is based on the LANCER universe, created by Tom Parkinson-Morgan and Miguel Lopez, and draws heavily from <a href="https://www.playrole.com/store/games/lancer-battlegroup" target="_blank">Lancer: Battlegroup</a> by Miguel Lopez and Kai Tave. 
         </p>
 
       </v-card-text>
@@ -32,7 +35,7 @@
         <v-toolbar-title>Using Nautilus</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
-        <p class="py-2">to do</p>
+        <p class="py-2">Coming soon!</p>
       </v-card-text>
     </v-card>
     <v-card variant="text" max-width="800px" class="mx-auto pt-4">
@@ -80,6 +83,13 @@
         <v-toolbar-title>FAQ</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
+
+        <p class="py-2">
+          <div class="text-h6">How can I add my own factions/shipwrights/pronouns/etc?</div>
+          <div class="blockquote border-s-xl mt-1">
+            Most drop-down selections in the editor <i>also</i> accept custom input. In most cases, when your item is published these custom inputs will be added to the public list of available options for future items. 
+          </div>
+        </p>          
         <p class="py-2">
           <div class="text-h6">What about stuff that isn't creatable in the editor? New regions?</div>
           <div class="blockquote border-s-xl mt-1">
@@ -88,6 +98,30 @@
             If it's something that's not possible in the editor, but you think it should be, also let me know in the Discord. I'm always looking for ways to improve the editor, and I'm happy to take suggestions. However, once this gets off the ground I'll be focusing on the COMP/CON v3 release, so it might be a (long) while before I can get to it. If you want to take a crack at it yourself, let me know and we'll figure out a way to get you the assets you need so you can make a PR.
           </div>
         </p>
+        <p class="py-2">
+          <div class="text-h6">How do I get authorized to post images?</div>
+          <div class="blockquote border-s-xl mt-1">
+            Image upload permissions will be granted by myself of another moderator on a case-by-case basis. For the time being, you'll have to have a Discord account and be in good standing in the LANCER Pilot Net Discord.
+          </div>
+        </p>
+        <p class="py-2">
+          <div class="text-h6">I deleted an item, how can I recover it?</div>
+          <div class="blockquote border-s-xl mt-1">
+            If you've flagged something for deletion, you can save and publish it any time in the next 24 hours to recover it. If the 24 hours have expired, it cannot be recovered and you'll have to recreate it.
+          </div>
+        </p>     
+        <p class="py-2">
+          <div class="text-h6">Will these ships move around?</div>
+          <div class="blockquote border-s-xl mt-1">
+            At this time, no. Procedurally generated and (semi) simulated items are under consideration for a future release.
+          </div>
+        </p>        
+        <p class="py-2">
+          <div class="text-h6">Can I create my own maps?</div>
+          <div class="blockquote border-s-xl mt-1">
+            Map creation and management (private and public) is on the roadmap for a release after the completion of COMP/CON v3. This will allow users to create and share their own maps and the items therein. This will <i>probably</i> be restricted to Patreon subscribers due to the cost of hosting and maintaining the maps.
+          </div>
+        </p>              
       </v-card-text>
     </v-card>
         <v-card variant="text" max-width="800px" class="mx-auto pt-4">

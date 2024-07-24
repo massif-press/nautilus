@@ -69,7 +69,7 @@
         v-model="deployable.Description" />
     </div>
 
-    <div class="mx-2 mt-3">
+    <!-- <div class="mx-2 mt-3">
       <div class="text-caption text-disabled ml-n2">
         Deploy Keywords
         <v-tooltip width="300px">
@@ -144,7 +144,7 @@
         append-icon="mdi-plus-circle-outline"
         @keyup.enter="deployable.RecallKeywords.push(recallKeyword), (recallKeyword = '')"
         @click:append="deployable.RecallKeywords.push(recallKeyword), (recallKeyword = '')" />
-    </div>
+    </div> -->
   </compendium-item-editor>
 </template>
 

@@ -35,7 +35,7 @@
       height="150px" />
     <div
       v-else
-      style="position: absolute; top: 15%; left: 0; right: 0; opacity: 0.2"
+      style="position: absolute; top: 33%; left: 0; right: 0; opacity: 0.2"
       class="text-center text-h3 font-weight-light">
       NO IMAGE
     </div>

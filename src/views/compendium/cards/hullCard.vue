@@ -11,7 +11,7 @@
           <v-chip size="x-small">{{ hull.Size.name }}</v-chip>
         </v-col>
       </v-row>
-      <blockquote class="my-1 border-s-lg rounded pl-2">
+      <blockquote class="my-1 border-s-lg rounded pl-2" style="white-space: pre-wrap">
         {{ hull.Description }}
       </blockquote>
       <tag-card v-for="tag in hull.Tags" :tag="tag" small hide-applies class="my-1" />

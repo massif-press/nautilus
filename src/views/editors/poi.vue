@@ -41,19 +41,28 @@
     </v-row>
 
     <template #right>
-      <div class="mx-2 mt-6">
-        <div class="text-caption text-disabled ml-n2">Crew</div>
-        <crew-selector :crewed-item="poi" />
+      <div class="mx-2 mt-3">
+        <div class="text-caption text-disabled ml-n2">Description</div>
+        <v-textarea
+          maxlength="5500"
+          auto-grow
+          counter
+          :readonly="!poi.isUserOwned"
+          v-model="poi.Description" />
       </div>
     </template>
 
     <template #bottom>
-      <fieldset
+      <div class="mx-2 mt-6">
+        <div class="text-caption text-disabled ml-n2">Crew</div>
+        <crew-selector :crewed-item="poi" />
+      </div>
+      <!-- <fieldset
         class="pa-1 mt-2"
         style="border: solid rgba(150, 150, 150, 0.3) 1px; border-radius: 3px">
         <legend class="text-caption text-disabled ml-2 px-1 mb-n3">Submaps</legend>
         <submap-editor :item="poi" />
-      </fieldset>
+      </fieldset> -->
     </template>
   </map-item-editor>
 </template>

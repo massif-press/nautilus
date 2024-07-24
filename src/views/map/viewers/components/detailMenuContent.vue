@@ -33,12 +33,16 @@
         <v-window-item>
           <slot name="details" />
 
+          <div class="pa-2" style="white-space: pre-wrap">
+            {{ item.Description }}
+          </div>
+
           <v-card
             elevation="0"
             v-if="item.Details && item.Details.length"
             v-for="d in item.Details"
-            class="mb-3 mx-auto px-6 mt-2">
-            <div class="font-weight-bold">{{ d.title }}</div>
+            class="mb-3 mx-auto py-1 px-2 mt-2">
+            <div class="font-weight-bold pb-1">{{ d.title }}</div>
             <p v-text:="d.body" class="pl-3" style="font-size: 14px; white-space: pre-wrap" />
           </v-card>
         </v-window-item>
@@ -137,9 +141,9 @@
 </template>
 
 <script lang="ts">
-import CrewCard from '../../../compendium/cards/crewCard.vue';
-import DeployableCard from '../../../compendium/cards/deployableCard.vue';
-import CargoCard from '../../../compendium/cards/cargoCard.vue';
+import CrewCard from '@/views/compendium/cards/crewCard.vue';
+import DeployableCard from '@/views/compendium/cards/deployableCard.vue';
+import CargoCard from '@/views/compendium/cards/cargoCard.vue';
 
 export default {
   name: 'DetailMenu',

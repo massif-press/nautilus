@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 600px">
+  <div style="height: 750px">
     <l-map
       ref="lmap"
       v-model:zoom="zoom"
@@ -32,6 +32,18 @@
         :crossOrigin="true"
         :bounds="t.Bounds" />
 
+      <template v-for="label in labels">
+        <l-marker :lat-lng="[label.Offset[0], label.Offset[1]]" :visible="zoom >= label.Show">
+          <l-icon :icon-size="[100 + Number(label.Size * 2), 10]">
+            <div
+              class="text-center font-italic"
+              :style="`color: ${label.Color}; font-size: ${label.Size}px`">
+              {{ label.Name }}
+            </div>
+          </l-icon>
+        </l-marker>
+      </template>
+
       <l-control position="bottomright">
         <div class="text-caption ma-n1">
           <v-btn
@@ -57,6 +69,15 @@
                   color="accent"
                   @click="$emit('add-terrain', { lat, lng })">
                   Add Terrain Item
+                </v-btn>
+                <v-btn
+                  block
+                  size="small"
+                  variant="tonal"
+                  color="accent"
+                  class="mt-1"
+                  @click="$emit('add-label', { lat, lng })">
+                  Add Label
                 </v-btn>
               </div>
             </v-card-text>
@@ -103,7 +124,7 @@ export default {
   props: {
     map: { type: Object, required: true },
   },
-  emits: ['add-terrain'],
+  emits: ['add-terrain', 'add-label'],
   data: () => ({
     zoom: 3,
     iconSize: [15, 15],
@@ -115,6 +136,9 @@ export default {
   computed: {
     terrain() {
       return this.map.Terrain;
+    },
+    labels() {
+      return this.map.Labels;
     },
   },
   methods: {

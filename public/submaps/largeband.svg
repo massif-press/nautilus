@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="117.031px" height="490.666px" viewBox="0 0 117.031 490.666" enable-background="new 0 0 117.031 490.666"
+	 xml:space="preserve">
+<pattern  x="-246.985" y="641.833" width="24.806" height="24.81" patternUnits="userSpaceOnUse" id="SVGID_1_" viewBox="0 -24.81 24.806 24.81" overflow="visible">
+	<g>
+		<polygon fill="none" points="0,0 24.806,0 24.806,-24.811 0,-24.811 		"/>
+		<g>
+			<polygon fill="none" points="0,0 24.806,0 24.806,-24.811 0,-24.811 			"/>
+			<polygon opacity="0.1" fill="#29AAE2" enable-background="new    " points="10.984,-13.823 13.82,-13.823 13.82,-10.986 
+				10.984,-10.986 			"/>
+			<polygon opacity="0.25" fill="#29AAE2" enable-background="new    " points="15.385,-9.973 24.806,-0.366 24.806,-0.002 
+				24.442,-0.002 14.834,-9.422 			"/>
+			<polygon opacity="0.25" fill="#29AAE2" enable-background="new    " points="9.972,-9.422 0.361,0 0,0 0,-0.366 9.421,-9.973 			
+				"/>
+			<polygon opacity="0.25" fill="#29AAE2" enable-background="new    " points="14.834,-15.387 24.443,-24.811 24.806,-24.811 
+				24.806,-24.445 15.385,-14.836 			"/>
+			<polygon opacity="0.25" fill="#29AAE2" enable-background="new    " points="9.421,-14.836 0,-24.443 0,-24.807 0.363,-24.807 
+				9.972,-15.387 			"/>
+		</g>
+	</g>
+</pattern>
+<pattern  id="SVGID_2_" xlink:href="#SVGID_1_" patternTransform="matrix(0.125 0 0 -0.125 -13604.875 -2654.728)">
+</pattern>
+<path opacity="0.75" fill="url(#SVGID_2_)" enable-background="new    " d="M71.989,0c26.802,46.437,45.042,138.134,45.042,243.666
+	c0,108.12-19.146,201.72-47.031,247H0c27.885-45.28,47.031-138.88,47.031-247C47.031,138.134,28.791,46.437,1.989,0H71.989z"/>
+</svg>

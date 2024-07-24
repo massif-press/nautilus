@@ -14,6 +14,7 @@ export default defineConfig({
   resolve: {
     alias: {
       './runtimeConfig': './runtimeConfig.browser',
+      '@/': new URL('./src/', import.meta.url).pathname,
     },
   },
 });
