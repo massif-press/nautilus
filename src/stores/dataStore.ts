@@ -121,6 +121,9 @@ export const useDataStore = defineStore('data', {
       this.local_update = localStorage.getItem('nautilus_data_last_update') || 0;
 
       let remoteLoad = Date.now() > Number(this.expires);
+
+      console.log('remote load', remoteLoad);
+
       if (remoteLoad) {
         console.info(
           'Remote data expired',
