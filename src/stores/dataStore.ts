@@ -154,6 +154,8 @@ export const useDataStore = defineStore('data', {
       console.info('Building compendium...');
       const data = await GetAll();
 
+      console.log(data.filter((x) => x.type === 'ship').map((x) => x.name + ' ' + x.hull));
+
       for (const item of data) {
         if (item.deleted_at && !seenItems.has(item.id)) {
           console.info('Removing abandoned item:', item.id);

@@ -70,6 +70,13 @@
             </tr>
           </template>
         </v-data-table>
+        <div class="text-right font-italic text-caption px-3 pb-1">
+          Showing {{ filteredHulls.length }} of {{ hulls.length }} hulls. Hulls must be
+          <b>Approved</b>
+          or
+          <b>Submitted</b>
+          to be selected.
+        </div>
       </v-card>
     </v-dialog>
   </div>
@@ -101,7 +108,9 @@ export default {
   }),
   computed: {
     hulls() {
-      return useDataStore().hulls;
+      return useDataStore().hulls.filter(
+        (h) => h.Status === 'Approved' || h.Status === 'Submitted'
+      );
     },
     filteredHulls() {
       return this.hulls.filter((h) => h.Name.toLowerCase().includes(this.search.toLowerCase()));

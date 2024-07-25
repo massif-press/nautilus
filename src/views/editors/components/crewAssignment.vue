@@ -107,6 +107,13 @@
             </tr>
           </template>
         </v-data-table>
+        <div class="text-right font-italic text-caption px-3 pb-1">
+          Crewmembers must be
+          <b>Approved</b>
+          or
+          <b>Submitted</b>
+          to be selected.
+        </div>
       </v-card>
     </v-dialog>
   </div>
@@ -140,7 +147,9 @@ export default {
     allCrew() {
       let c = useDataStore().crew;
       if (this.crewedItem.IsSolidState) c = c.filter((c) => c.IsNhp);
-      return c.filter((cr) => cr.isUserOwned);
+      return c.filter(
+        (cr) => cr.isUserOwned && (cr.Status === 'Approved' || cr.Status === 'Submitted')
+      );
     },
     user(): string {
       return useUserStore().user_id;
