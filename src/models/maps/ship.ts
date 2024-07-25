@@ -60,7 +60,7 @@ class Ship extends MapItem {
     if (data) {
       const hull = useDataStore().hull(data.hull);
       if (!hull) {
-        console.error(`Hull ${data.hull} not found in compendium`);
+        // console.error(`Hull ${data.hull} not found in compendium`);
       } else this.Hull = hull as Hull;
 
       if (this.Hull?.Submaps) {
