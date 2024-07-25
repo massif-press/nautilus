@@ -15,9 +15,9 @@
           Nautilus is a collaborative worldbuilding project about interstellar logistics in the
           Lancer universe. Within the fiction, it is an IPS-N network for tracking and managing the
           flow of cargo across the universe, akin to contemporary
-          <a href="" target="_blank" class="pr-1">maritime</a>
-          <a href="" target="_blank" class="pr-1">tracking</a>
-          <a href="" target="_blank" >software</a>
+          <a href="https://www.marinetraffic.com/" target="_blank" class="pr-1">maritime</a>
+          <a href="https://www.myshiptracking.com/" target="_blank" class="pr-1">tracking</a>
+          <a href="https://www.vesselfinder.com/" target="_blank" >software</a>
           .
           <br />
           In the real world it's an exercise in collaborative worldbuilding for fans of the LANCER
