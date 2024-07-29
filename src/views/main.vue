@@ -113,7 +113,8 @@ export default {
   },
   computed: {
     maps() {
-      return useDataStore().maps;
+      if (useUserStore().dev_access) return useDataStore().maps;
+      return useDataStore().maps.filter((x) => x.IsPublic);
     },
     isMod() {
       return useUserStore().is_mod;

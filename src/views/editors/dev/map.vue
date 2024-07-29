@@ -33,7 +33,7 @@
       <v-divider class="my-4" />
 
       <v-row align="center">
-        <v-col cols="6">
+        <v-col cols="4">
           <v-text-field hide-details v-model="map.Name" label="Name" />
         </v-col>
         <v-col>
@@ -51,6 +51,9 @@
             </template>
             <v-color-picker v-model="map.Color" hide-details />
           </v-menu>
+        </v-col>
+        <v-col cols="auto">
+          <v-switch v-model="map.IsPublic" label="Public" density="compact" hide-details />
         </v-col>
       </v-row>
 

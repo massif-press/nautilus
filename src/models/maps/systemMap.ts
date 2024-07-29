@@ -12,6 +12,7 @@ type MapData = EditableItemData & {
   control: string;
   color: string;
   description: string;
+  isPublic: boolean;
   terrain: TerrainData[];
   labels?: LabelData[];
 
@@ -26,6 +27,7 @@ class SystemMap extends EditableItem {
   public Control: string;
   public Description: string;
   public Color: string;
+  public IsPublic: boolean;
   public Terrain: Terrain[];
   public Labels: Label[] = [];
 
@@ -38,6 +40,7 @@ class SystemMap extends EditableItem {
     this.Control = data?.control || '';
     this.Description = data?.description || '';
     this.Color = data?.color || '#991E2A';
+    this.IsPublic = data?.isPublic || false;
     this.Terrain = data?.terrain.map((t) => new Terrain(this, t)) || [];
     this.Labels = data?.labels?.map((l) => new Label(this, l)) || [];
 
@@ -56,6 +59,7 @@ class SystemMap extends EditableItem {
       subtitle: this.Subtitle,
       control: this.Control,
       color: this.Color,
+      isPublic: this.IsPublic,
       description: this.Description,
       updated_by: useUserStore().user_id,
       terrain: this.Terrain.map((t) => t.Save()),
