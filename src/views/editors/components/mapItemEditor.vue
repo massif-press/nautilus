@@ -109,6 +109,7 @@ import EditorBase from './editorBase.vue';
 import DetailEditor from './detailEditor.vue';
 import ImageSelector from './imageSelector.vue';
 import ColorPicker from './colorPicker.vue';
+import { useUserStore } from '../../../stores/userStore';
 
 export default {
   name: 'MapItemEditor',
@@ -125,7 +126,8 @@ export default {
   }),
   computed: {
     maps() {
-      return useDataStore().maps;
+      if (useUserStore().dev_access) return useDataStore().maps;
+      return useDataStore().maps.filter((x) => x.IsPublic);
     },
     icons() {
       if (this.item.ItemType === 'ship') return ['cc:ship', 'mdi-delta', 'mdi-triangle'];
