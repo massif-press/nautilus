@@ -328,6 +328,7 @@ export default {
       'rocks/39.svg',
       'largeband.svg',
       'smallband.svg',
+      'eyalet.svg',
     ],
   }),
   methods: {
