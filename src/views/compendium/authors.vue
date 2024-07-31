@@ -138,9 +138,11 @@ export default {
       });
     },
     authors() {
-      return useDataStore().authors.filter((x) => {
-        return x.MapItems.length > 0 || x.CompendiumItems.length > 0;
-      });
+      return useDataStore()
+        .authors.filter((x) => !x.Name.toLowerCase().includes('new user'))
+        .filter((x) => {
+          return x.MapItems.length > 0 || x.CompendiumItems.length > 0;
+        });
     },
   },
   methods: {
