@@ -26,6 +26,10 @@ class Author {
     this.LastUpdate = data.last_update ? new Date(data.last_update) : new Date();
   }
 
+  public get HasItems(): boolean {
+    return useDataStore().items.some((x) => x.Author.ID === this.ID);
+  }
+
   public get MapItems(): MapItem[] {
     return useDataStore()
       .getMapItemsByAuthor(this.ID)

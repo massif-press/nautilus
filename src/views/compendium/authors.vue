@@ -24,7 +24,7 @@
         :headers="headers"
         :items="authors"
         item-value="ID"
-        :items-per-page="-1"
+        :items-per-page="15"
         show-expand>
         <template #item.map="{ item }">{{ item.MapItems.length }}</template>
         <template #item.compendium="{ item }">{{ item.CompendiumItems.length }}</template>
@@ -65,12 +65,6 @@
                           {{ getMap(item.Location.map) }}
                         </v-btn>
                       </template>
-                      <template #item.CreatedAt="{ item }">
-                        {{ item.CreatedAt.toLocaleString() }}
-                      </template>
-                      <template #item.UpdatedAt="{ item }">
-                        {{ item.UpdatedAt.toLocaleString() }}
-                      </template>
 
                       <template #bottom></template>
                     </v-data-table>
@@ -108,7 +102,6 @@ export default {
       { title: 'Discord', value: 'Discord' },
       { title: 'Map Items', key: 'map' },
       { title: 'Compendium Items', key: 'compendium' },
-      { title: 'Last Update', value: 'LastUpdate' },
     ],
     subHeaders: {
       MapItems: [
@@ -140,9 +133,7 @@ export default {
     authors() {
       return useDataStore()
         .authors.filter((x) => !x.Name.toLowerCase().includes('new user'))
-        .filter((x) => {
-          return x.MapItems.length > 0 || x.CompendiumItems.length > 0;
-        });
+        .filter((x) => x.HasItems);
     },
   },
   methods: {
