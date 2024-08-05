@@ -329,6 +329,7 @@ export default {
       'largeband.svg',
       'smallband.svg',
       'eyalet.svg',
+      'ras.svg',
     ],
   }),
   methods: {
