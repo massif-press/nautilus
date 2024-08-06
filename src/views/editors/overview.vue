@@ -125,6 +125,17 @@
             </v-card>
           </v-menu>
         </template>
+        <template #item.Map="{ item }">
+          <i v-if="!item.Map" class="text-caption text-disabled">Unknown</i>
+          <v-btn
+            v-else
+            size="small"
+            color="accent"
+            variant="tonal"
+            :to="`/main/map/${item.Location.map}`">
+            {{ item.Map.Name }}
+          </v-btn>
+        </template>
         <template #item.Status="{ item }">
           <v-chip :color="statusColor(item)" size="x-small">
             {{ item.Status }}
@@ -165,50 +176,52 @@ export default {
     search: '',
     shipHeaders: [
       { title: 'Vessel', value: 'Name' },
-      { title: 'Faction', value: 'Faction' },
-      { title: 'Owner', value: 'Owner' },
-      { title: 'Class', value: 'Hull.Class' },
-      { title: 'Hull', value: 'Hull.Name' },
+      { title: 'Map', key: 'Map', value: 'Location.map', sortable: true },
+      { title: 'Faction', value: 'Faction', sortable: true },
+      { title: 'Owner', value: 'Owner', sortable: true },
+      { title: 'Class', value: 'Hull.Class', sortable: true },
+      { title: 'Hull', value: 'Hull.Name', sortable: true },
       { title: 'Tags', value: 'Tags' },
-      { title: 'Status', value: 'Status' },
+      { title: 'Status', value: 'Status', sortable: true },
     ],
     poiHeaders: [
-      { title: 'Item', value: 'Name' },
-      { title: 'Faction', value: 'Faction' },
-      { title: 'Owner', value: 'Owner' },
-      { title: 'Type', value: 'PoiType' },
+      { title: 'Item', value: 'Name', sortable: true },
+      { title: 'Map', key: 'Map', value: 'Location.map', sortable: true },
+      { title: 'Faction', value: 'Faction', sortable: true },
+      { title: 'Owner', value: 'Owner', sortable: true },
+      { title: 'Type', value: 'PoiType', sortable: true },
       { title: 'Tags', value: 'Tags' },
-      { title: 'Status', value: 'Status' },
+      { title: 'Status', value: 'Status', sortable: true },
     ],
     crewHeaders: [
-      { title: 'Name', value: 'Name' },
-      { title: 'Role', key: 'Role' },
-      { title: 'Pronouns', key: 'Pronouns' },
-      { title: 'Background', key: 'Background' },
-      { title: 'Assignment', key: 'Assignment' },
-      { title: 'Status', value: 'Status' },
+      { title: 'Name', value: 'Name', sortable: true },
+      { title: 'Role', key: 'Role', sortable: true },
+      { title: 'Pronouns', key: 'Pronouns', sortable: true },
+      { title: 'Background', key: 'Background', sortable: true },
+      { title: 'Assignment', key: 'Assignment', sortable: true },
+      { title: 'Status', value: 'Status', sortable: true },
     ],
     hullHeaders: [
-      { title: 'Name', key: 'Name' },
-      { title: 'Size', key: 'Size.name' },
-      { title: 'Shipwright', key: 'Shipwright' },
+      { title: 'Name', key: 'Name', sortable: true },
+      { title: 'Size', key: 'Size.name', sortable: true },
+      { title: 'Shipwright', key: 'Shipwright', sortable: true },
       { title: 'Tags', key: 'Tags' },
-      { title: 'Status', value: 'Status' },
+      { title: 'Status', value: 'Status', sortable: true },
     ],
     cargoHeaders: [
-      { title: 'Name', key: 'Name' },
-      { title: 'Type', key: 'CargoType' },
-      { title: 'Status', value: 'Status' },
+      { title: 'Name', key: 'Name', sortable: true },
+      { title: 'Type', key: 'CargoType', sortable: true },
+      { title: 'Status', value: 'Status', sortable: true },
     ],
     deployableHeaders: [
-      { title: 'Name', key: 'Name' },
-      { title: 'Type', key: 'DeployableType' },
-      { title: 'Status', value: 'Status' },
+      { title: 'Name', key: 'Name', sortable: true },
+      { title: 'Type', key: 'DeployableType', sortable: true },
+      { title: 'Status', value: 'Status', sortable: true },
     ],
     tagHeaders: [
-      { title: 'Name', key: 'Name' },
-      { title: 'Type', key: 'AppliesTo' },
-      { title: 'Status', value: 'Status' },
+      { title: 'Name', key: 'Name', sortable: true },
+      { title: 'Type', key: 'AppliesTo', sortable: true },
+      { title: 'Status', value: 'Status', sortable: true },
     ],
   }),
   computed: {

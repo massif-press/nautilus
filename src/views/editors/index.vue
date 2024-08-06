@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer permanent>
+  <v-navigation-drawer permanent :width="350">
     <v-list density="compact">
       <v-list-item link title="Overview" to="/main/editor/overview" />
       <v-divider />
@@ -7,17 +7,23 @@
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" title="Ships">
             <div class="text-caption text-disabled">
-              <i>{{ ships.length }} Registered</i>
+              <i>{{ count(ships) }} Registered</i>
             </div>
           </v-list-item>
         </template>
-        <v-list-item v-for="s in ships" link :to="`/main/editor/edit/ship/${s.ID}`">
-          <v-icon :icon="s.Icon.icon" size="x-small" class="mt-n1" />
-          {{ s.Name }}
-          <div class="text-caption text-disabled" style="line-height: 14px">
-            {{ `${s.Owner} ${s.Hull.Class}` }}
+        <div v-for="map in Object.keys(ships)" class="mx-2">
+          <div class="text-caption ml-2 my-2">
+            <b>{{ getMap(map) }}</b>
+            <v-divider />
           </div>
-        </v-list-item>
+          <v-list-item v-for="s in ships[map]" link :to="`/main/editor/edit/ship/${s.ID}`">
+            <v-icon :icon="s.Icon.icon" size="x-small" class="mt-n1" />
+            {{ s.Name }}
+            <div class="text-caption text-disabled" style="line-height: 14px">
+              {{ `${s.Owner} ${s.Hull.Class}` }}
+            </div>
+          </v-list-item>
+        </div>
         <v-btn
           prepend-icon="mdi-plus"
           size="x-small"
@@ -34,17 +40,23 @@
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" title="Points of Interest">
             <div class="text-caption text-disabled">
-              <i>{{ pois.length }} Registered</i>
+              <i>{{ count(pois) }} Registered</i>
             </div>
           </v-list-item>
         </template>
-        <v-list-item v-for="p in pois" link :to="`/main/editor/edit/poi/${p.ID}`">
-          <v-icon :icon="p.Icon.icon" size="x-small" class="mt-n1" />
-          {{ p.Name }}
-          <div class="text-caption text-disabled" style="line-height: 14px">
-            {{ `${p.Owner} ${p.PoiType}` }}
+        <div v-for="map in Object.keys(pois)" class="mx-2">
+          <div class="text-caption ml-2 my-2">
+            <b>{{ getMap(map) }}</b>
+            <v-divider />
           </div>
-        </v-list-item>
+          <v-list-item v-for="p in pois[map]" link :to="`/main/editor/edit/poi/${p.ID}`">
+            <v-icon :icon="p.Icon.icon" size="x-small" class="mt-n1" />
+            {{ p.Name }}
+            <div class="text-caption text-disabled" style="line-height: 14px">
+              {{ `${p.Owner} ${p.PoiType}` }}
+            </div>
+          </v-list-item>
+        </div>
         <v-btn
           prepend-icon="mdi-plus"
           variant="tonal"
@@ -246,9 +258,12 @@ export default {
       return useUserStore().dev_access;
     },
     ships() {
-      return _.uniq(
-        useDataStore().ships.filter((x) => x.isUserOwned),
-        'ID'
+      return _.groupBy(
+        _.uniq(
+          useDataStore().ships.filter((x) => x.isUserOwned),
+          'ID'
+        ),
+        'Location.map'
       );
     },
     crew() {
@@ -258,9 +273,21 @@ export default {
       );
     },
     pois() {
-      return _.uniq(
-        useDataStore().pois.filter((x) => x.isUserOwned),
-        'ID'
+      console.log(
+        _.groupBy(
+          _.uniq(
+            useDataStore().pois.filter((x) => x.isUserOwned),
+            'ID'
+          ),
+          'Location.map'
+        )
+      );
+      return _.groupBy(
+        _.uniq(
+          useDataStore().pois.filter((x) => x.isUserOwned),
+          'ID'
+        ),
+        'Location.map'
       );
     },
     cargo() {
@@ -289,6 +316,14 @@ export default {
     },
     maps() {
       return useDataStore().maps;
+    },
+  },
+  methods: {
+    count(obj) {
+      return Object.values(obj).reduce((total, arr) => total + arr.length, 0);
+    },
+    getMap(mapId: string) {
+      return useDataStore().getMapById(mapId).Name;
     },
   },
 };

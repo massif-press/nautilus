@@ -20,6 +20,10 @@ const CargoTypes = [
     description: 'Dangerous and sensitive materials that require special handling.',
   },
   {
+    title: 'Paracausal',
+    description: 'Cargo that defies conventional physics and requires special containment.',
+  },
+  {
     title: 'Passenger',
     description:
       'Non-crew passengers that require hab modules, cryogenic facilities, or other special accommodations.',

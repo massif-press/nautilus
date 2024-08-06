@@ -5,6 +5,7 @@ import { Submap, SubmapData } from './submap';
 import { Tag } from '../compendium/tag';
 import { EditableItem, EditableItemData } from '../editableItem';
 import { Crew } from './crew';
+import { SystemMap } from './systemMap';
 
 type MapItemData = EditableItemData & {
   id: string;
@@ -66,6 +67,11 @@ abstract class MapItem extends EditableItem {
 
   public get Crew(): Crew[] {
     return useDataStore().crew.filter((c) => c.Assignment && c.Assignment.ID === this.ID);
+  }
+
+  public get Map(): SystemMap | undefined {
+    const mapObj = useDataStore().maps.find((m) => m.ID === this.Location.map);
+    return mapObj;
   }
 
   public Save(): MapItemData {

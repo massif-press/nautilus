@@ -34,6 +34,12 @@
       @click="openDetailTab(3)">
       Hangar
     </v-btn>
+    <div v-if="item.IsUserOwned">
+      <v-divider />
+      <v-btn color="secondary" size="x-small" flat class="my-2" block @click="openInEditor()">
+        Open in Editor
+      </v-btn>
+    </div>
   </div>
 
   <v-dialog v-model="dialog" width="75vw">
@@ -75,6 +81,12 @@ export default {
     openDetailTab(tab: number) {
       this.tab = tab;
       this.dialog = true;
+    },
+    openInEditor() {
+      console.log('openInEditor', this.item);
+      this.$router.push({
+        path: `/main/editor/edit/${this.item.ItemType}/${this.item.ID}`,
+      });
     },
   },
 };

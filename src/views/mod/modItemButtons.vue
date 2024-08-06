@@ -21,7 +21,7 @@
       </v-btn>
     </template>
     <template #default="{ isActive }">
-      <v-card>
+      <v-card style="position: absolute; top: 15vh; left: 0; right: 0">
         <v-toolbar density="compact" color="warning">
           <v-toolbar-title>
             Request Changes &mdash; {{ (item as any).Title || (item as any).Name }}
